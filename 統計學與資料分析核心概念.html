@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>統計學與資料分析核心概念</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --danger-light: #fce8e6;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #dadce0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    header h1 { font-size: 2rem; margin-bottom: 8px; }
+    header p { opacity: 0.95; font-size: 1.05rem; }
+
+    /* Section & Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.15rem; color: var(--primary-dark); margin: 20px 0 10px 0; border-left: 4px solid var(--primary); padding-left: 10px; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+    th { background: var(--primary-light); color: var(--primary-dark); }
+
+    /* Grids & Callouts */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin: 15px 0; }
+    .card-item { background: #f8f9fa; border: 1px solid var(--border-color); padding: 18px; border-radius: 8px; }
+    .card-item h4 { color: var(--primary-dark); margin-bottom: 6px; font-size: 1rem; }
+
+    .blue-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .green-box { background: var(--secondary-light); border-left: 5px solid var(--secondary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .red-box { background: var(--danger-light); border-left: 5px solid var(--danger); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+
+    /* Glossary Grid */
+    .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 15px; }
+    .glossary-item { background: #f1f3f4; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); }
+    .glossary-item strong { color: var(--primary-dark); display: block; margin-bottom: 4px; }
+
+    @media (max-width: 600px) { body { padding: 10px; } header h1 { font-size: 1.5rem; } section { padding: 18px; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header Banner -->
+    <header>
+      <h1>統計學與資料分析核心概念</h1>
+      <p>結合開放資料 (data.gov.tw)、AREMOS 與 SRDA 的連貫實戰範例教學</p>
+    </header>
+
+    <!-- 第一主題：統計學基礎概念與假設檢定 -->
+    <section>
+      <h2><span>📊</span> 一、 統計學基礎概念與假設檢定</h2>
+
+      <h3>1. 測量尺度與變數分類（以 SRDA 家庭動態調查 PSFD 為例）</h3>
+      <p>在使用統計方法前，必須先了解問卷或資料庫欄位的「測量尺度」。這決定了我們能使用哪種統計圖表與模型：</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>尺度名稱</th>
+            <th>英文名稱</th>
+            <th>定義與特性</th>
+            <th>SRDA / 開放資料庫真實範例</th>
+            <th>歸屬變數類型</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>名義尺度</strong></td>
+            <td>Nominal</td>
+            <td>僅作類別分類，組別間沒有大小或順序之分。</td>
+            <td><strong>SRDA：</strong>居住縣市（台北、台中、高雄）、居住狀態（同住、搬離）。</td>
+            <td rowspan="2" style="background:#f8f9fa; vertical-align:middle; text-align:center;"><strong>類別變數</strong><br>(Categorical)</td>
+          </tr>
+          <tr>
+            <td><strong>次序尺度</strong></td>
+            <td>Ordinal</td>
+            <td>數值順序有意義，但兩數值之間的「距離差異」不一定相等。</td>
+            <td><strong>SRDA：</strong>生活幸福感評分（1極不快樂～7極快樂）、教育程度排序。</td>
+          </tr>
+          <tr>
+            <td><strong>等距尺度</strong></td>
+            <td>Interval</td>
+            <td>數值順序與差距都有意義，但<strong>沒有真實零點</strong>（0不代表完全沒有）。</td>
+            <td><strong>data.gov.tw：</strong>攝氏溫度、年份（如 2026 年）、滿意度量表總分。</td>
+            <td rowspan="2" style="background:#f8f9fa; vertical-align:middle; text-align:center;"><strong>數值變數</strong><br>(Numerical)</td>
+          </tr>
+          <tr>
+            <td><strong>等比尺度</strong></td>
+            <td>Ratio</td>
+            <td>具有等距特質，且<strong>具備真實零點</strong>（0代表完全沒有，可進行倍數運算）。</td>
+            <td><strong>AREMOS / SRDA：</strong>個人月收入（0元）、每人平均 GDP（美元）、年齡。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2. 描述統計 vs. 推論統計</h3>
+      <div class="grid-2">
+        <div class="card-item">
+          <h4>描述統計 (Descriptive Statistics)</h4>
+          <p><strong>目標：</strong>組織與整理既有資料，呈現資料全貌。</p>
+          <p><strong>資料庫應用範例：</strong></p>
+          <ul style="margin-left: 20px;">
+            <li>計算 AREMOS 中近 40 年台灣人均所得的<strong>平均數與成長率</strong>。</li>
+            <li>繪製 data.gov.tw 各縣市交通事故總數的<strong>長條圖與圓餅圖</strong>。</li>
+          </ul>
+        </div>
+        <div class="card-item">
+          <h4>推論統計 (Inferential Statistics)</h4>
+          <p><strong>目標：</strong>用抽樣樣本資料，推論與預測整個母體的特性。</p>
+          <p><strong>資料庫應用範例：</strong></p>
+          <ul style="margin-left: 20px;">
+            <li>分析 SRDA 追蹤的 3,000 位青年樣本，<strong>推論全台灣青年</strong>搬離父母家後的幸福感變化。</li>
+            <li>利用過去 10 年 AREMOS 數據，建構模型<strong>預估未來的經濟成長率</strong>。</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>3. 假設檢定架構與「品茶女士」經典案例</h3>
+      <p>假設檢定是用於評估研究結果是否「達到統計顯著」的核心邏輯：</p>
+
+      <div class="grid-2">
+        <div class="card-item">
+          <h4>虛無假設 (Null Hypothesis, H<sub>0</sub>)</h4>
+          <p>假設「沒有顯著差異或效果」，是研究者試圖進行檢定並希望駁回的假設。</p>
+          <p style="color:var(--text-muted);">⚖️ <em>法庭類比：被告被推定無罪。</em></p>
+          <p><strong>實例：</strong>H<sub>0</sub>：搬家與否對生活幸福感「完全沒有影響」。</p>
+        </div>
+        <div class="card-item">
+          <h4>對立假設 (Alternative Hypothesis, H<sub>1</sub>)</h4>
+          <p>與虛無假設對立，是研究者真正「想要證明的觀點」。</p>
+          <p style="color:var(--text-muted);">⚖️ <em>法庭類比：被告有罪。</em></p>
+          <p><strong>實例：</strong>H<sub>1</sub>：搬家與否對生活幸福感「有顯著差異」。</p>
+        </div>
+      </div>
+
+      <div class="blue-box">
+        <strong>🍵 經典範例：品茶女士 (Lady Tasting Tea) 假設檢定 5 步驟</strong>
+        <ol style="margin-left: 20px; margin-top: 5px;">
+          <li><strong>建立假設：</strong> H<sub>0</sub>：女士只是靠運氣盲猜（成功率 50%） vs. H<sub>1</sub>：女士真的能分辨先加茶還是先加牛奶。</li>
+          <li><strong>設定顯著水準：</strong> 訂定 α = 0.05（容許 5% 的假警報機率）。</li>
+          <li><strong>收集資料：</strong> 準備 8 杯隨機順序沖泡的奶茶，讓女士盲測判斷。</li>
+          <li><strong>計算 p 值：</strong> 若女士 8 杯全對，盲猜猜對的機率（p 值）僅為 1/70 ≈ 0.014 (1.4%)。</li>
+          <li><strong>做出決策：</strong> 因為 p = 0.014 ≤ 0.05，<strong>拒絕虛無假設 H<sub>0</sub></strong>！結論：女士具備分辨能力。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 第二主題：常用統計方法與工具應用 -->
+    <section>
+      <h2><span>⚙️</span> 二、 常用統計方法與工具應用</h2>
+
+      <h3>1. t 檢定 vs. 單因子變異數分析 (ANOVA)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>統計方法</th>
+            <th>適用時機</th>
+            <th>三大資料庫整合研究範例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>獨立樣本 t 檢定</strong></td>
+            <td>比較<strong>「兩組」</strong>數值變數的平均數差異。</td>
+            <td><strong>SRDA 資料：</strong>比較「與父母同住者」與「獨居者」兩組人的平均幸福感分數是否有顯著差異。</td>
+          </tr>
+          <tr>
+            <td><strong>單因子變異數分析<br>(ANOVA)</strong></td>
+            <td>比較<strong>「三組以上」</strong>數值變數的平均數差異。</td>
+            <td><strong>data.gov.tw 資料：</strong>比較「北部、中部、南部、東部」四大區域的平均交通事故率是否有顯著差異。（若檢定顯著，需搭配 <em>Tukey 事後檢定</em> 找出究竟是哪兩區有差）。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2. 卡方檢定 (Chi-Square Test)</h3>
+      <p>專門用來分析<strong>「類別資料」</strong>（非連續數值），評估觀察到的次數分配是否由隨機機會引起：</p>
+      
+      <div class="grid-3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:15px;">
+        <div class="card-item">
+          <h4>1. 適合度檢定</h4>
+          <p><strong>範例：</strong>檢查 SRDA 樣本中的性別比例（如男 52%: 女 48%），是否符合全台人口母體結構。</p>
+        </div>
+        <div class="card-item">
+          <h4>2. 同質性檢定</h4>
+          <p><strong>範例：</strong>比較北部與南部民眾，對「興建社會住宅」的贊成比例是否一致。</p>
+        </div>
+        <div class="card-item">
+          <h4>3. 獨立性檢定</h4>
+          <p><strong>範例：</strong>分析「學歷高低（類別）」與「是否經常關注 AREMOS 經濟新聞（類別）」兩者之間是否互相獨立。</p>
+        </div>
+      </div>
+
+      <h3>3. 統計工具評比與 AI 輔助（R 語言 vs. SPSS）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th width="15%">軟體</th>
+            <th>優勢</th>
+            <th>缺點</th>
+            <th>建議應用情境</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SPSS</strong></td>
+            <td>點擊式選單介面，容易上手。</td>
+            <td>需付費授權、無法批次自動化處理大數據。</td>
+            <td>學術問卷基礎統計、快速預估分析。</td>
+          </tr>
+          <tr>
+            <td><strong>R 語言</strong></td>
+            <td><strong>免費開源</strong>、繪圖極美、處理幾百萬筆資料極快。</td>
+            <td>學習曲線陡峭，需撰寫程式碼。</td>
+            <td>大型資料庫合併、高階計量模型、AI 輔助寫碼。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="green-box">
+        🤖 <strong>AI 工具寫 R 程式碼最佳搭檔：DeepSeek & Gemini</strong><br>
+        在處理 R 語言資料合併與卡方檢定時，DeepSeek 與 Gemini 對 R 語言邏輯理解力極高，能自動處理欄位亂碼、寫出套件安裝語法並修復錯誤（Debug），幫初學者省下 80% 寫程式的時間！
+      </div>
+
+      <h3>4. 機率抽樣 vs. 非機率抽樣</h3>
+      <div class="grid-2">
+        <div class="card-item">
+          <h4>機率抽樣 (Probability Sampling)</h4>
+          <p><strong>特點：</strong>母體中每個人被抽中的機率已知且不為零，<strong>可進行強力的母體推論</strong>。</p>
+          <p><strong>範例：</strong>SRDA 採用的「分層隨機抽樣」（全台按縣市分層抽樣）。</p>
+        </div>
+        <div class="card-item">
+          <h4>非機率抽樣 (Non-Probability Sampling)</h4>
+          <p><strong>特點：</strong>依便利性或主觀判斷挑選，<strong>難以推論至整個母體</strong>。</p>
+          <p><strong>範例：</strong>在校園路口發放 Google 表單問卷（便利抽樣）。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第三主題：統計陷阱、實務案例與名詞速查 -->
+    <section>
+      <h2><span>⚠️</span> 三、 統計陷阱、實務案例與名詞速查</h2>
+
+      <h3>1. 兩大常見統計陷阱</h3>
+      <div class="red-box">
+        <h4>陷阱 A：偽相關 (Spurious Correlation) ——「相關不等於因果！」</h4>
+        <p>兩個變數在統計上高度相關，但實際上毫無直接因果關係，背後是由<strong>第三個未觀察到的干擾變數</strong>所推動。</p>
+        <p><strong>經典範例：</strong>統計發現「冰淇淋銷量」越高，「溺水事故」也越多（相關係數高達 0.95）。</p>
+        <p>👉 <strong>背後真凶：</strong>「炎熱的夏天（第三變數）」同時導致大家買冰淇淋，也同時導致大家跑去玩水溺水！</p>
+      </div>
+
+      <div class="red-box">
+        <h4>陷阱 B：過擬合 (Overfitting) ——「死記答案的考生」</h4>
+        <p>模型過於複雜（加入過多不相關的變數），把訓練資料里的「噪音」也當成規律背下來。</p>
+        <p><strong>問題：</strong>模型在現有資料表現 100 分，但拿去預測新資料（如未來的 AREMOS 數據）時準確度爆跌。</p>
+        <p>👉 <strong>解法：</strong>簡化模型變數、使用交叉驗證 (Cross-Validation)。</p>
+      </div>
+
+      <h3>2. 實戰案例解析：員工健康計畫成效評估（ANOVA 應用）</h3>
+      <div class="blue-box">
+        <p><strong>🏢 研究情境：</strong>某企業評估「員工健康計畫」對行政、研發、業務三個部門的滿意度影響。</p>
+        <ul style="margin-left: 20px;">
+          <li><strong>假設設定：</strong><br>
+              H<sub>0</sub>：三個部門的滿意度提升程度無顯著差異。<br>
+              H<sub>1</sub>：三個部門的滿意度提升程度有顯著差異。</li>
+          <li><strong>變數類型：</strong>「部門別」為名義尺度（獨立變數）；「滿意度提升分數」為等距/等比尺度（依變數）。</li>
+          <li><strong>統計方法：</strong>採用 <strong>單因子變異數分析 (ANOVA)</strong>。若 ANOVA p 值 ≤ 0.05，進一步執行 <strong>Tukey 事後檢定</strong>，找出到底哪兩個部門之間的差異最顯著。</li>
+        </ul>
+      </div>
+
+      <h3>3. 核心統計術語快速字典</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <strong>事後比較 (Post-Hoc Test)</strong>
+          ANOVA 顯著後，進一步一對一比較各組別間差異的檢定（如 Tukey）。
+        </div>
+        <div class="glossary-item">
+          <strong>邏輯斯諦迴歸 (Logistic)</strong>
+          用來預測「二元結果機率」（如：買房/不買房、發生交通事故/未發生）的模型。
+        </div>
+        <div class="glossary-item">
+          <strong>因素分析 (Factor Analysis)</strong>
+          將問卷中的幾十個題目，縮減簡化為少數幾個關鍵潛在因素（如將20題簡化為「幸福感」與「壓力值」）。
+        </div>
+        <div class="glossary-item">
+          <strong>集群分析 (Cluster Analysis)</strong>
+          將相似特質的對象歸為同一群（如將 SRDA 受訪者自動分類為「高消費群」、「保守儲蓄群」）。
+        </div>
+        <div class="glossary-item">
+          <strong>共變數分析 (ANCOVA)</strong>
+          在控制其他干擾變數（如年齡、收入）的影響後，比較各組間的差異。
+        </div>
+        <div class="glossary-item">
+          <strong>多變量變異數分析 (MANOVA)</strong>
+          同時比較兩個以上相關依變數（如同時比較「薪資」與「滿意度」）的 ANOVA 擴展模型。
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

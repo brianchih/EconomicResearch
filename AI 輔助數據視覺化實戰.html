@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Colab ✕ AI 輔助數據視覺化實戰</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --danger-light: #fce8e6;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #dadce0;
+      --code-bg: #282c34;
+      --code-text: #abb2bf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header Banner */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    header h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.3; }
+    header p { opacity: 0.95; font-size: 1.05rem; }
+    .badge-tag { display: inline-block; background: var(--accent); color: #000; font-weight: bold; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem; margin-bottom: 12px; }
+
+    /* Section Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.35rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.15rem; color: var(--primary-dark); margin: 20px 0 10px 0; border-left: 4px solid var(--primary); padding-left: 10px; }
+
+    /* Grids & Cards */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin: 15px 0; }
+    .feature-card { background: #f8f9fa; border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; }
+    .feature-card h4 { font-size: 1rem; color: var(--primary-dark); margin-bottom: 6px; }
+
+    /* Callout Boxes */
+    .blue-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .green-box { background: var(--secondary-light); border-left: 5px solid var(--secondary); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .red-box { background: var(--danger-light); border-left: 5px solid var(--danger); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+
+    /* Code Container & Copy Button */
+    .code-container { background: var(--code-bg); color: var(--code-text); padding: 18px; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; position: relative; margin: 15px 0; white-space: pre-wrap; overflow-x: auto; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: background 0.2s; }
+    .copy-btn:hover { background: var(--primary-dark); }
+
+    /* Prompt Box */
+    .prompt-box { background: #e8f0fe; border: 2px dashed var(--primary); padding: 15px; border-radius: 8px; font-size: 0.95rem; margin: 12px 0; position: relative; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+    th { background: var(--primary-light); color: var(--primary-dark); }
+
+    @media (max-width: 600px) { body { padding: 10px; } header h1 { font-size: 1.5rem; } section { padding: 18px; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Banner Header -->
+    <header>
+      <span class="badge-tag">產業分析實作課</span>
+      <h1>Google Colab ✕ AI 輔助數據視覺化實戰</h1>
+      <p>零程式基礎速成：結合 AREMOS、data.gov.tw 與 SRDA 資料庫的 Python 雲端分析</p>
+    </header>
+
+    <!-- 第一章：為什麼選擇 Google Colab -->
+    <section>
+      <h2><span>☁️</span> 一、 為什麼選擇 Google Colab？</h2>
+      <p>過去進行資料分析時，常卡在環境安裝、套件衝突與電腦效能不足。Google Colab（Collaboratory）解決了這些痛點：</p>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <h4>1. 完全免安裝環境</h4>
+          <p>只需要一個 Google 帳號，開啟瀏覽器即可直接執行 Python 程式碼，免去繁瑣的系統設定。</p>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--secondary);">
+          <h4>2. 免費超級電腦算力</h4>
+          <p>Google 免費借出雲端高效能主機與 GPU 資源，處理幾十萬筆大規模資料依然流暢迅速。</p>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--accent);">
+          <h4>3. 內建 Gemini AI 助手</h4>
+          <p>介面右側直接整合 Gemini AI 助手，可以用中文輸入提示詞（Prompt）讓 AI 自動寫出寫碼與 Debug。</p>
+        </div>
+      </div>
+
+      <div class="red-box">
+        ⚠️ <strong>重要提醒（雲端暫存與額度管理）：</strong><br>
+        1. <strong>檔案暫存性：</strong> 上傳至 Colab 左側工作區的檔案僅於當次執行階段有效，關閉頁面後會被刪除，個人電腦務必保留原始檔。<br>
+        2. <strong>AI 每日算力額度：</strong> 免費版 AI 額度有限，建議小組成員<strong>分工合作、避免多人同時對同一問題重複送出 prompt</strong>，以節省算力。
+      </div>
+    </section>
+
+    <!-- 第二章：解決中文字型顯示亂碼問題 -->
+    <section>
+      <h2><span>🔤</span> 二、 關鍵突破：修復 Matplotlib 中文顯示亂碼（方框）</h2>
+      <p>由於 Python 的預設繪圖套件（Matplotlib）沒有內建中文字型，繪製圖表標籤時常會出現方框亂碼（如 <code>□□□</code>）。</p>
+
+      <h3>通用修復方案：在 Colab 安裝「文泉驛正黑」中文字型</h3>
+      <p>在你的 Colab 筆記本第一個區塊（Code Cell）貼上並執行以下程式碼，即可一鍵徹底解決中文字體亂碼：</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('fontCode')">複製程式碼</button>
+        <code id="fontCode"># 1. 安裝中文字型套件
+!apt-get install -y fonts-wqy-zenhei
+
+# 2. 設定 Matplotlib 使用文泉驛正黑中文字型
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+plt.rc('font', family='WenQuanYi Zen Hei')
+mpl.rcParams['axes.unicode_minus'] = False # 解決負號 '-' 顯示為方框的問題
+
+print("✨ 中文字型設定完成！現在圖表可以正常顯示中文標籤囉。")</code>
+      </div>
+    </section>
+
+    <!-- 第三章：三大資料庫視覺化實戰範例 -->
+    <section>
+      <h2><span>📈</span> 三、 三大資料庫視覺化分析實戰範例</h2>
+
+      <!-- 範例 1: AREMOS -->
+      <h3>1. AREMOS 總體經濟：CPI 物價指數 vs. 受僱薪資（雙 Y 軸時間序列圖）</h3>
+      <p><strong>研究目的：</strong> 觀察過去 20 年全台物價上漲速度是否高於薪資成長幅度。</p>
+
+      <div class="prompt-box">
+        <strong>🤖 搭配 Gemini AI 的提示詞 (Prompt) 範例：</strong><br>
+        <em>「我上傳了一個 Excel 檔案（檔名：<code>AREMOS_data.xlsx</code>），包含了日期 (Date)、物價指數 (CPI) 與每人每月平均薪資 (Wage)。請幫我寫 Python 程式，繪製包含左右雙 Y 軸的時間序列折線圖，並確保中文標籤顯示正常。」</em>
+      </div>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('aremosCode')">複製程式碼</button>
+        <code id="aremosCode">import pandas as pd
+import matplotlib.pyplot as plt
+
+# 讀取 AREMOS 整理好的 Excel 檔
+df = pd.read_excel('AREMOS_data.xlsx')
+
+# 繪製左右雙 Y 軸圖表
+fig, ax1 = plt.subplots(figsize=(10, 5))
+
+# 左 Y 軸：物價指數 CPI
+color = 'tab:red'
+ax1.set_xlabel('時間（年月）')
+ax1.set_ylabel('消費者物價指數 (CPI)', color=color)
+ax1.plot(df['Date'], df['CPI'], color=color, linewidth=2, label='CPI 物價指數')
+ax1.tick_params(axis='y', labelcolor=color)
+
+# 右 Y 軸：平均薪資
+ax2 = ax1.twinx()  
+color = 'tab:blue'
+ax2.set_ylabel('每人每月平均薪資 (元)', color=color)
+ax2.plot(df['Date'], df['Wage'], color=color, linewidth=2, linestyle='--', label='平均薪資')
+ax2.tick_params(axis='y', labelcolor=color)
+
+plt.title('台灣物價指數 (CPI) 與每人每月平均薪資趨勢對比 (雙 Y 軸)')
+fig.tight_layout()
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.show()</code>
+      </div>
+
+      <!-- 範例 2: SRDA -->
+      <h3>2. SRDA 家庭動態調查 (PSFD)：居住狀態 vs. 幸福感（散佈圖與箱形圖）</h3>
+      <p><strong>研究目的：</strong> 探討成年子女「與父母同住」或「搬離獨居」對生活滿意度分數（1~7分）的分布差異。</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('srdaCode')">複製程式碼</button>
+        <code id="srdaCode">import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 讀取轉檔後的 SRDA 個體問卷 CSV 檔
+df = pd.read_csv('converted_data.csv')
+
+# 繪製箱形圖 (Boxplot) 比較兩組幸福感分布
+plt.figure(figsize=(8, 5))
+sns.boxplot(x='居住狀態', y='生活幸福感', data=df, palette='Set2')
+
+plt.title('SRDA 家庭動態調查：與父母同住 vs. 獨居青年之幸福感分布比較')
+plt.xlabel('居住狀態 (1:同住, 2:獨居)')
+plt.ylabel('生活幸福感評分 (1:極不快樂 ~ 7:極快樂)')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()</code>
+      </div>
+
+      <!-- 範例 3: data.gov.tw -->
+      <h3>3. 政府開放資料 (data.gov.tw)：多月份交通事故 CSV 自動合併與趨勢</h3>
+      <p><strong>研究目的：</strong> 自動讀取資料夾中 12 個月份的事故 CSV 檔，合併後計算月度變化。</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('govCode')">複製程式碼</button>
+        <code id="govCode">import glob
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. 自動搜尋資料夾中所有符合命名規律的 CSV 檔案
+file_list = glob.glob('traffic_data_*.csv')
+
+# 2. 批次讀取並合併為一個大型 Dataframe
+df_list = [pd.read_csv(file) for file in file_list]
+merged_df = pd.concat(df_list, ignore_index=True)
+
+# 3. 按月份統計交通事故總件數
+monthly_counts = merged_df.groupby('月份').size()
+
+# 4. 繪製長條圖
+plt.figure(figsize=(9, 4.5))
+monthly_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+plt.title('全台交通事故月度件數統計趨勢圖')
+plt.xlabel('月份')
+plt.ylabel('事故總件數')
+plt.xticks(rotation=0)
+plt.grid(axis='y', linestyle=':', alpha=0.7)
+plt.show()</code>
+      </div>
+    </section>
+
+    <!-- 第四章：Gemini AI 互動排錯 SOP -->
+    <section>
+      <h2><span>🛠️</span> 四、 遇錯不慌張：Gemini AI 互動排錯 SOP</h2>
+      <p>當執行 Colab 程式碼出現紅底報錯訊息時，請依照以下 3 步驟讓 AI 自動替你修復：</p>
+
+      <div class="blue-box">
+        <strong>修復 SOP 三步驟：</strong>
+        <ol style="margin-left: 20px; margin-top: 5px;">
+          <li><strong>點擊自動修復：</strong> 直接點擊報錯訊息下方的「使用 Gemini 修復錯誤」按鈕。</li>
+          <li><strong>手動貼上錯誤訊息：</strong> 若 AI 沒有自動反應，複製最後一行紅色字體（如：<code>KeyError: 'CPI'</code> 或 <code>FileNotFoundError</code>）。</li>
+          <li><strong>輸入排錯提示詞 (Prompt)：</strong><br>
+              <em>「我在執行程式碼時出現以下錯誤：[貼上錯誤訊息]。請幫我檢查是欄位名稱不符、缺少套件還是檔案路徑錯誤，並提供修正後的完整程式碼。」</em></li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function copyCode(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✨ 程式碼已成功複製到剪貼簿！可以直接貼到 Google Colab 執行囉。");
+      });
+    }
+  </script>
+</body>
+</html>

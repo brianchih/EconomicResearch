@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R 語言 ✕ AI 輔助數據分析實戰</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --danger-light: #fce8e6;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #dadce0;
+      --code-bg: #282c34;
+      --code-text: #abb2bf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header Banner */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    header h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.3; }
+    header p { opacity: 0.95; font-size: 1.05rem; }
+    .badge-tag { display: inline-block; background: var(--accent); color: #000; font-weight: bold; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem; margin-bottom: 12px; }
+
+    /* Section Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.35rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.15rem; color: var(--primary-dark); margin: 20px 0 10px 0; border-left: 4px solid var(--primary); padding-left: 10px; }
+
+    /* Grids & Cards */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin: 15px 0; }
+    .feature-card { background: #f8f9fa; border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; }
+    .feature-card h4 { font-size: 1rem; color: var(--primary-dark); margin-bottom: 6px; }
+
+    /* Callout Boxes */
+    .blue-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .green-box { background: var(--secondary-light); border-left: 5px solid var(--secondary); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .red-box { background: var(--danger-light); border-left: 5px solid var(--danger); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+
+    /* Code Container & Copy Button */
+    .code-container { background: var(--code-bg); color: var(--code-text); padding: 18px; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; position: relative; margin: 15px 0; white-space: pre-wrap; overflow-x: auto; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: background 0.2s; }
+    .copy-btn:hover { background: var(--primary-dark); }
+
+    /* Prompt Box */
+    .prompt-box { background: #e8f0fe; border: 2px dashed var(--primary); padding: 15px; border-radius: 8px; font-size: 0.95rem; margin: 12px 0; position: relative; }
+
+    /* External Links */
+    .link-btn { display: inline-block; background: var(--primary); color: white; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 6px; transition: background 0.2s; }
+    .link-btn:hover { background: var(--primary-dark); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+    th { background: var(--primary-light); color: var(--primary-dark); }
+
+    @media (max-width: 600px) { body { padding: 10px; } header h1 { font-size: 1.5rem; } section { padding: 18px; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Banner Header -->
+    <header>
+      <span class="badge-tag">產業分析實作課</span>
+      <h1>R 語言 ✕ AI 輔助數據分析實戰</h1>
+      <p>從環境建置到實務：結合 AREMOS、data.gov.tw 與 SRDA 資料庫的 R 語言自動化分析</p>
+    </header>
+
+    <!-- 第一章：環境建置與軟體下載 -->
+    <section>
+      <h2><span>💻</span> 一、 R 語言與 RStudio 安裝指南</h2>
+      <p>在開始分析之前，我們需要安裝兩個軟體：<strong>R 語言核心（運算引擎）</strong> 與 <strong>RStudio（方便操作的操作介面）</strong>。</p>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <h4>第 1 步：下載 R 核心 (CRAN)</h4>
+          <p>這是 R 語言的底層運算核心，請先下載並依預設值完成安裝。</p>
+          <a href="https://cran.r-project.org/" target="_blank" class="link-btn">下載 R 語言 🔗</a>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--secondary);">
+          <h4>第 2 步：下載 RStudio Desktop</h4>
+          <p>這是官方專用的整合開發環境 (IDE)，提供優良的語法突顯與圖表預覽介面。</p>
+          <a href="https://posit.co/download/rstudio-desktop/" target="_blank" class="link-btn">下載 RStudio 🔗</a>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--accent);">
+          <h4>第 3 步：開啟 RStudio 開工！</h4>
+          <p>安裝完成後，未來只需要打開 <strong>RStudio</strong> 即可進行所有 R 語言分析作業。</p>
+        </div>
+      </div>
+
+      <div class="blue-box">
+        💡 <strong>RStudio 介面四大區塊導覽：</strong><br>
+        1. <strong>左上（Script）：</strong> 撰寫程式碼與儲存 `.R` 檔的地方。<br>
+        2. <strong>左下（Console）：</strong> 程式碼執行區與輸出結果顯示區。<br>
+        3. <strong>右上（Environment）：</strong> 查看載入的資料集 (Dataframe) 與變數。<br>
+        4. <strong>右下（Files / Plots）：</strong> 查看專案檔案、套件安裝狀態與繪製出來的圖表。
+      </div>
+    </section>
+
+    <!-- 第二章：AI 提示詞撰寫心法 -->
+    <section>
+      <h2><span>🤖</span> 二、 AI 提示詞 (Prompt) 撰寫三大關鍵元素</h2>
+      <p>使用 DeepSeek 或 Gemini 輔助撰寫 R 語言程式碼時，提示詞必須包含以下三大核心元素，AI 才能寫出精準可執行的語法：</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th width="25%">提示詞元素</th>
+            <th width="35%">元素說明</th>
+            <th>實務提示詞範例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 檔案路徑 / 位置</strong></td>
+            <td>明確告知資料存放的資料夾路徑。</td>
+            <td><code>"C:/R_data/monthly_traffic/"</code></td>
+          </tr>
+          <tr>
+            <td><strong>2. 檔案命名規律</strong></td>
+            <td>說明多個檔案的共通名稱規則。</td>
+            <td>所有以 <code>"traffic_2023_"</code> 開頭的 CSV 檔</td>
+          </tr>
+          <tr>
+            <td><strong>3. 具體分析任務</strong></td>
+            <td>清晰敘述希望執行的統計或合併指令。</td>
+            <td>讀取並自動合併為一個 data frame，並計算月度平均值。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="prompt-box">
+        <strong>📌 組合出來的標準提示詞 (Prompt) 範例：</strong><br>
+        <em>「請幫我寫 R 語言程式碼，讀取位於 'C:/R_data/monthly_traffic/' 資料夾中，所有以 'traffic_2023_' 開頭的 CSV 檔案，並將它們合併成一個完整的 data frame。」</em>
+      </div>
+    </section>
+
+    <!-- 第三章：三大資料庫 R 語言實戰範例 -->
+    <section>
+      <h2><span>📊</span> 三、 三大資料庫 R 語言實務處理與統計分析</h2>
+
+      <!-- 範例 1: data.gov.tw 自動合併多檔 -->
+      <h3>1. 政府開放資料 (data.gov.tw)：自動化讀取與合併多個 CSV 檔</h3>
+      <p><strong>情境：</strong> 下載了 12 個月份的全台交通事故 CSV 檔案，使用 R 語言多檔合併套件一次處理。</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('mergeCode')">複製程式碼</button>
+        <code id="mergeCode"># 1. 安裝與載入基礎資料處理套件
+if(!require(tidyverse)) install.packages("tidyverse")
+library(tidyverse)
+
+# 2. 設定資料夾路徑與搜尋符合規律的 CSV 檔案
+file_folder <- "C:/R_data/monthly_traffic/"
+file_list <- list.files(path = file_folder, pattern = "^traffic_2023_.*\\.csv$", full.names = TRUE)
+
+# 3. 批次讀取並自動合併為一個完整的 data frame
+merged_data <- file_list %>%
+  map_dfr(read_csv)
+
+# 4. 查看合併後的資料總筆數與前幾筆資料
+glimpse(merged_data)
+head(merged_data)</code>
+      </div>
+
+      <!-- 範例 2: SRDA 問卷轉檔與卡方檢定 -->
+      <h3>2. SRDA 個體問卷：讀取 `.sav` 檔與卡方檢定 (Chi-Square Test)</h3>
+      <p><strong>情境：</strong> 讀取 SRDA 家庭動態調查 (PSFD) 的 SPSS `.sav` 檔，分析「居住狀態（同住/獨居）」與「居住滿意度（滿意/不滿意）」是否互相獨立。</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('srdaRCode')">複製程式碼</button>
+        <code id="srdaRCode"># 1. 載入讀取 SPSS 檔案所需的 haven 套件
+if(!require(haven)) install.packages("haven")
+library(haven)
+
+# 2. 讀取 SRDA 下載的 .sav 數據檔
+psfd_data <- read_sav("RR2022.sav")
+
+# 3. 建立交叉次數表 (Contingency Table)
+contingency_table <- table(psfd_data$居住狀態, psfd_data$居住滿意度)
+print(contingency_table)
+
+# 4. 執行卡方獨立性檢定
+chisq_result <- chisq.test(contingency_table)
+print(chisq_result)
+
+# 5. 解讀結果：若 p-value <= 0.05，代表居住狀態與滿意度有顯著相關！</code>
+      </div>
+
+      <!-- 範例 3: AREMOS 兩組平均數 t 檢定與 ANOVA -->
+      <h3>3. AREMOS 總體經濟與政策分析：單因子變異數分析 (ANOVA)</h3>
+      <p><strong>情境：</strong> 比較「北部、中部、南部」三大區域在政府推動區域平衡政策後，平均薪資成長率是否有顯著差異。</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('anovaCode')">複製程式碼</button>
+        <code id="anovaCode"># 1. 執行單因子變異數分析 (ANOVA)
+anova_model <- aov(薪資成長率 ~ 區域, data = aremos_region_data)
+
+# 2. 顯示 ANOVA 摘要表
+summary(anova_model)
+
+# 3. 若 Pr(>F) <= 0.05 代表有顯著差異，進一步執行 Tukey 事後檢定 (Post-Hoc Test)
+TukeyHSD(anova_model)</code>
+      </div>
+    </section>
+
+    <!-- 第四章：R 語言常見錯誤與 AI 排錯 SOP -->
+    <section>
+      <h2><span>🛠️</span> 四、 R 語言常見錯誤與 AI 排錯 SOP</h2>
+
+      <div class="red-box">
+        <strong>常見錯誤 1：缺少套件 (No Package Found)</strong><br>
+        <code>Error in library(tidyverse) : there is no package called ‘tidyverse’</code><br>
+        👉 <strong>解法：</strong> 執行 <code>install.packages("tidyverse")</code> 安裝套件即可解決。
+      </div>
+
+      <div class="red-box">
+        <strong>常見錯誤 2：找不到檔案或路徑錯誤 (No Such File or Directory)</strong><br>
+        <code>Error in read.csv("data.csv") : cannot open file 'data.csv': No such file or directory</code><br>
+        👉 <strong>解法：</strong> 檢查路徑中的斜線是否為正斜線 <code>/</code>（Windows 預設的反斜線 <code>\</code> 常會導致跳脫字元報錯）。
+      </div>
+
+      <div class="blue-box">
+        🤖 <strong>萬用 AI 除錯提示詞 (Debug Prompt)：</strong><br>
+        當你遇到無法解決的報錯時，請複製 Console 的紅色訊息，並發送給 DeepSeek / Gemini：<br>
+        <em>「我在執行這段 R 程式碼時遇到錯誤：[貼上錯誤訊息]。請幫我檢查是缺少套件、檔案路徑錯誤還是語法問題，並請提供修正後的完整 R 程式碼與安裝指令。」</em>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function copyCode(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✨ 程式碼已成功複製到剪貼簿！可以直接貼到 RStudio 執行囉。");
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRDA 資料庫實作與 2027 臺灣經驗實證論文獎攻略</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #dadce0;
+      --code-bg: #282c34;
+      --code-text: #abb2bf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header Banner */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    header h1 { font-size: 1.8rem; margin-bottom: 8px; line-height: 1.3; }
+    header p { opacity: 0.95; font-size: 1.05rem; }
+    .badge-tag { display: inline-block; background: var(--accent); color: #000; font-weight: bold; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem; margin-bottom: 12px; }
+
+    /* Section Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.35rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.1rem; color: var(--primary-dark); margin: 18px 0 10px 0; }
+
+    /* Grids & Cards */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin: 15px 0; }
+    .feature-card { background: #f8f9fa; border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; }
+    .feature-card h4 { font-size: 1rem; color: var(--primary-dark); margin-bottom: 6px; }
+
+    /* Highlight Boxes */
+    .green-box { background: var(--secondary-light); border: 2px solid var(--secondary); border-radius: 8px; padding: 18px; margin: 15px 0; }
+    .blue-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+
+    /* Code Block & Prompt */
+    .code-container { background: var(--code-bg); color: var(--code-text); padding: 18px; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; position: relative; margin: 15px 0; white-space: pre-wrap; overflow-x: auto; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: background 0.2s; }
+    .copy-btn:hover { background: var(--primary-dark); }
+
+    /* DB Tags Grid */
+    .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 15px; }
+    .db-item { background: #f1f3f4; padding: 12px 15px; border-radius: 6px; font-size: 0.95rem; border: 1px solid var(--border-color); }
+    .db-item strong { color: var(--primary-dark); display: block; margin-bottom: 2px; }
+
+    /* Timeline */
+    .timeline { position: relative; margin: 20px 0 10px 20px; border-left: 3px solid var(--primary); padding-left: 20px; }
+    .timeline-item { margin-bottom: 20px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: -28px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); }
+    .timeline-date { font-weight: bold; color: var(--primary-dark); font-size: 0.95rem; }
+    .timeline-title { font-size: 1.05rem; font-weight: bold; margin: 2px 0; }
+
+    /* Buttons */
+    .btn { display: inline-block; background: var(--primary); color: white; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: bold; transition: background 0.2s; border: none; cursor: pointer; }
+    .btn:hover { background: var(--primary-dark); }
+
+    @media (max-width: 600px) { body { padding: 10px; } header h1 { font-size: 1.5rem; } section { padding: 18px; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Banner Header -->
+    <header>
+      <span class="badge-tag">頂石課程 ✕ 中研院加值計畫</span>
+      <h1>一份專題，三重收穫！投稿 2027 臺灣經驗實證論文獎</h1>
+      <p>結合 SRDA 學術調查資料庫實作，把課程報告升級為中研院獲獎論文與研討會海報發表！</p>
+    </header>
+
+    <!-- 第一章：參賽超強誘因 -->
+    <section>
+      <h2><span>🚀</span> 一、 為什麼你一定要參加？（三大超強誘因）</h2>
+      <p>把頂石課程期末報告「一魚多吃」，不需要額外重寫，即可直接挑戰國家級論文競賽：</p>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <h4>1. 專屬「大學生組」獨立評選</h4>
+          <p>不用跟碩博士生競爭！大會設有獨立的大學生組評選機制，獲勝與得獎機會大幅提升。</p>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--secondary);">
+          <h4>2. 零額外負擔（一魚多吃）</h4>
+          <p>比賽接受已於課程或校內成果展發表過的作品。頂石專題完成後，順手修改送件剛剛好！</p>
+        </div>
+
+        <div class="feature-card" style="border-left-color: var(--accent);">
+          <h4>3. 首獎 $5,000 與研討會發表</h4>
+          <p>獲獎頒發首獎 $5,000 獎金與正式獎狀，並受邀於 2027 年暑期學術研討會進行海報發表！</p>
+        </div>
+      </div>
+
+      <div class="green-box">
+        <h3 style="color:var(--secondary); margin-bottom:5px;">👨‍🏫 老師親自擔任推薦人！</h3>
+        <p>依據比賽規定，大學生組投稿需要一位大專院校教師推薦。只要各組專題達到一定品質與規範，<strong>老師會無條件擔任推薦人並協助完成送件</strong>！</p>
+      </div>
+    </section>
+
+    <!-- 第二章：指定 8 大實證資料庫 -->
+    <section>
+      <h2><span>📊</span> 二、 比賽指定 8 大高品質實證資料庫</h2>
+      <p>不用煩惱找不到資料！大會一次提供 8 大涵蓋社會、家庭、心理、政治與媒體的高品質次級資料庫：</p>
+
+      <div class="db-grid">
+        <div class="db-item">
+          <strong>1. 家庭動態調查 (PSFD)</strong>
+          長期追蹤婚姻、生育、搬家、與父母同住及生活滿意度。
+        </div>
+        <div class="db-item">
+          <strong>2. 臺灣社會變遷基本調查 (TSCS)</strong>
+          涵蓋社會階層、文化價值觀、工作與家庭態度變遷。
+        </div>
+        <div class="db-item">
+          <strong>3. 臺灣數位世代青少年追蹤 (TIGPS)</strong>
+          關注 Z 世代網路使用、心理成長與行為發展。
+        </div>
+        <div class="db-item">
+          <strong>4. 台灣選舉與民主化調查 (TEDS)</strong>
+          政治參與、投票行為、公共議題與民主態度數據。
+        </div>
+        <div class="db-item">
+          <strong>5. 亞洲民主動態調查台灣區 (ABS)</strong>
+          跨國民主品質、政治文化與社會信任比較。
+        </div>
+        <div class="db-item">
+          <strong>6. 臺灣幼兒發展調查資料庫 (KIT)</strong>
+          早期幼兒發展、托育環境與家庭教育追蹤。
+        </div>
+        <div class="db-item">
+          <strong>7. 臺灣傳播調查資料庫 (TCS)</strong>
+          媒體使用、網路社交、娛樂、健康與日常生活。
+        </div>
+        <div class="db-item">
+          <strong>8. 臺灣法律與社會變遷調查</strong>
+          民眾法治觀念、法律行為與社會制度意識。
+        </div>
+      </div>
+
+      <div class="blue-box" style="margin-top:20px;">
+        <strong>💡 實例啟發：家庭動態調查 (PSFD) 熱門研究話題</strong><br>
+        * <em>「成年後搬出去住比較自由，還是住家裡比較舒服？」</em><br>
+        * <em>「跟父母同住的生活滿意度真的比較低嗎？」</em><br>
+        學者運用 PSFD 追蹤數據發現：統計上「住家裡」或「搬出去」的幸福感沒有顯著差異，真正造成心情起伏的是<strong>「搬家這件事帶來的適應壓力」</strong>！這樣的題目既接地氣又具備學術嚴謹度。
+      </div>
+    </section>
+
+    <!-- 第三章：SRDA 資料下載與 Python/Colab 轉檔實作 -->
+    <section>
+      <h2><span>💻</span> 三、 SRDA 資料下載與 Python 轉檔實作</h2>
+
+      <h3>1. 資料庫申請與解壓縮結構</h3>
+      <p>至 <a href="https://srda.sinica.edu.tw/" target="_blank">SRDA 官網</a> 註冊帳號並申請資料集（如 PSFD `RR2022` 或 `RR2024`）。下載解壓後包含：</p>
+      <ul style="margin-left:20px; margin-bottom:15px;">
+        <li><strong>資料使用說明 (PDF/Word)：</strong> 解釋計畫背景與抽樣方法。</li>
+        <li><strong>訪員問卷檔：</strong> 查看題號（如 A07 生活快樂程度 1-7 分、A10 生活滿意度、平均月收入等）。</li>
+        <li><strong>編碼簿 (Codebook)：</strong> 記載變數名稱與選項代碼（如 66 代表不知道、77 代表其他、88 代表拒答）。</li>
+        <li><strong>數據資料檔：</strong> 包含 `.sav` (SPSS)、`.dta` (Stata) 與 `.csv` 格式。</li>
+      </ul>
+
+      <h3>2. 用 Python (Pandas/pyreadstat) 自動讀取與轉換 `.sav` 檔</h3>
+      <p>若下載到的資料集為 SPSS 的 `.sav` 檔，可直接在 Google Colab 貼上以下程式碼轉為 `.csv` 檔：</p>
+
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('pyCode')">複製程式碼</button>
+        <code id="pyCode"># 1. 安裝讀取 SPSS 檔案所需的套件
+!pip install pyreadstat pandas
+
+import pandas as pd
+import pyreadstat
+
+# 2. 上傳並讀取 .sav 數據檔與標籤資訊
+file_path = 'RR2022.sav'  # 請替換為您上傳的 .sav 檔名
+df, meta = pyreadstat.read_sav(file_path)
+
+# 3. 檢視前 5 筆資料與變數名稱
+print("資料維度：", df.shape)
+print(df.head())
+
+# 4. 匯出為 CSV 檔案（包含中文字型支援）
+df.to_csv('converted_data.csv', index=False, encoding='utf-8-sig')
+print("✨ 檔案已成功轉換為 converted_data.csv！")</code>
+      </div>
+
+      <div class="blue-box">
+        🤖 <strong>AI 提示詞（Prompt）輔助：</strong><br>
+        在 Colab 中，你可以把「編碼簿文字」與 `.sav` 檔上傳，並貼給 Gemini 提示詞：<br>
+        <em>「請幫我寫 Python 程式，讀取 `RR2022.sav` 檔，並根據編碼簿提取 A07（生活快樂）與 A10（生活滿意度）兩個欄位，繪製散佈圖並計算相關係數。」</em>
+      </div>
+    </section>
+
+    <!-- 第四章：課程 Timeline 接軌 -->
+    <section>
+      <h2><span>📅</span> 四、 比賽與頂石課程完美接軌 Timeline</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">大四上（9月～10月）</div>
+          <div class="timeline-title">選定主題與 SRDA 資料庫申請</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">選擇 8 大資料庫之一，研讀問卷與編碼簿，確定研究假設。</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">大四上（11月～12月）</div>
+          <div class="timeline-title">Colab 資料分析與視覺化繪圖</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">跟著課程進度使用 Python/Excel 進行資料清理、轉碼與統計分析。</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">大四上（12月中旬）</div>
+          <div class="timeline-title">淡水校園頂石成果展發表</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">參與成果展發表，並收集評審與老師的回饋意見。</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date" style="color:var(--danger);">2027 年 2 月 19 日截止前</div>
+          <div class="timeline-title">老師推薦並 E-mail 寄出投稿</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">寒假期間將報告進行微幅修訂，由老師撰寫推薦意見後完成投稿！</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2027 年 6月～8月</div>
+          <div class="timeline-title">得獎公告與研討會海報發表</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">畢業之際收穫中研院得獎獎金與獎狀，為大學生涯畫下完美句點！</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function copyCode(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✨ 程式碼已成功複製到剪貼簿！可以貼到 Google Colab 執行咯。");
+      });
+    }
+  </script>
+</body>
+</html>

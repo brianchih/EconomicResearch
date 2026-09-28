@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>數據解密 —— 政府開放資料、AREMOS 與 SRDA 探索</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #dadce0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    header p { opacity: 0.95; font-size: 1.05rem; }
+    .badge-tag { display: inline-block; background: var(--accent); color: #000; font-weight: bold; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem; margin-bottom: 12px; }
+
+    /* Sections & Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.35rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.1rem; color: var(--primary-dark); margin: 18px 0 10px 0; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+    th { background: var(--primary-light); color: var(--primary-dark); }
+
+    /* Callouts & Grids */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin: 15px 0; }
+    .card-item { background: #f8f9fa; border: 1px solid var(--border-color); padding: 18px; border-radius: 8px; }
+    .card-item h4 { color: var(--primary-dark); margin-bottom: 6px; font-size: 1rem; }
+
+    .highlight-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+    .green-box { background: var(--secondary-light); border-left: 5px solid var(--secondary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; }
+
+    /* External Links */
+    .link-btn { display: inline-block; background: var(--primary); color: white; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 6px; transition: background 0.2s; }
+    .link-btn:hover { background: var(--primary-dark); }
+
+    /* Interactive Checkbox Section */
+    .interactive-check { background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin-top: 15px; }
+    .interactive-check label { display: block; margin-bottom: 8px; font-size: 0.95rem; cursor: pointer; }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      header h1 { font-size: 1.5rem; }
+      section { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Banner Header -->
+    <header>
+      <span class="badge-tag">產業分析實作課</span>
+      <h1>數據解密：三大資料庫探索與觀察實戰</h1>
+      <p>掌握政府開放資料 (data.gov.tw)、AREMOS 總體經濟庫與 SRDA 學術調查庫的尋寶心法</p>
+    </header>
+
+    <!-- 第一章：三大資料庫定位與比較 -->
+    <section>
+      <h2><span>🌐</span> 一、 三大資料庫神器：定位與特色比較</h2>
+      <p>在進行產業或經濟分析時，選擇對的資料庫是決定研究品質的第一步。不同的資料庫適用的分析情境截然不同：</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th width="20%">資料庫名稱</th>
+            <th width="30%">核心內容與優勢</th>
+            <th width="25%">最佳應用場景</th>
+            <th>資料連結</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>政府資料開放平臺</strong><br>(data.gov.tw)</td>
+            <td>政府各部會開放數據（行政統計、交通事件、即時氣象、公共設施、企業登記等）。格式多為 CSV/JSON。</td>
+            <td>產業趨勢、公共政策效果評估、區域不平等分析、即時事件觀察。</td>
+            <td><a href="https://data.gov.tw/" target="_blank" class="link-btn">前往 data.gov.tw 🔗</a></td>
+          </tr>
+          <tr>
+            <td><strong>AREMOS 資料庫</strong><br>(淡江經濟系首頁)</td>
+            <td>國內外總體經濟、金融、海關貿易、國民所得、物價與產業統計之時間序列資料。</td>
+            <td>跨年份長期的宏觀經濟分析、雙軸趨勢對比、迴歸與時間序列模型。</td>
+            <td>學校 IP 登入使用</td>
+          </tr>
+          <tr>
+            <td><strong>SRDA 學術調查庫</strong><br>(中研院維護)</td>
+            <td>高品質個體與微觀問卷調查（如：社會變遷 TSCS、家庭動態 PSFD、青少追蹤 TIGPS 等）。</td>
+            <td>微觀個體行為分析、幸福感、消費抉擇、深入因果關係驗證（Micro Data）。</td>
+            <td><a href="https://srda.sinica.edu.tw/" target="_blank" class="link-btn">前往 SRDA 網站 🔗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 第二章：如何在政府開放資料平台找出值得研究的題目 -->
+    <section>
+      <h2><span>🔍</span> 二、 在 data.gov.tw 尋找「值得研究」資料的四大心法</h2>
+      <p>政府開放資料平台上有數萬筆資料，該如何從中挑選？請參考以下搜尋與篩選技巧：</p>
+
+      <div class="grid-3">
+        <div class="card-item">
+          <h4>1. 熱門排序法 (Hot Ranking)</h4>
+          <p>進入感興趣的類別後，選擇排序依據為<strong>「下載次數多至今」</strong>或「瀏覽次數」。大家熱門下載的資料，通常具備高實用性與較完整的格式。</p>
+        </div>
+
+        <div class="card-item">
+          <h4>2. 機器可讀性 (Machine Readable)</h4>
+          <p>優先挑選 <strong>CSV</strong> 或 <strong>JSON/XML</strong> 格式的資料集。避免挑選被掃描成不可編輯的 PDF 或純圖片檔，以利後續 R 語言或 AI 載入分析。</p>
+        </div>
+
+        <div class="card-item">
+          <h4>3. 多檔案序列 (Multi-file Series)</h4>
+          <p>尋找具有「時間規律性」的資料集（如：每月/每年發布一份 CSV）。這類資料非常適合用來學習 R 語言的多檔自動合併與動態趨勢繪製。</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        💡 <strong>實務挑選重要類別建議：</strong>
+        <ul style="margin-left: 20px; margin-top: 5px;">
+          <li><strong>求職就業/薪資：</strong> 適合與 AREMOS 總體薪資對照，探討不同產業或學歷的薪資差異。</li>
+          <li><strong>交通/事故記錄：</strong> 包含時間與地點，適合進行季節性分析與政策（如酒駕重罰）效果檢定。</li>
+          <li><strong>教育/大專校院：</strong> 適合觀察科系變遷與少子化衝擊。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 第三章：下載前「觀察資料」的黃金三步驟 -->
+    <section>
+      <h2><span>👁️</span> 三、 下載前的「黃金觀察三步驟」</h2>
+      <p>不要拿到資料就急著寫程式！先用「人眼」完成以下觀察，能幫你節省後續 80% 寫程式除錯的時間：</p>
+
+      <div class="grid-3">
+        <div class="card-item">
+          <h4>第 1 步：觀察「資料層級」</h4>
+          <p>確認是<strong>「總體資料」</strong>（如：111年全台交通事故總數）還是<strong>「個體資料」</strong>（如：每起事故的發生時間、駕駛年齡與違規型態）。個體資料具備更好的統計檢定力與因果分析能力！</p>
+        </div>
+
+        <div class="card-item">
+          <h4>第 2 步：觀察「欄位命名規律」</h4>
+          <p>打開欄位說明，檢查標頭（Header）是否包含中文、空白字元或特殊符號。檔名是否有時間命名規律（如 `data_2023_01.csv`, `data_2023_02.csv`）。</p>
+        </div>
+
+        <div class="card-item">
+          <h4>第 3 步：檢查「缺失值與異常值」</h4>
+          <p>觀察是否有大量的空白文字、`-999` 或 `NULL`。這些欄位在餵給 R 語言或 AI 處理前，必須先進行資料清洗與轉碼。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第四章：進階實務 —— 三大資料庫跨庫串接與整合 -->
+    <section>
+      <h2><span>🔗</span> 四、 進階產業分析：三大資料庫「跨庫串接」範例</h2>
+      <p>單一資料庫往往有其盲點，結合兩至三個資料庫的優勢，能讓你的報告呈現出驚人的深度：</p>
+
+      <div class="green-box">
+        <strong>🎯 跨庫研究範例：探討「房價飆漲對年輕世代幸福感與生育意願的衝擊」</strong>
+        <ol style="margin-left: 20px; margin-top: 8px;">
+          <li><strong>總體趨勢（AREMOS）：</strong> 抓取過去 20 年全台房價指數、物價指數 (CPI) 與平均實質薪資變遷。</li>
+          <li><strong>區域政策與供給（data.gov.tw）：</strong> 抓取內政部「社會住宅興建進度」與「各縣市核發建築物建造執照統計」。</li>
+          <li><strong>微觀個體態度（SRDA - 家庭動態 PSFD）：</strong> 抓取年輕世代對「與父母同住意願」、「婚姻滿意度」與「幸福感評分」的微觀個體問卷數據。</li>
+        </ol>
+        <p style="margin-top: 10px; font-size: 0.9rem; color: #2b8a43;">👉 <strong>整合效益：</strong> 結合「巨觀巨量趨勢」與「微觀心理調查」，既有經濟數據作為支撐，又有真實個體溫度的問卷結果，這就是論文獎與優秀專題的核心秘訣！</p>
+      </div>
+    </section>
+
+    <!-- 第五章：課堂實作演練檢查清單 -->
+    <section>
+      <h2><span>✍️</span> 五、 本單元課堂小試身手</h2>
+      <p>請開啟瀏覽器進入 <a href="https://data.gov.tw/" target="_blank">data.gov.tw</a>，嘗試完成以下任務，並為下一個單元（R 語言環境建置）做準備：</p>
+
+      <div class="interactive-check">
+        <strong>✅ 尋寶實作自我檢查清單：</strong>
+        <label><input type="checkbox"> 1. 我已找到一個興趣類別，並按「下載次數多至今」成功排序。</label>
+        <label><input type="checkbox"> 2. 我選定的資料集格式為 CSV，且包含至少 2 個以上的時間序列檔案（或歷史年份檔）。</label>
+        <label><input type="checkbox"> 3. 我已記錄該資料集的「資料夾路徑」與「檔案命名規律」（下節課 AI 提示詞 Prompt 要用）！</label>
+        <label><input type="checkbox"> 4. 我已確認此資料集是屬於「個體微觀資料」還是「總體彙整資料」。</label>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
