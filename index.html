@@ -30,7 +30,7 @@
     header p { opacity: 0.95; font-size: 1.15rem; max-width: 750px; margin: 0 auto; }
     .badge-tag { display: inline-block; background: var(--accent); color: #000; font-weight: bold; padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 12px; }
 
-    /* Learning Roadmap Grid */
+    /* Section Title */
     .section-title { font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2.5px solid var(--primary-light); display: flex; align-items: center; gap: 10px; }
     
     .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-bottom: 35px; }
@@ -44,15 +44,20 @@
     .module-card h3 { font-size: 1.2rem; color: var(--text-main); line-height: 1.4; margin-bottom: 8px; }
     .module-card p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 18px; }
 
-    /* Special Highlight for Paper Award Card */
+    /* Special Highlight Cards */
     .module-card.award-card { border-left: 5px solid var(--secondary); }
     .module-card.award-card .unit-badge { color: var(--secondary); background: var(--secondary-light); }
+
+    .module-card.worksheet-card { border-left: 5px solid var(--accent); background: #fffdf5; }
+    .module-card.worksheet-card .unit-badge { color: #b06000; background: #fff3d6; }
 
     /* Card Action Button */
     .card-btn { display: inline-block; text-align: center; background: var(--primary); color: white; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 0.95rem; font-weight: bold; transition: background 0.2s; }
     .card-btn:hover { background: var(--primary-dark); }
     .award-card .card-btn { background: var(--secondary); }
     .award-card .card-btn:hover { background: #2b8a43; }
+    .worksheet-card .card-btn { background: #d97706; color: white; }
+    .worksheet-card .card-btn:hover { background: #b45309; }
 
     /* Course Overview Callout */
     .overview-box { background: var(--card-bg); border-radius: 10px; padding: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
@@ -76,21 +81,22 @@
       <p>從三大實證資料庫探索、統計學核心觀念，到 Google Colab 與 R 語言 AI 輔助分析全攻略</p>
     </header>
 
-    <!-- 課程簡介 -->
+    <!-- 課程簡介與學習地圖 -->
     <div class="overview-box">
       <h3>💡 課程學習地圖導引</h3>
       <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:10px;">
-        本課程專為培養具備「資料發現問題、假設建立、統計驗證與 AI 程式寫作能力」的產業分析人才而設計。請依序點擊下方五大教學單元卡片進行學習：
+        本課程專為培養具備「資料發現問題、假設建立、統計驗證與 AI 程式寫作能力」的產業分析人才而設計。請依序點擊下方教學單元進行學習，並於課後進入<b>「互動學習單」</b>完成實作練習：
       </p>
       <ul>
-        <li><strong>模組一至二：</strong> 掌握開放資料 (data.gov.tw)、AREMOS 與 SRDA 資料庫檢索，並將期末成果連結中研院論文獎。</li>
-        <li><strong>模組三：</strong> 建立紮實的統計學基礎，釐清變數尺度、Hypothesis Testing 與常見統計陷阱。</li>
-        <li><strong>模組四至五：</strong> 運用免安裝的 Google Colab 與 R 語言，搭配 Gemini/DeepSeek AI 進行數據自動化處理與繪圖。</li>
+        <li><strong>單元 01 - 02：</strong> 掌握開放資料 (data.gov.tw)、AREMOS 與 SRDA 資料庫檢索，並將期末成果連結中研院論文獎。</li>
+        <li><strong>單元 03：</strong> 建立紮實的統計學基礎，釐清變數尺度、Hypothesis Testing 與常見統計陷阱。</li>
+        <li><strong>單元 04 - 05：</strong> 運用免安裝的 Google Colab 與 R 語言，搭配 Gemini/DeepSeek AI 進行數據自動化處理與繪圖。</li>
+        <li><strong>實作檢核：</strong> 開啟<b>「互動學習單」</b>，體驗 AI 提示詞生成器、進行數據試算與技能自我檢核，完成後可下載 PDF 繳交。</li>
       </ul>
     </div>
 
     <!-- 教學卡片網格目錄 -->
-    <h2 class="section-title"><span>📚</span> 核心教學單元地圖</h2>
+    <h2 class="section-title"><span>📚</span> 核心教學單元與實作地圖</h2>
 
     <div class="modules-grid">
 
@@ -108,7 +114,7 @@
       <div class="module-card award-card">
         <div>
           <span class="unit-badge">單元 02・加值競賽</span>
-          <h3>投稿 2027 臺灣經驗實證論文獎</h3>
+          <h3>投稿 2027 臺灣經驗實證論</h3>
           <p>一魚多吃專案！結合 SRDA 家庭動態 (PSFD) 等 8 大資料庫實作，將課程報告升級投稿中研院論文獎（大學生組首獎 $5,000）。</p>
         </div>
         <a href="投稿 2027 臺灣經驗實證論.html" class="card-btn">檢視參賽攻略 ➔</a>
@@ -142,6 +148,16 @@
           <p>R 語言與 RStudio 環境建置、DeepSeek AI 提示詞三大元素，實現開放資料多個 CSV 檔自動讀取合併與除錯。</p>
         </div>
         <a href="R 語言 ✕ AI 輔助數據分析實戰.html" class="card-btn">進入學習單元 ➔</a>
+      </div>
+
+      <!-- 卡片 6 (互動學習單特別卡片) -->
+      <div class="module-card worksheet-card">
+        <div>
+          <span class="unit-badge">實作練習與檢核</span>
+          <h3>數據分析與 AI 輔助研究 互動學習單</h3>
+          <p>整合式 Web 學習單！含 AI 提示詞 (Prompt) 生成器、統計數據試算、除錯體驗與成果 PDF 導出功能。</p>
+        </div>
+        <a href="互動學習單.html" class="card-btn">開啟互動學習單 ➔</a>
       </div>
 
     </div>

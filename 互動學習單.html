@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>產業分析實作：數據分析與 AI 輔助研究 互動學習單</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --primary-light: #e8f0fe;
+      --secondary: #34a853;
+      --secondary-light: #e6f4ea;
+      --accent: #fbbc04;
+      --danger: #d93025;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --border-color: #dadce0;
+      --code-bg: #282c34;
+      --code-text: #abb2bf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* Header */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 30px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; }
+    header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    header p { opacity: 0.95; font-size: 1rem; }
+
+    .user-info-bar { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; backdrop-filter: blur(5px); }
+    .user-info-bar input { border: none; padding: 8px 12px; border-radius: 4px; outline: none; font-size: 0.9rem; flex: 1; min-width: 140px; }
+
+    .action-btn-group { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; }
+    .btn { background: white; color: var(--primary-dark); border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .btn:hover { background: #f1f3f4; transform: translateY(-1px); }
+    .btn-success { background: var(--secondary); color: white; }
+    .btn-success:hover { background: #2b8a43; }
+
+    /* Section Cards */
+    section { background: var(--card-bg); border-radius: 10px; padding: 28px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.04); }
+    section h2 { color: var(--primary); font-size: 1.35rem; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); display: flex; align-items: center; gap: 8px; }
+    section h3 { font-size: 1.1rem; color: var(--primary-dark); margin: 18px 0 10px 0; border-left: 4px solid var(--primary); padding-left: 10px; }
+
+    /* Forms */
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 0.95rem; }
+    .form-control { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; outline: none; transition: 0.2s; }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
+    textarea.form-control { resize: vertical; min-height: 75px; }
+
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0; }
+    .checkbox-group label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+    /* Callouts & Boxes */
+    .prompt-box { background: var(--code-bg); color: var(--code-text); padding: 18px; border-radius: 8px; font-family: "Courier New", Courier, monospace; position: relative; margin: 15px 0; font-size: 0.9rem; line-height: 1.5; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--primary); color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+    .copy-btn:hover { background: var(--primary-dark); }
+
+    .blue-box { background: var(--primary-light); border-left: 5px solid var(--primary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; font-size: 0.95rem; }
+    .green-box { background: var(--secondary-light); border-left: 5px solid var(--secondary); padding: 15px 18px; border-radius: 0 8px 8px 0; margin: 15px 0; font-size: 0.95rem; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
+    th { background: var(--primary-light); color: var(--primary-dark); }
+
+    @media print {
+      .action-btn-group, .btn, .copy-btn { display: none; }
+      body { background: white; padding: 0; }
+      .container { max-width: 100%; }
+      section { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- 頁首與個人資料登錄 -->
+    <header>
+      <div class="action-btn-group">
+        <button class="btn" onclick="saveProgress()">💾 儲存進度</button>
+        <button class="btn btn-success" onclick="window.print()">🖨️ 列印/導出 PDF</button>
+      </div>
+      <h1>產業分析實作：數據分析與 AI 輔助研究 互動學習單</h1>
+      <p>涵蓋三大實證資料庫、2027 論文獎對接、統計學核心觀念與 Colab / R 語言 AI 實作</p>
+      
+      <div class="user-info-bar">
+        <input type="text" id="userName" placeholder="姓名：________________" onchange="autoSave()">
+        <input type="text" id="userStudentId" placeholder="學號：________________" onchange="autoSave()">
+        <input type="date" id="userDate" onchange="autoSave()">
+      </div>
+    </header>
+
+    <!-- 任務一：三大資料庫探索與 AI 提示詞 (Prompt) 撰寫 -->
+    <section>
+      <h2><span>🌐</span> 任務一：資料庫搜尋、資料層級與 AI 提示詞 (Prompt) 設計</h2>
+      
+      <h3>1. 資料探索與競賽連結</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">請至 <strong>data.gov.tw</strong>、<strong>AREMOS</strong> 或 <strong>SRDA</strong> 搜尋研究資料。使用指定的 8 大 SRDA 資料庫（如家庭動態 PSFD），有機會可將成果投稿至「2027 臺灣經驗實證論文獎」（大學生組首獎 $5,000）！</p>
+      
+      <div class="form-group">
+        <label>選擇的資料庫來源與主題類別：</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="dbType" value="data.gov.tw"> 政府開放資料 (data.gov.tw)</label>
+          <label><input type="checkbox" name="dbType" value="AREMOS"> AREMOS 總體經濟庫</label>
+          <label><input type="checkbox" name="dbType" value="SRDA"> SRDA 學術調查庫 (如 PSFD / TSCS)</label>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label>資料集名稱：</label>
+          <input type="text" id="dsName" class="form-control" placeholder="例如：SRDA 家庭動態調查 (PSFD) / 交通事故 CSV" oninput="generatePrompt()">
+        </div>
+        <div class="form-group">
+          <label>資料層級：</label>
+          <select id="dsLevel" class="form-control">
+            <option value="個體資料 (Micro Data)">個體微觀資料 (Micro)</option>
+            <option value="總體資料 (Macro Data)">總體彙整資料 (Macro)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>資料期間：</label>
+          <input type="text" id="dsPeriod" class="form-control" placeholder="如：2000年 ~ 2026年">
+        </div>
+      </div>
+
+      <h3>2. AI 提示詞 (Prompt) 撰寫三大元素試算</h3>
+      <div class="blue-box">
+        <b>提示詞（Prompt）核心原則：</b> 為了讓 DeepSeek、Gemini 或 ChatGPT 準確撰寫 R 語言或 Python 程式碼，提示詞必須包含：<strong>1. 路徑位置、2. 命名規律、3. 具體分析任務</strong>。
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label>元素1：檔案路徑/位置</label>
+          <input type="text" id="pPath" class="form-control" value="C:/R_data/monthly_reports/" oninput="generatePrompt()">
+        </div>
+        <div class="form-group">
+          <label>元素2：檔案命名規律</label>
+          <input type="text" id="pPattern" class="form-control" value="data_2023_" oninput="generatePrompt()">
+        </div>
+        <div class="form-group">
+          <label>元素3：期望 AI 執行之任務</label>
+          <input type="text" id="pTask" class="form-control" value="自動多檔合併並計算平均值" oninput="generatePrompt()">
+        </div>
+      </div>
+
+      <label style="font-weight: bold;">自動生成之標準 AI 提示詞 (Prompt)：</label>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyText('generatedPrompt')">複製提示詞</button>
+        <span id="generatedPrompt">請幫我寫 R 語言程式碼，讀取位於 "C:/R_data/monthly_reports/" 資料夾中，所有以 "data_2023_" 開頭的 CSV 檔案，並將它們自動多檔合併並計算平均值。</span>
+      </div>
+    </section>
+
+    <!-- 任務二：統計學核心概念與假設檢定 -->
+    <section>
+      <h2><span>📊</span> 任務二：統計學核心觀念、測量尺度與假設檢定實務</h2>
+
+      <h3>1. 測量尺度分類練習（請對應教材範例）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th width="20%">測量尺度</th>
+            <th width="30%">定義與特性</th>
+            <th>資料庫真實範例 (請填寫)</th>
+            <th width="20%">歸屬變數類型</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>名義尺度 (Nominal)</strong></td>
+            <td>僅分類別，無大小順序之分</td>
+            <td><input type="text" class="form-control" value="SRDA：居住縣市（台北/台中）、居住狀態"></td>
+            <td>類別變數 (Categorical)</td>
+          </tr>
+          <tr>
+            <td><strong>次序尺度 (Ordinal)</strong></td>
+            <td>順序有意義，但間距不保證相等</td>
+            <td><input type="text" class="form-control" value="SRDA：生活幸福感評分 (1極不快樂~7極快樂)"></td>
+            <td>類別變數 (Categorical)</td>
+          </tr>
+          <tr>
+            <td><strong>等距尺度 (Interval)</strong></td>
+            <td>順序與差距有意義，無真實零點</td>
+            <td><input type="text" class="form-control" value="data.gov.tw：攝氏溫度、年份"></td>
+            <td>數值變數 (Numerical)</td>
+          </tr>
+          <tr>
+            <td><strong>等比尺度 (Ratio)</strong></td>
+            <td>具差距意義，且具有真實零點</td>
+            <td><input type="text" class="form-control" value="AREMOS：每人平均 GDP、月薪資金額"></td>
+            <td>數值變數 (Numerical)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2. 假設檢定架構與「品茶女士」案例</h3>
+      <div class="green-box">
+        <strong>🍵 品茶女士 (Lady Tasting Tea) 實驗結論回顧：</strong><br>
+        8 杯茶全對時，盲猜猜對的機率為 1/70 ≈ 0.014 (1.4%)。因為 p 值 = 0.014 ≤ 0.05（顯著水準 α），因此<strong>拒絕虛無假設 H₀</strong>，證實女士真能分辨沖泡順序！
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label>你的專題研究虛無假設 (H₀)：</label>
+          <textarea class="form-control" placeholder="例如：搬離父母家與否，對青年生活幸福感無顯著差異"></textarea>
+        </div>
+        <div class="form-group">
+          <label>你的專題研究對立假設 (H₁)：</label>
+          <textarea class="form-control" placeholder="例如：搬離父母家與否，對青年生活幸福感有顯著差異"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 任務三：AI 程式執行與排錯 (Debug) 實務 -->
+    <section>
+      <h2><span>🛠️</span> 任務三：AI 輔助程式執行與萬用排錯 (Debug) SOP</h2>
+
+      <h3>1. AI 工具體驗評估</h3>
+      <div class="form-group">
+        <label>在處理 R 語言 / Python 編寫與排錯時，您實測後偏好的 AI 工具：</label>
+        <div class="checkbox-group">
+          <label><input type="radio" name="aiPref" value="DeepSeek"> DeepSeek</label>
+          <label><input type="radio" name="aiPref" value="Gemini"> Google Gemini</label>
+          <label><input type="radio" name="aiPref" value="ChatGPT"> ChatGPT</label>
+          <label><input type="radio" name="aiPref" value="Claude"> Claude</label>
+        </div>
+      </div>
+
+      <h3>2. 萬用排錯提示詞 (Debug Prompt) 範例</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">當程式執行遇到錯誤（例如：缺少套件或中文字型顯示亂碼方框）時，可直接複製以下提示詞發送給 AI：</p>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyText('debugPrompt')">複製排錯提示詞</button>
+        <span id="debugPrompt">我在執行這段程式碼時遇到錯誤：[貼上主機顯示的紅色錯誤訊息]<br>請幫我檢查是缺少套件 (No package found)、檔案路徑錯誤還是中文字型亂碼問題，並提供包含修正語法與 install.packages 的完整程式碼。</span>
+      </div>
+    </section>
+
+    <!-- 學習成果自評與反思 -->
+    <section>
+      <h2><span>✅</span> 學習成果檢核與反思</h2>
+
+      <h3>1. 核心技能自評</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>技能項目</th>
+            <th width="20%" style="text-align: center;">尚未掌握</th>
+            <th width="20%" style="text-align: center;">基本了解</th>
+            <th width="20%" style="text-align: center;">熟練掌握</th>
+          </tr>
+        </thead>
+        <tbody id="skillCheckTable">
+          <!-- JS 動態生成 -->
+        </tbody>
+      </table>
+
+      <h3>2. 學習反思與專題未來應用</h3>
+      <div class="form-group">
+        <label>我預計將今日所學（資料庫/統計檢定/AI 提示詞）應用於我的頂石專題主題：</label>
+        <textarea class="form-control" placeholder="請簡述專題題目與預計使用的資料庫..."></textarea>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // 預設日期為今日
+    document.getElementById('userDate').valueAsDate = new Date();
+
+    // 技能檢核項目
+    const skills = [
+      "三大實證資料庫檢索 (data.gov.tw / AREMOS / SRDA)",
+      "了解 2027 臺灣經驗論文獎投稿規範",
+      "區分四種測量尺度 (名義/次序/等距/等比)",
+      "理解假設檢定邏輯與品茶女士案例",
+      "撰寫包含三大元素的 AI 提示詞 (Prompt)",
+      "Google Colab / RStudio 程式執行與除錯"
+    ];
+
+    let tableHtml = "";
+    skills.forEach((sk, idx) => {
+      tableHtml += `
+        <tr>
+          <td>${sk}</td>
+          <td style="text-align: center;"><input type="radio" name="sk_${idx}" value="1"></td>
+          <td style="text-align: center;"><input type="radio" name="sk_${idx}" value="2" checked></td>
+          <td style="text-align: center;"><input type="radio" name="sk_${idx}" value="3"></td>
+        </tr>
+      `;
+    });
+    document.getElementById('skillCheckTable').innerHTML = tableHtml;
+
+    // 動態 AI 提示詞生成
+    function generatePrompt() {
+      const path = document.getElementById('pPath').value || '[您的路徑]';
+      const pattern = document.getElementById('pPattern').value || '[檔案命名規律]';
+      const task = document.getElementById('pTask').value || '進行分析處理';
+      
+      const promptText = `請幫我寫 R 語言程式碼，讀取位於 "${path}" 資料夾中，所有以 "${pattern}" 開頭的 CSV 檔案，並將它們${task}。`;
+      document.getElementById('generatedPrompt').innerText = promptText;
+    }
+
+    // 複製文字功能
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✨ 提示詞 (Prompt) 已成功複製到剪貼簿！可以直接貼給 AI 咯。");
+      });
+    }
+
+    // 儲存與離焦自動儲存
+    function saveProgress() {
+      const name = document.getElementById('userName').value;
+      if(!name) { alert("請先輸入姓名再進行儲存！"); return; }
+      localStorage.setItem('worksheet_student_name', name);
+      localStorage.setItem('worksheet_student_id', document.getElementById('userStudentId').value);
+      alert("💾 進度已成功儲存至本機瀏覽器！");
+    }
+
+    function autoSave() {
+      localStorage.setItem('worksheet_student_name', document.getElementById('userName').value);
+      localStorage.setItem('worksheet_student_id', document.getElementById('userStudentId').value);
+    }
+
+    window.onload = function() {
+      if(localStorage.getItem('worksheet_student_name')) {
+        document.getElementById('userName').value = localStorage.getItem('worksheet_student_name');
+      }
+      if(localStorage.getItem('worksheet_student_id')) {
+        document.getElementById('userStudentId').value = localStorage.getItem('worksheet_student_id');
+      }
+    };
+  </script>
+</body>
+</html>
