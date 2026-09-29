@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大專院校歷年學生數趨勢分析工具 (103-112學年度)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PapaParse (CSV 解析器) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white py-6 shadow-md mb-8">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold">大專院校歷年學生數視覺化分析</h1>
+                <p class="text-indigo-200 text-sm mt-1">支援依學校、學制、等級別、縣市與體系分析 103–112 學年度趨勢</p>
+            </div>
+            <div id="statusBadge" class="hidden bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow">
+                資料已載入
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- 左側：檔案匯入與篩選控制面板 -->
+        <aside class="lg:col-span-1 space-y-6">
+            
+            <!-- 1. 載入資料區塊 -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-base font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    1. 載入 CSV 資料檔
+                </h2>
+                <input type="file" id="csvFileInput" accept=".csv" class="block w-full text-sm text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer border border-slate-200 rounded-lg"/>
+                <p class="text-xs text-slate-400 mt-2">請選擇包含 103-112 學年度學生資料的 CSV 檔案。</p>
+            </div>
+
+            <!-- 2. 條件篩選面板 -->
+            <div id="filterPanel" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4 opacity-50 pointer-events-none transition-opacity">
+                <h2 class="text-base font-bold text-slate-700 border-b pb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    2. 設定分析條件
+                </h2>
+
+                <!-- 學校名稱 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">學校名稱</label>
+                    <select id="selectSchool" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="ALL">全部學校 (合計)</option>
+                    </select>
+                </div>
+
+                <!-- 日間 / 進修別 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">日間∕進修別</label>
+                    <select id="selectDayNight" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="ALL">全部類別</option>
+                    </select>
+                </div>
+
+                <!-- 等級別 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">等級別 (學制)</label>
+                    <select id="selectLevel" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="ALL">全部等級</option>
+                    </select>
+                </div>
+
+                <!-- 體系別 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">體系別</label>
+                    <select id="selectSystem" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="ALL">全部體系</option>
+                    </select>
+                </div>
+
+                <!-- 縣市名稱 -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">縣市名稱</label>
+                    <select id="selectCity" class="w-full bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="ALL">全部縣市</option>
+                    </select>
+                </div>
+
+                <!-- 觀察指標 -->
+                <div class="pt-2 border-t">
+                    <label class="block text-xs font-bold text-indigo-700 mb-1">分析指標（圖表顯示）</label>
+                    <select id="selectMetric" class="w-full bg-indigo-50 border border-indigo-300 text-indigo-900 font-medium text-sm rounded-lg p-2.5 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="TOTAL">總計人數 (總學生數)</option>
+                        <option value="GENDER">男生計 vs 女生計</option>
+                        <option value="GRADES">各年級男/女生人數明細</option>
+                    </select>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- 右側：趨勢圖表與數據結果 -->
+        <section class="lg:col-span-3 space-y-6">
+            
+            <!-- 圖表卡片 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="chartTitle" class="text-lg font-bold text-slate-800">歷年學生人數趨勢</h2>
+                    <span id="dataSummary" class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-md font-mono">尚未載入資料</span>
+                </div>
+                <div class="relative w-full h-[420px]">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 明細數據表格 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-md font-bold text-slate-800">年度數據統計表</h3>
+                    <button id="exportBtn" class="hidden text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-3 rounded inline-flex items-center gap-1 border border-slate-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        匯出表格 CSV
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="dataTable" class="w-full text-sm text-left text-slate-600">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th class="py-3 px-4">學年度</th>
+                                <th class="py-3 px-4 text-right">總計</th>
+                                <th class="py-3 px-4 text-right">男生計</th>
+                                <th class="py-3 px-4 text-right">女生計</th>
+                                <th class="py-3 px-4 text-right">一年級男</th>
+                                <th class="py-3 px-4 text-right">一年級女</th>
+                                <th class="py-3 px-4 text-right">延修生男</th>
+                                <th class="py-3 px-4 text-right">延修生女</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td colspan="8" class="text-center py-6 text-slate-400">請先在左側匯入 CSV 檔案</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        let rawData = [];
+        let chartInstance = null;
+
+        // 數字格式化 (含千分位)
+        const formatNum = num => new Intl.NumberFormat('zh-TW').format(num || 0);
+
+        // 清理數據（數值轉整數）
+        function parseNumeric(val) {
+            if (!val) return 0;
+            let str = val.toString().replace(/,/g, '').trim();
+            let n = parseInt(str, 10);
+            return isNaN(n) ? 0 : n;
+        }
+
+        // CSV 檔案讀取事件
+        document.getElementById('csvFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    rawData = results.data;
+                    initFilters();
+                    document.getElementById('filterPanel').classList.remove('opacity-50', 'pointer-events-none');
+                    document.getElementById('statusBadge').classList.remove('hidden');
+                    updateDashboard();
+                }
+            });
+        });
+
+        // 初始化選單選項
+        function initFilters() {
+            populateSelect('selectSchool', '學校名稱');
+            populateSelect('selectDayNight', '日間∕進修別');
+            populateSelect('selectLevel', '等級別');
+            populateSelect('selectSystem', '體系別');
+            populateSelect('selectCity', '縣市名稱');
+
+            // 註冊監聽器
+            ['selectSchool', 'selectDayNight', 'selectLevel', 'selectSystem', 'selectCity', 'selectMetric'].forEach(id => {
+                document.getElementById(id).addEventListener('change', updateDashboard);
+            });
+        }
+
+        function populateSelect(elementId, keyName) {
+            const select = document.getElementById(elementId);
+            const values = Array.from(new Set(rawData.map(item => item[keyName]))).filter(Boolean).sort();
+            
+            // 保留第一個預設選項 (ALL)
+            select.innerHTML = select.options[0].outerHTML;
+
+            values.forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                select.appendChild(opt);
+            });
+        }
+
+        // 核心更新邏輯
+        function updateDashboard() {
+            if (!rawData.length) return;
+
+            const selectedSchool = document.getElementById('selectSchool').value;
+            const selectedDayNight = document.getElementById('selectDayNight').value;
+            const selectedLevel = document.getElementById('selectLevel').value;
+            const selectedSystem = document.getElementById('selectSystem').value;
+            const selectedCity = document.getElementById('selectCity').value;
+            const selectedMetric = document.getElementById('selectMetric').value;
+
+            // 1. 篩選資料
+            const filtered = rawData.filter(d => {
+                return (selectedSchool === 'ALL' || d['學校名稱'] === selectedSchool) &&
+                       (selectedDayNight === 'ALL' || d['日間∕進修別'] === selectedDayNight) &&
+                       (selectedLevel === 'ALL' || d['等級別'] === selectedLevel) &&
+                       (selectedSystem === 'ALL' || d['體系別'] === selectedSystem) &&
+                       (selectedCity === 'ALL' || d['縣市名稱'] === selectedCity);
+            });
+
+            // 2. 按學年度分組聚合
+            const years = Array.from(new Set(rawData.map(d => d['學年度']))).filter(Boolean).sort((a,b) => a-b);
+            
+            const yearlyStats = years.map(yr => {
+                const yearData = filtered.filter(d => d['學年度'] == yr);
+                
+                const sumKey = (key) => yearData.reduce((acc, cur) => acc + parseNumeric(cur[key]), 0);
+
+                return {
+                    year: yr + '學年度',
+                    total: sumKey('總計'),
+                    male: sumKey('男生計'),
+                    female: sumKey('女生計'),
+                    m1: sumKey('一年級男'),
+                    f1: sumKey('一年級女'),
+                    m2: sumKey('二年級男'),
+                    f2: sumKey('二年級女'),
+                    m3: sumKey('三年級男'),
+                    f3: sumKey('三年級女'),
+                    m4: sumKey('四年級男'),
+                    f4: sumKey('四年級女'),
+                    mExt: sumKey('延修生男'),
+                    fExt: sumKey('延修生女')
+                };
+            });
+
+            // 3. 更新資訊與圖表
+            document.getElementById('dataSummary').textContent = `符合資料筆數: ${formatNum(filtered.length)} 筆`;
+            renderChart(years.map(y => y + '學年度'), yearlyStats, selectedMetric);
+            renderTable(yearlyStats);
+        }
+
+        // 繪製 Chart.js 圖表
+        function renderChart(labels, stats, metric) {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            let datasets = [];
+
+            if (metric === 'TOTAL') {
+                datasets = [{
+                    label: '總學生人數',
+                    data: stats.map(s => s.total),
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 3
+                }];
+            } else if (metric === 'GENDER') {
+                datasets = [
+                    {
+                        label: '男生總數',
+                        data: stats.map(s => s.male),
+                        borderColor: '#2563eb',
+                        backgroundColor: '#2563eb',
+                        tension: 0.3,
+                        borderWidth: 2
+                    },
+                    {
+                        label: '女生總數',
+                        data: stats.map(s => s.female),
+                        borderColor: '#ec4899',
+                        backgroundColor: '#ec4899',
+                        tension: 0.3,
+                        borderWidth: 2
+                    }
+                ];
+            } else if (metric === 'GRADES') {
+                datasets = [
+                    { label: '一年級男', data: stats.map(s => s.m1), borderColor: '#93c5fd', borderWidth: 2 },
+                    { label: '一年級女', data: stats.map(s => s.f1), borderColor: '#fbcfe8', borderWidth: 2 },
+                    { label: '二年級男', data: stats.map(s => s.m2), borderColor: '#60a5fa', borderWidth: 2 },
+                    { label: '二年級女', data: stats.map(s => s.f2), borderColor: '#f472b6', borderWidth: 2 },
+                    { label: '三年級男', data: stats.map(s => s.m3), borderColor: '#3b82f6', borderWidth: 2 },
+                    { label: '三年級女', data: stats.map(s => s.f3), borderColor: '#e11d48', borderWidth: 2 },
+                    { label: '延修生男', data: stats.map(s => s.mExt), borderColor: '#64748b', borderWidth: 2 },
+                    { label: '延修生女', data: stats.map(s => s.fExt), borderColor: '#a8a29e', borderWidth: 2 }
+                ];
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.dataset.label}: ${formatNum(context.raw)} 人`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: (val) => formatNum(val)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 繪製表格
+        function renderTable(stats) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            stats.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-semibold text-slate-700">${s.year}</td>
+                    <td class="py-3 px-4 text-right font-bold text-indigo-600">${formatNum(s.total)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.male)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.female)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.m1)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.f1)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.mExt)}</td>
+                    <td class="py-3 px-4 text-right">${formatNum(s.fExt)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
