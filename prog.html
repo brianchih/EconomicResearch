@@ -19,7 +19,8 @@
         .bg-completed { background-color: #d1e7dd; color: #0f5132; }
         .bg-in-progress { background-color: #fff3cd; color: #664d03; }
         .bg-not-started { background-color: #e2e3e5; color: #41464b; }
-        .topic-badge { background-color: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; padding: 0.4rem 0.75rem; border-radius: 8px; font-weight: 500; font-size: 0.85rem; }
+        .topic-badge-active { background-color: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; padding: 0.4rem 0.75rem; border-radius: 8px; font-weight: 500; font-size: 0.85rem; }
+        .topic-badge-empty { background-color: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; padding: 0.4rem 0.75rem; border-radius: 8px; font-weight: 400; font-size: 0.85rem; }
         .output-link { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </head>
@@ -132,7 +133,7 @@
                     id: i,
                     name: groupName,
                     members: [],
-                    topic: "尚未設定 / 待組別定案",
+                    topic: "未定",
                     recordsCount: 0,
                     totalHours: 0,
                     lastSubmitTime: "尚無填報",
@@ -174,7 +175,6 @@
             return result;
         }
 
-        // 讀取 CSV
         async function fetchData() {
             document.getElementById('update-time').innerText = "讀取中...";
             allGroupsData = initEmptyGroups();
@@ -208,9 +208,9 @@
                 const rows = parseCSV(csvText);
                 if (rows.length > 1) {
                     processCSVData(rows);
-                    showAlert("success", `<i class="fa-solid font-circle-check me-2"></i>成功同步產業分析實作課程最新填報資料！（符合個資去識別化）`);
+                    showAlert("success", `<i class="fa-solid font-circle-check me-2"></i>成功同步產業分析實作課程最新填報資料！`);
                 } else {
-                    showAlert("warning", `<i class="fa-solid font-triangle-exclamation me-2"></i>試算表中目前尚無學生填報紀錄，已顯示 15 組預設結構。`);
+                    showAlert("warning", `<i class="fa-solid font-triangle-exclamation me-2"></i>試算表中目前尚無學生填報紀錄，已顯示 15 組空狀態。`);
                 }
             } else {
                 showAlert("danger", `<i class="fa-solid font-circle-exclamation me-2"></i>連線受限。請確認電腦已連線網路，或確定已選取「檔案 → 分享 → 發布到網路」發布 CSV。`);
@@ -250,7 +250,7 @@
                 const groupObj = allGroupsData[groupNum - 1];
                 groupObj.recordsCount += 1;
 
-                // 姓名去識別化處理 (如: 田育妮 -> 田O妮)
+                // 姓名去識別化
                 const rawName = idxName !== -1 ? row[idxName] : "";
                 if (rawName) {
                     const maskedName = maskName(rawName);
@@ -262,16 +262,9 @@
 
                 if (idxTime !== -1 && row[idxTime]) groupObj.lastSubmitTime = row[idxTime];
 
-                // 自動提取主題 (如果試算表有主題欄，或是從填報描述中自動捕捉關鍵字)
+                // 讀取「研究主題」欄位 (若填答空白則維持為 "未定")
                 if (idxTopic !== -1 && row[idxTopic] && row[idxTopic].trim() !== "") {
                     groupObj.topic = row[idxTopic].trim();
-                } else if (idxOutput !== -1 && row[idxOutput]) {
-                    const text = row[idxOutput];
-                    if (text.includes("物價指數") || text.includes("實質薪資")) {
-                        groupObj.topic = "物價指數與實質薪資變動之產業影響分析";
-                    } else if (text.includes("GDP") || text.includes("物價")) {
-                        groupObj.topic = "GDP 年增率與物價指數相關性檢定";
-                    }
                 }
 
                 const tasks = idxTask !== -1 ? row[idxTask] : "";
@@ -365,6 +358,9 @@
                 outputHtml = `<a href="${g.lastOutput}" target="_blank" class="text-decoration-none text-primary output-link"><i class="fa-solid font-arrow-up-right-from-square me-1"></i>開啟產出連結 / Colab</a>`;
             }
 
+            const isTopicSet = g.topic && g.topic !== "未定";
+            const topicClass = isTopicSet ? "topic-badge-active" : "topic-badge-empty";
+
             col.innerHTML = `
                 <div class="card group-card p-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -372,8 +368,8 @@
                         <span class="badge ${g.progress === 100 ? 'bg-success' : (g.progress > 0 ? 'bg-primary' : 'bg-secondary')} fs-6">${g.progress}%</span>
                     </div>
 
-                    <!-- 獨立揭示研究主題欄 -->
-                    <div class="topic-badge mb-3">
+                    <!-- 研究主題欄位 (空白顯示為 未定) -->
+                    <div class="${topicClass} mb-3">
                         <i class="fa-solid font-lightbulb me-1"></i><strong>研究主題：</strong> ${g.topic}
                     </div>
 
