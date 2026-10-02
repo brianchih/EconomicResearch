@@ -102,16 +102,57 @@
             return name[0] + 'O' + name.substring(2);
         }
 
+        // 專用日期解析器：將包含中文「上午/下午」的 Google 表單日期轉為可被正確認識的 Date 物件
+        function parseFormDate(dateStr) {
+            if (!dateStr) return null;
+            let s = dateStr.trim();
+
+            // 處理 Google 表單「YYYY/M/D 上午/下午 H:M:S」格式
+            let isPM = s.includes('下午');
+            let isAM = s.includes('上午');
+
+            // 移除中文標記與多餘空白
+            s = s.replace('上午', '').replace('下午', '').replace(/\s+/g, ' ').trim();
+            
+            // 將斜線改為橫線
+            s = s.replace(/\//g, '-');
+
+            let parts = s.split(' ');
+            if (parts.length === 0) return null;
+
+            let dateParts = parts[0].split('-');
+            if (dateParts.length < 3) return null;
+
+            let year = parseInt(dateParts[0], 10);
+            let month = parseInt(dateParts[1], 10) - 1; // 月份從 0 開始
+            let day = parseInt(dateParts[2], 10);
+
+            let hours = 0, minutes = 0, seconds = 0;
+            if (parts.length > 1) {
+                let timeParts = parts[1].split(':');
+                hours = parseInt(timeParts[0], 10) || 0;
+                minutes = parseInt(timeParts[1], 10) || 0;
+                seconds = parseInt(timeParts[2], 10) || 0;
+
+                if (isPM && hours < 12) hours += 12;
+                if (isAM && hours === 12) hours = 0;
+            }
+
+            return new Date(year, month, day, hours, minutes, seconds);
+        }
+
         // 計算日期落在哪一週的週一索引 (0 ~ 14)
         function getWeekIndex(dateStr) {
-            if (!dateStr) return 0;
-            let d = new Date(dateStr);
-            if (isNaN(d.getTime())) return 0;
+            let d = parseFormDate(dateStr);
+            if (!d || isNaN(d.getTime())) {
+                d = new Date(dateStr); // 備用嘗試
+            }
+            if (!d || isNaN(d.getTime())) return 0;
 
-            let start = new Date(WEEKS_LIST[0] + 'T00:00:00');
+            let start = new Date(2026, 8, 21, 0, 0, 0); // 2026/09/21
             let diffDays = Math.floor((d.getTime() - start.getTime()) / (1000 * 3600 * 24));
             
-            if (diffDays < 0) return 0; // 早於首週歸入第0週
+            if (diffDays < 0) return 0; // 早於首週歸入第 0 週
             let weekIdx = Math.floor(diffDays / 7);
             return Math.min(weekIdx, WEEKS_LIST.length - 1);
         }
@@ -173,7 +214,6 @@
 
         // 核心資料轉換：將 row 轉換為 { name: [week0_score, week1_score, ...] }
         function processAndRender(rows) {
-            // 結構：studentMap[maskedName][weekIdx] = { count, hours }
             let studentMap = {};
 
             rows.forEach(row => {
