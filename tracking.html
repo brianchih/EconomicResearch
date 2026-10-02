@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人進度與時數追蹤儀表板</title>
+    <title>學生每週填報與績效追蹤儀表板 (自動同步 Google 試算表)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PapaParse (解析線上 CSV) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
 
@@ -15,202 +15,231 @@
     <header class="bg-indigo-700 text-white py-6 shadow-md mb-6">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-                <h1 class="text-2xl font-bold">學生個人進度與填報時數儀表板</h1>
-                <p class="text-indigo-200 text-xs mt-1">起始週：2026/09/14 (W1) | 滿分條件：(均時≥2小時且次數≥2) 或 (次數≥5)</p>
+                <h1 class="text-2xl font-bold">學生每週進度與績效追蹤儀表板</h1>
+                <p class="text-indigo-200 text-xs mt-1">起始週：2026/09/14 (W1) | 自動同步 Google Form 表單 responses</p>
             </div>
             <div class="flex items-center gap-3">
-                <select id="weekFilter" class="bg-indigo-800 text-white text-sm font-semibold py-2 px-4 rounded-lg border border-indigo-500 focus:outline-none">
-                    <!-- 自動生成週次選項 -->
+                <select id="weekFilter" class="bg-indigo-800 text-white text-sm font-semibold py-2 px-4 rounded-lg border border-indigo-500 focus:outline-none cursor-pointer">
+                    <!-- 動態產生週次選單 -->
                 </select>
+                <button id="syncBtn" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs px-3 py-2 rounded-lg shadow flex items-center gap-1 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    立即同步資料
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <main class="max-w-7xl mx-auto px-4 space-y-6">
 
-        <!-- 左側：填報紀錄表單與規則說明 -->
-        <section class="lg:col-span-1 space-y-6">
-            
-            <!-- 新增填報紀錄 -->
-            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-base font-bold text-slate-700 mb-4 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    新增/更新填報紀錄
-                </h2>
-                <form id="recordForm" class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">學生姓名</label>
-                        <input type="text" id="inputName" placeholder="例如：張小明" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">填報週次</label>
-                        <select id="inputWeek" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <!-- 週次選項 -->
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">當週填報次數</label>
-                            <input type="number" id="inputCount" min="0" value="1" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">當週總累積時數</label>
-                            <input type="number" id="inputHours" min="0" step="0.5" value="2" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow text-sm transition">
-                        儲存紀錄
-                    </button>
-                </form>
+        <!-- 上方狀態與統計面板 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
+                <p class="text-xs text-slate-500 font-semibold">當週填報人數</p>
+                <p id="statTotalStudents" class="text-2xl font-bold text-slate-800 mt-1">0</p>
             </div>
-
-            <!-- 計分規則說明卡片 -->
-            <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-xs text-indigo-900 space-y-2">
-                <h3 class="font-bold text-indigo-800 text-sm">💯 評分標準（滿分 10 分）</h3>
-                <p>當週符合以下任一條件即獲得 **10 分**：</p>
-                <ul class="list-disc list-inside space-y-1 font-mono text-indigo-700">
-                    <li>條件 A：填報次數 ≥ 2 次 且 平均每次 ≥ 2 小時（即總時數≥4小時）</li>
-                    <li>條件 B：當週總填報次數 ≥ 5 次</li>
-                </ul>
-                <p class="text-slate-600 pt-1 border-t border-indigo-200">未達標者按最高達成比例計算分數，並以**整數**採計。</p>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
+                <p class="text-xs text-slate-500 font-semibold">當週平均得分</p>
+                <p id="statAvgScore" class="text-2xl font-bold text-indigo-600 mt-1">0</p>
             </div>
-
-        </section>
-
-        <!-- 右側：成績統計表與分析圖表 -->
-        <section class="lg:col-span-2 space-y-6">
-
-            <!-- 數據總覽卡片 -->
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
-                    <p class="text-xs text-slate-500 font-semibold">總追蹤人數</p>
-                    <p id="statTotalStudents" class="text-2xl font-bold text-slate-800 mt-1">0</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
-                    <p class="text-xs text-slate-500 font-semibold">當週平均分數</p>
-                    <p id="statAvgScore" class="text-2xl font-bold text-indigo-600 mt-1">0</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
-                    <p class="text-xs text-slate-500 font-semibold">滿分率 (10分)</p>
-                    <p id="statFullScoreRate" class="text-2xl font-bold text-emerald-600 mt-1">0%</p>
-                </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center">
+                <p class="text-xs text-slate-500 font-semibold">滿分率 (10分)</p>
+                <p id="statFullScoreRate" class="text-2xl font-bold text-emerald-600 mt-1">0%</p>
             </div>
-
-            <!-- 追蹤資料表格 -->
-            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-base font-bold text-slate-800" id="tableTitle">學生填報明細與得分</h3>
-                    <div class="space-x-2">
-                        <button id="clearBtn" class="text-xs bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded border border-rose-200">清空數據</button>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-slate-600">
-                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
-                            <tr>
-                                <th class="py-3 px-3">姓名</th>
-                                <th class="py-3 px-3 text-center">週次</th>
-                                <th class="py-3 px-3 text-center">填報次數</th>
-                                <th class="py-3 px-3 text-center">總時數</th>
-                                <th class="py-3 px-3 text-center">平均時數/次</th>
-                                <th class="py-3 px-3 text-center">當週得分</th>
-                                <th class="py-3 px-3 text-center">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recordsTableBody">
-                            <!-- 動態渲染數據 -->
-                        </tbody>
-                    </table>
-                </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center flex flex-col justify-center items-center">
+                <span id="syncStatus" class="text-xs font-semibold text-slate-400">系統連線狀態</span>
+                <span id="lastUpdated" class="text-xs text-slate-500 mt-1">未同步</span>
             </div>
+        </div>
 
-        </section>
+        <!-- 計分規則與數據來源提示 -->
+        <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-indigo-900">
+            <div>
+                <span class="font-bold text-sm text-indigo-800">💯 評分標準（滿分 10 分）：</span>
+                <span>當週（平均每次 ≥ 2 小時 且 次數 ≥ 2 次）或（填報次數 ≥ 5 次）為 10 分，其餘按達成比例四捨五入計算整數分。</span>
+            </div>
+            <div class="text-indigo-600 text-right shrink-0">
+                <span>資料來源：Google 試算表 CSV 自動同步</span>
+            </div>
+        </div>
+
+        <!-- 追蹤資料表格 -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-base font-bold text-slate-800">學生當週績效統計表 (姓名已去識別化)</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                        <tr>
+                            <th class="py-3 px-4">姓名 (去識別)</th>
+                            <th class="py-3 px-4 text-center">週次</th>
+                            <th class="py-3 px-4 text-center">當週填報次數</th>
+                            <th class="py-3 px-4 text-center">當週總工時 (hrs)</th>
+                            <th class="py-3 px-4 text-center">平均工時 (hrs/次)</th>
+                            <th class="py-3 px-4 text-center">當週績效得分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center py-8 text-slate-400">正在同步 Google 試算表資料...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </main>
 
     <script>
+        // CSV 發布網址
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTHSlUTV8_xDsK4WtfLxbzOj8OJtpn-3v1Re6Tm2KmbQmbrkPOYxAq8xrFQtKh1DAbsc9AiNCLbET_3/pub?gid=1717113032&single=true&output=csv';
+        
         // 起始日期：2026 年 09 月 14 日 (週一)
-        const START_DATE = new Date('2026-09-14');
-        let records = JSON.parse(localStorage.getItem('student_progress_records')) || [];
+        const START_DATE = new Date('2026-09-14T00:00:00');
+        
+        let parsedRawData = [];
+        let groupedWeeklyData = {}; // { weekNum: [ { name, count, hours }, ... ] }
 
-        // 初始化週次選項 (產生 16 週)
+        // 姓名去識別化函數 (中間字替換為 O)
+        function maskName(str) {
+            if (!str) return '無名氏';
+            let name = str.trim();
+            if (name.length <= 1) return name;
+            if (name.length === 2) return name[0] + 'O';
+            return name[0] + 'O' + name.substring(2);
+        }
+
+        // 計算日期屬於第幾週 (以 2026/09/14 第一週起算)
+        function getWeekNumber(dateStr) {
+            if (!dateStr) return 1;
+            let d = new Date(dateStr);
+            if (isNaN(d.getTime())) return 1;
+            
+            let diffTime = d.getTime() - START_DATE.getTime();
+            if (diffTime < 0) return 1; // 早於起始日歸為第一週
+            
+            let diffDays = Math.floor(diffTime / (1000 * 3600 * 24));
+            return Math.floor(diffDays / 7) + 1;
+        }
+
+        // 初始化週次選單 (16 週)
         function initWeekOptions() {
             const weekFilter = document.getElementById('weekFilter');
-            const inputWeek = document.getElementById('inputWeek');
-            
+            weekFilter.innerHTML = '';
+
             for (let i = 1; i <= 16; i++) {
                 let wStart = new Date(START_DATE);
                 wStart.setDate(START_DATE.getDate() + (i - 1) * 7);
                 let dateStr = `${wStart.getMonth() + 1}/${wStart.getDate()}`;
                 
-                let optText = `第 ${i} 週 (${dateStr} 起)`;
-                
-                let opt1 = document.createElement('option');
-                opt1.value = i;
-                opt1.textContent = optText;
-                weekFilter.appendChild(opt1);
-
-                let opt2 = document.createElement('option');
-                opt2.value = i;
-                opt2.textContent = optText;
-                inputWeek.appendChild(opt2);
-            }
-
-            // 預設示範數據（若為空）
-            if (records.length === 0) {
-                records = [
-                    { name: '王小明', week: 1, count: 2, hours: 4.5 },
-                    { name: '陳美麗', week: 1, count: 5, hours: 3.0 },
-                    { name: '林阿花', week: 1, count: 1, hours: 2.0 },
-                    { name: '李強強', week: 1, count: 1, hours: 1.0 }
-                ];
-                saveRecords();
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = `第 ${i} 週 (${dateStr} 起)`;
+                weekFilter.appendChild(opt);
             }
         }
 
-        // 核心計分演算法
+        // 評分邏輯
         function calculateScore(hours, count) {
             if (!count || count <= 0) return 0;
             const avgHours = hours / count;
 
-            // 滿分條件判斷
             if ((avgHours >= 2 && count >= 2) || count >= 5) {
                 return 10;
             }
 
-            // 比例計算邏輯
-            // 達標基準：條件A需 2次 & 4小時；條件B需 5次
             const ratioA = Math.min(count / 2, hours / 4);
             const ratioB = count / 5;
             const maxRatio = Math.max(ratioA, ratioB);
 
-            // 計算分數並四捨五入取整數
             return Math.min(10, Math.round(maxRatio * 10));
         }
 
-        // 儲存資料
-        function saveRecords() {
-            localStorage.setItem('student_progress_records', JSON.stringify(records));
-            renderDashboard();
+        // 從試算表讀取與處理 CSV
+        function fetchCsvData() {
+            document.getElementById('syncStatus').textContent = '同步中...';
+            document.getElementById('syncStatus').className = 'text-xs font-semibold text-amber-500';
+
+            Papa.parse(CSV_URL, {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    parsedRawData = results.data;
+                    processData(parsedRawData);
+
+                    document.getElementById('syncStatus').textContent = '已同步';
+                    document.getElementById('syncStatus').className = 'text-xs font-semibold text-emerald-600';
+                    document.getElementById('lastUpdated').textContent = '最後更新：' + new Date().toLocaleTimeString();
+                    
+                    renderDashboard();
+                },
+                error: function(err) {
+                    console.error('CSV 載入失敗:', err);
+                    document.getElementById('syncStatus').textContent = '同步失敗';
+                    document.getElementById('syncStatus').className = 'text-xs font-semibold text-rose-500';
+                }
+            });
         }
 
-        // 渲染儀表板
+        // 處理試算表欄位，進行週次與姓名聚合
+        function processData(rows) {
+            groupedWeeklyData = {};
+
+            rows.forEach(row => {
+                // 依欄位名稱模糊匹配 (時間戳記, 姓名, 工時)
+                let timeKey = Object.keys(row).find(k => k.includes('時間') || k.includes('Timestamp')) || Object.keys(row)[0];
+                let nameKey = Object.keys(row).find(k => k.includes('姓名') || k.includes('Name')) || Object.keys(row)[1];
+                let hourKey = Object.keys(row).find(k => k.includes('時數') || k.includes('工時') || k.includes('小時')) || Object.keys(row)[2];
+
+                let timeVal = row[timeKey];
+                let nameVal = maskName(row[nameKey]);
+                let hourVal = parseFloat(row[hourKey]) || 0;
+
+                let weekNum = getWeekNumber(timeVal);
+
+                if (!groupedWeeklyData[weekNum]) {
+                    groupedWeeklyData[weekNum] = {};
+                }
+
+                if (!groupedWeeklyData[weekNum][nameVal]) {
+                    groupedWeeklyData[weekNum][nameVal] = { count: 0, hours: 0 };
+                }
+
+                groupedWeeklyData[weekNum][nameVal].count += 1;
+                groupedWeeklyData[weekNum][nameVal].hours += hourVal;
+            });
+        }
+
+        // 渲染統計結果
         function renderDashboard() {
             const currentWeek = parseInt(document.getElementById('weekFilter').value) || 1;
             const tbody = document.getElementById('recordsTableBody');
             tbody.innerHTML = '';
 
-            const filteredRecords = records.filter(r => r.week === currentWeek);
+            const currentWeekData = groupedWeeklyData[currentWeek] || {};
+            const studentNames = Object.keys(currentWeekData);
+
+            if (studentNames.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400">第 ${currentWeek} 週尚無學生填報紀錄</td></tr>`;
+                document.getElementById('statTotalStudents').textContent = '0 人';
+                document.getElementById('statAvgScore').textContent = '0';
+                document.getElementById('statFullScoreRate').textContent = '0%';
+                return;
+            }
 
             let totalScore = 0;
             let fullScoreCount = 0;
 
-            filteredRecords.forEach((r, idx) => {
-                const avgHours = (r.hours / r.count).toFixed(1);
-                const score = calculateScore(r.hours, r.count);
+            studentNames.forEach(name => {
+                const item = currentWeekData[name];
+                const avgHours = (item.hours / item.count).toFixed(1);
+                const score = calculateScore(item.hours, item.count);
+
                 totalScore += score;
                 if (score === 10) fullScoreCount++;
 
-                // 分數標籤樣式
                 let scoreBadgeClass = 'bg-rose-100 text-rose-700 border-rose-200';
                 if (score === 10) scoreBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
                 else if (score >= 5) scoreBadgeClass = 'bg-amber-100 text-amber-700 border-amber-200';
@@ -218,76 +247,34 @@
                 const tr = document.createElement('tr');
                 tr.className = 'border-b hover:bg-slate-50 transition';
                 tr.innerHTML = `
-                    <td class="py-3 px-3 font-semibold text-slate-800">${r.name}</td>
-                    <td class="py-3 px-3 text-center">W${r.week}</td>
-                    <td class="py-3 px-3 text-center font-mono">${r.count} 次</td>
-                    <td class="py-3 px-3 text-center font-mono">${r.hours} hrs</td>
-                    <td class="py-3 px-3 text-center font-mono text-slate-500">${avgHours} h/次</td>
-                    <td class="py-3 px-3 text-center">
+                    <td class="py-3 px-4 font-semibold text-slate-800">${name}</td>
+                    <td class="py-3 px-4 text-center font-mono">W${currentWeek}</td>
+                    <td class="py-3 px-4 text-center font-mono">${item.count} 次</td>
+                    <td class="py-3 px-4 text-center font-mono">${item.hours.toFixed(1)} hrs</td>
+                    <td class="py-3 px-4 text-center font-mono text-slate-500">${avgHours} h/次</td>
+                    <td class="py-3 px-4 text-center">
                         <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${scoreBadgeClass}">
                             ${score} 分
                         </span>
-                    </td>
-                    <td class="py-3 px-3 text-center">
-                        <button onclick="deleteRecord(${idx})" class="text-xs text-rose-500 hover:text-rose-700">刪除</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            // 更新統計統計面板
-            const totalCount = filteredRecords.length;
-            document.getElementById('statTotalStudents').textContent = `${totalCount} 人`;
-            document.getElementById('statAvgScore').textContent = totalCount ? (totalScore / totalCount).toFixed(1) : '0';
-            document.getElementById('statFullScoreRate').textContent = totalCount ? `${Math.round((fullScoreCount / totalCount) * 100)}%` : '0%';
+            // 更新頁面統計
+            const totalStudents = studentNames.length;
+            document.getElementById('statTotalStudents').textContent = `${totalStudents} 人`;
+            document.getElementById('statAvgScore').textContent = (totalScore / totalStudents).toFixed(1);
+            document.getElementById('statFullScoreRate').textContent = `${Math.round((fullScoreCount / totalStudents) * 100)}%`;
         }
 
-        // 表單提交事件
-        document.getElementById('recordForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('inputName').value.trim();
-            const week = parseInt(document.getElementById('inputWeek').value);
-            const count = parseInt(document.getElementById('inputCount').value);
-            const hours = parseFloat(document.getElementById('inputHours').value);
-
-            // 更新或新增
-            const existingIdx = records.findIndex(r => r.name === name && r.week === week);
-            if (existingIdx >= 0) {
-                records[existingIdx] = { name, week, count, hours };
-            } else {
-                records.push({ name, week, count, hours });
-            }
-
-            saveRecords();
-            document.getElementById('inputName').value = '';
-        });
-
-        // 刪除紀錄
-        function deleteRecord(idx) {
-            const currentWeek = parseInt(document.getElementById('weekFilter').value);
-            const filteredIndices = records.map((r, i) => r.week === currentWeek ? i : -1).filter(i => i !== -1);
-            const targetIdx = filteredIndices[idx];
-            
-            if (targetIdx !== undefined) {
-                records.splice(targetIdx, 1);
-                saveRecords();
-            }
-        }
-
-        // 清空紀錄
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            if (confirm('確定要清空所有學生的填報紀錄嗎？')) {
-                records = [];
-                saveRecords();
-            }
-        });
-
-        // 切換週次監聽器
+        // 事件監聽
         document.getElementById('weekFilter').addEventListener('change', renderDashboard);
+        document.getElementById('syncBtn').addEventListener('click', fetchCsvData);
 
-        // 初始化
+        // 初始化執行
         initWeekOptions();
-        renderDashboard();
+        fetchCsvData();
     </script>
 </body>
 </html>
