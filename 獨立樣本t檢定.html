@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式 t 檢定演示：AI 輔助報告成績比較</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- 加入 MathJax 以支援數學公式渲染 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen p-6">
+
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+        
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-slate-800">📊 獨立樣本 $t$ 檢定：AI 工具對報告成績的影響</h1>
+            <p class="text-sm text-slate-500 mt-2">虛無假設 ($H_0$)：AI 組與傳統組的平均成績沒有差異 ($p \ge 0.05$)</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- 左側控制面板 -->
+            <div class="md:col-span-1 space-y-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <h2 class="text-base font-bold text-slate-700 border-b pb-2">1. 調整實驗參數</h2>
+                
+                <div>
+                    <label class="flex justify-between text-sm font-semibold text-slate-700 mb-2">
+                        <span>兩組平均分數差距</span>
+                        <span id="diffLabel" class="text-indigo-600">5 分</span>
+                    </label>
+                    <input type="range" id="diffSlider" min="0" max="15" step="1" value="5" class="w-full accent-indigo-600">
+                    <p class="text-xs text-slate-500 mt-1">控制組 70 分 vs. AI 組 (70 + 差距) 分</p>
+                </div>
+
+                <div class="pt-4">
+                    <label class="flex justify-between text-sm font-semibold text-slate-700 mb-2">
+                        <span>每組抽樣人數 (樣本數 $n$)</span>
+                        <span id="nLabel" class="text-indigo-600">30 人</span>
+                    </label>
+                    <input type="range" id="nSlider" min="10" max="100" step="5" value="30" class="w-full accent-indigo-600">
+                    <p class="text-xs text-slate-500 mt-1">樣本數越大，抽樣分配的鐘形曲線越窄</p>
+                </div>
+            </div>
+
+            <!-- 右側圖表與結果 -->
+            <div class="md:col-span-2 space-y-4">
+                
+                <!-- 結果判定面板 -->
+                <div id="resultBox" class="p-4 rounded-xl text-center border transition-all duration-300 bg-slate-100 border-slate-300">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-xs text-slate-500 font-semibold">檢定統計量 ($t$ 值)</p>
+                            <p id="tValue" class="text-2xl font-mono font-bold text-slate-700">0.000</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-semibold">發生機率 ($p$ 值)</p>
+                            <p id="pValue" class="text-2xl font-mono font-bold text-slate-700">0.000</p>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <span id="verdict" class="px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm">
+                                判斷中...
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 鐘形曲線圖 -->
+                <div class="relative w-full h-72">
+                    <canvas id="tChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-slate-500">此圖表呈現的是「樣本平均數的抽樣分配 (Sampling Distribution of the Mean)」</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 常態分配 CDF 逼近函數 (Hastings approximation)
+        function normalCDF(x) {
+            let z = Math.abs(x);
+            let t = 1 / (1 + 0.2316419 * z);
+            let d = 0.3989423 * Math.exp(-x * x / 2);
+            let prob = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+            return x > 0 ? 1 - prob : prob;
+        }
+
+        // 常態分配 PDF 函數
+        function normalPDF(x, mean, stdDev) {
+            let variance = stdDev * stdDev;
+            return (1 / Math.sqrt(2 * Math.PI * variance)) * Math.exp(-Math.pow(x - mean, 2) / (2 * variance));
+        }
+
+        const ctx = document.getElementById('tChart').getContext('2d');
+        let chart;
+
+        function updateSimulation() {
+            const diff = parseFloat(document.getElementById('diffSlider').value);
+            const n = parseInt(document.getElementById('nSlider').value);
+            
+            document.getElementById('diffLabel').textContent = `${diff} 分`;
+            document.getElementById('nLabel').textContent = `${n} 人`;
+
+            // 統計參數設定 (母體標準差假定為 10)
+            const popStdDev = 10;
+            const mean1 = 70; // 控制組
+            const mean2 = 70 + diff; // AI 組
+            
+            // 抽樣分配的標準誤 (Standard Error)
+            const se = popStdDev / Math.sqrt(n);
+            
+            // 計算獨立樣本 t 值 (此處用 z 逼近呈現)
+            const pooledSE = Math.sqrt((popStdDev*popStdDev)/n + (popStdDev*popStdDev)/n);
+            const tVal = diff / pooledSE;
+            
+            // 單尾 p 值
+            const pVal = 1 - normalCDF(tVal);
+
+            // 更新結果面板
+            document.getElementById('tValue').textContent = tVal.toFixed(3);
+            let pStr = pVal < 0.001 ? "< 0.001" : pVal.toFixed(3);
+            document.getElementById('pValue').textContent = pStr;
+
+            const resultBox = document.getElementById('resultBox');
+            const verdict = document.getElementById('verdict');
+
+            if (pVal < 0.05) {
+                resultBox.className = "p-4 rounded-xl text-center border transition-all duration-300 bg-emerald-50 border-emerald-300 shadow-inner";
+                document.getElementById('tValue').classList.replace('text-slate-700', 'text-emerald-700');
+                document.getElementById('pValue').classList.replace('text-slate-700', 'text-emerald-700');
+                verdict.textContent = "顯著！拒絕 H₀";
+                verdict.className = "px-4 py-2 rounded-lg font-bold text-sm bg-emerald-600 text-white shadow-md";
+            } else {
+                resultBox.className = "p-4 rounded-xl text-center border transition-all duration-300 bg-amber-50 border-amber-300";
+                document.getElementById('tValue').className = "text-2xl font-mono font-bold text-amber-700";
+                document.getElementById('pValue').className = "text-2xl font-mono font-bold text-amber-700";
+                verdict.textContent = "不顯著！無法拒絕 H₀";
+                verdict.className = "px-4 py-2 rounded-lg font-bold text-sm bg-amber-500 text-white shadow-md";
+            }
+
+            // 生成 X 軸資料點 (從 55 分到 95 分)
+            const labels = [];
+            const data1 = [];
+            const data2 = [];
+            for (let x = 55; x <= 95; x += 0.5) {
+                labels.push(x.toFixed(1));
+                data1.push(normalPDF(x, mean1, se));
+                data2.push(normalPDF(x, mean2, se));
+            }
+
+            // 更新或重繪圖表
+            if (chart) {
+                chart.data.labels = labels;
+                chart.data.datasets[0].data = data1;
+                chart.data.datasets[1].data = data2;
+                chart.update('none'); // 無動畫即時更新
+            } else {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: '控制組 (傳統作法)',
+                                data: data1,
+                                borderColor: '#94a3b8',
+                                backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 2,
+                                pointRadius: 0
+                            },
+                            {
+                                label: '實驗組 (AI 輔助)',
+                                data: data2,
+                                borderColor: '#4f46e5',
+                                backgroundColor: 'rgba(79, 70, 229, 0.4)',
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 2,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { intersect: false, mode: 'index' },
+                        plugins: { tooltip: { enabled: false } },
+                        scales: {
+                            y: { display: false, beginAtZero: true },
+                            x: {
+                                grid: { display: false },
+                                ticks: { maxTicksLimit: 10 }
+                            }
+                        },
+                        animation: false
+                    }
+                });
+            }
+        }
+
+        // 綁定事件
+        document.getElementById('diffSlider').addEventListener('input', updateSimulation);
+        document.getElementById('nSlider').addEventListener('input', updateSimulation);
+
+        // 初始繪製
+        updateSimulation();
+    </script>
+</body>
+</html>
