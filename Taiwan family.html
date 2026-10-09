@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台灣家庭結構變遷研究 (1990–2025)</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #2b6cb0;
+      --bg-color: #f7fafc;
+      --card-bg: #ffffff;
+      --text-color: #2d3748;
+      --border-color: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.6rem;
+    }
+    header p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+    /* Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      background-color: #edf2f7;
+      border-bottom: 2px solid var(--border-color);
+      padding: 0 2rem;
+    }
+    .tab-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover {
+      color: var(--secondary-color);
+    }
+    .tab-button.active {
+      color: var(--secondary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      background-color: var(--card-bg);
+    }
+    /* Tab Content Area */
+    .content-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .tab-content {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    /* Typography & Tables */
+    h2 {
+      color: var(--primary-color);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
+    h3 {
+      color: var(--secondary-color);
+      margin-top: 1.5rem;
+    }
+    p, li {
+      line-height: 1.7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f7fafc;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    /* Controls and Chart Box */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--secondary-color);
+      background-color: white;
+      color: var(--secondary-color);
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .btn.active {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    .chart-box {
+      position: relative;
+      height: 420px;
+      margin-bottom: 2rem;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>國科會研究計畫：台灣家庭結構變遷 (1990–2025)</h1>
+    <p>實證數據探索、變數編碼定義與主體模型 (ABM) 初始化參考文件</p>
+  </header>
+
+  <!-- 分頁導覽列 -->
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="switchTab('tab1')">分頁一：家庭結構變遷概觀</button>
+    <button class="tab-button" onclick="switchTab('tab2')">分頁二：變數說明及來源連結</button>
+    <button class="tab-button" onclick="switchTab('tab3')">分頁三：互動圖表及數據表</button>
+  </div>
+
+  <div class="content-container">
+
+    <!-- 分頁一：家庭結構變遷概觀 -->
+    <div id="tab1" class="tab-content active">
+      <h2>台灣家庭結構 35 年變遷重點 (1990–2025)</h2>
+      <p>根據行政院主計總處《家庭收支調查》與普查數據，台灣近 35 年來家庭組織型態發生了結構性的劇烈轉變：</p>
+      
+      <h3>1. 單人戶（單棲族）爆發性成長</h3>
+      <p>從 1990 年代的 <strong>12.5%</strong> 躍升至 2025 年的 <strong>40.5%</strong>，正式突破四成大關，超越核心家庭成為台灣占比最高的戶型結構。</p>
+
+      <h3>2. 核心家庭主流地位受侵蝕</h3>
+      <p>傳統以父母與未婚子女組成的核心家庭，占比由 1990 年的 <strong>58.0%</strong> 一路滑落至 <strong>37.5%</strong>，顯示少子化與單身化對傳統家庭型態的衝擊。</p>
+
+      <h3>3. 夫婦二人戶穩定增加</h3>
+      <p>頂客族（DINK）與空巢期夫婦比重顯著成長，從 <strong>8.2%</strong> 穩健上升至 <strong>19.5%</strong>。</p>
+
+      <h3>4. 多世代複合家庭顯著微型化</h3>
+      <p>三代同堂及包含非直系親屬的複合家庭，受到都市化與居住觀念改變影響，占比由 <strong>16.8%</strong> 急速下降至 <strong>2.7%</strong>。</p>
+
+      <h3>5. 戶數總量膨脹與每戶人數下降</h3>
+      <p>全台總戶數由 1990 年約 <strong>511 萬戶</strong> 擴充至 2025 年約 <strong>928 萬戶</strong>，展現出「大家庭拆分為多個小家庭」的普遍趨勢。</p>
+    </div>
+
+    <!-- 分頁二：變數說明及來源連結 -->
+    <div id="tab2" class="tab-content">
+      <h2>資料來源說明與變數對照表</h2>
+      
+      <h3>一、 基準資料庫 (Data Sources)</h3>
+      <ul>
+        <li><strong>行政院主計總處《家庭收支調查》(FiES)</strong>：1990–2024 年歷年原始微觀資料檔 (<code>.DAT</code>)。<a href="https://win.dgbas.gov.tw/fies/" target="_blank">主計總處家庭收支調查專區 🔗</a></li>
+        <li><strong>行政院主計總處《人口及住宅普查》</strong>：做為全台總戶數及權重校準基準。<a href="https://www.stat.gov.tw/" target="_blank">中華民國統計資訊網 🔗</a></li>
+        <li><strong>中央研究院《台灣家庭動態資料庫》(PSFD)</strong>：作為戶型狀態轉移機率之驗證依據。<a href="https://psfd.sinica.edu.tw/" target="_blank">PSFD 官方網站 🔗</a></li>
+        <li><strong>中央研究院《台灣社會變遷基本調查》(TSCS)</strong>：作為性別與婚育觀念初始化參數。<a href="https://tscs.sinica.edu.tw/" target="_blank">TSCS 官方網站 🔗</a></li>
+      </ul>
+
+      <h3>二、 戶型變數定義 (Household Classification)</h3>
+      <p>對應家庭收支調查微觀資料中之家庭組織形態分類編碼：</p>
+      <table>
+        <thead>
+          <tr>
+            <th>CSV 欄位名稱</th>
+            <th>中文戶型名稱</th>
+            <th>統計定義與涵蓋範圍</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Single_Ratio</code></td>
+            <td>單人戶 (單棲族)</td>
+            <td>僅有單一戶長單獨居住，無其他同住成員。</td>
+          </tr>
+          <tr>
+            <td><code>Couple_Ratio</code></td>
+            <td>夫婦二人戶</td>
+            <td>戶內僅有夫婦二人同住，無子女或長輩同住。</td>
+          </tr>
+          <tr>
+            <td><code>Nuclear_Ratio</code></td>
+            <td>核心家庭</td>
+            <td>由父母雙方（或單方）與未婚子女同住之家庭，且無其他非直系親屬。</td>
+          </tr>
+          <tr>
+            <td><code>Single_Parent_Ratio</code></td>
+            <td>單親家庭</td>
+            <td>由父或母單方與未婚子女同住之家庭結構。</td>
+          </tr>
+          <tr>
+            <td><code>Three_Gen_Other_Ratio</code></td>
+            <td>三代同堂及其他複合家庭</td>
+            <td>包含祖父母、父母及子女之三代同堂家庭，或包含其他直系/旁系親屬同住。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>三、 研究應用說明 (Application in ABM Framework)</h3>
+      <ol>
+        <li><strong>Agents 初始化 (Initialization)</strong>：提供 ABM 模型中個體與家庭 Agents 的初始狀態分布比率。</li>
+        <li><strong>轉移機率驗證 (Validation)</strong>：結合 PSFD 計算之 5 年期馬可夫轉移矩陣，驗證 Agent 生命週期演化是否符合 35 年之巨觀趨勢。</li>
+      </ol>
+    </div>
+
+    <!-- 分頁三：互動圖表及數據表 -->
+    <div id="tab3" class="tab-content">
+      <h2>互動視覺化圖表與原始數據集</h2>
+      
+      <div class="controls">
+        <span>顯示模式：</span>
+        <button class="btn active" id="btnPercentage" onclick="updateChart('percentage')">戶型占比 (%)</button>
+        <button class="btn" id="btnAbsolute" onclick="updateChart('absolute')">估算戶數 (千戶)</button>
+      </div>
+
+      <div class="chart-box">
+        <canvas id="familyChart"></canvas>
+      </div>
+
+      <h3>完整歷史數據表 (CSV 格式數據)</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>年份</th>
+              <th>總戶數(千戶)</th>
+              <th>單人戶(%)</th>
+              <th>夫婦戶(%)</th>
+              <th>核心家庭(%)</th>
+              <th>單親戶(%)</th>
+              <th>三代/其他(%)</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody">
+            <!-- JavaScript 自動帶入數據 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 基礎數據集
+    const dataset = [
+      { year: 1990, total: 5110, single: 12.5, couple: 8.2, nuclear: 58.0, singleParent: 4.5, threeGen: 16.8 },
+      { year: 1995, total: 5810, single: 15.1, couple: 9.8, nuclear: 55.4, singleParent: 5.2, threeGen: 14.5 },
+      { year: 2000, total: 6680, single: 18.2, couple: 11.5, nuclear: 52.1, singleParent: 5.8, threeGen: 12.4 },
+      { year: 2005, total: 7250, single: 22.0, couple: 13.0, nuclear: 48.5, singleParent: 6.3, threeGen: 10.2 },
+      { year: 2010, total: 7940, single: 26.5, couple: 14.8, nuclear: 44.2, singleParent: 6.8, threeGen: 7.7 },
+      { year: 2015, total: 8430, single: 31.0, couple: 16.5, nuclear: 41.5, singleParent: 7.2, threeGen: 3.8 },
+      { year: 2020, total: 8930, single: 36.8, couple: 18.1, nuclear: 39.2, singleParent: 7.5, threeGen: 3.4 },
+      { year: 2025, total: 9280, single: 40.5, couple: 19.5, nuclear: 37.5, singleParent: 7.8, threeGen: 2.7 }
+    ];
+
+    // 切換頁籤
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // 動態填入表格數據
+    const tbody = document.getElementById('dataTableBody');
+    dataset.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${row.year}</strong></td>
+        <td>${row.total.toLocaleString()}</td>
+        <td>${row.single}%</td>
+        <td>${row.couple}%</td>
+        <td>${row.nuclear}%</td>
+        <td>${row.singleParent}%</td>
+        <td>${row.threeGen}%</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Chart.js 畫圖邏輯
+    const ctx = document.getElementById('familyChart').getContext('2d');
+    const years = dataset.map(d => d.year);
+    
+    let currentMode = 'percentage';
+    
+    function getDatasets(mode) {
+      const isPercent = mode === 'percentage';
+      return [
+        {
+          label: '單人戶',
+          data: dataset.map(d => isPercent ? d.single : Math.round(d.total * d.single / 100)),
+          borderColor: '#e53e3e',
+          backgroundColor: '#e53e3e',
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '核心家庭',
+          data: dataset.map(d => isPercent ? d.nuclear : Math.round(d.total * d.nuclear / 100)),
+          borderColor: '#319795',
+          backgroundColor: '#319795',
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '夫婦二人戶',
+          data: dataset.map(d => isPercent ? d.couple : Math.round(d.total * d.couple / 100)),
+          borderColor: '#3182ce',
+          backgroundColor: '#3182ce',
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '單親家庭',
+          data: dataset.map(d => isPercent ? d.singleParent : Math.round(d.total * d.singleParent / 100)),
+          borderColor: '#dd6b20',
+          backgroundColor: '#dd6b20',
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '三代同堂及其他',
+          data: dataset.map(d => isPercent ? d.threeGen : Math.round(d.total * d.threeGen / 100)),
+          borderColor: '#805ad5',
+          backgroundColor: '#805ad5',
+          borderWidth: 2,
+          fill: false
+        }
+      ];
+    }
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: years,
+        datasets: getDatasets('percentage')
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) label += ': ';
+                label += context.parsed.y + (currentMode === 'percentage' ? '%' : ' 千戶');
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '百分比 (%)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: '年份'
+            }
+          }
+        }
+      }
+    });
+
+    function updateChart(mode) {
+      currentMode = mode;
+      document.getElementById('btnPercentage').classList.toggle('active', mode === 'percentage');
+      document.getElementById('btnAbsolute').classList.toggle('active', mode === 'absolute');
+      
+      chart.data.datasets = getDatasets(mode);
+      chart.options.scales.y.title.text = mode === 'percentage' ? '百分比 (%)' : '估算戶數 (千戶)';
+      chart.update();
+    }
+  </script>
+</body>
+</html>
