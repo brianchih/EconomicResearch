@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台灣家庭結構多維度拆解研究 (1990–2025)</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #2b6cb0;
+      --accent-color: #319795;
+      --bg-color: #f7fafc;
+      --card-bg: #ffffff;
+      --text-color: #2d3748;
+      --border-color: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.6rem;
+    }
+    header p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+    /* Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      background-color: #edf2f7;
+      border-bottom: 2px solid var(--border-color);
+      padding: 0 2rem;
+    }
+    .tab-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover {
+      color: var(--secondary-color);
+    }
+    .tab-button.active {
+      color: var(--secondary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      background-color: var(--card-bg);
+    }
+    /* Tab Content Area */
+    .content-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .tab-content {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    /* Typography & Tables */
+    h2 {
+      color: var(--primary-color);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
+    h3 {
+      color: var(--secondary-color);
+      margin-top: 1.5rem;
+    }
+    p, li {
+      line-height: 1.7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f7fafc;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    /* Controls and Chart Box */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--secondary-color);
+      background-color: white;
+      color: var(--secondary-color);
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .btn.active {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    .chart-box {
+      position: relative;
+      height: 420px;
+      margin-bottom: 2rem;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background-color: #e2e8f0;
+      color: #2d3748;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>國科會研究計畫：家庭結構時間序列的多維度細分與真相探索</h1>
+    <p>剖析單人戶爆發、核心家庭萎縮與三代同堂平緩背後的實質社會經濟機制</p>
+  </header>
+
+  <!-- 分頁導覽列 -->
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="switchTab('tab1')">分頁一：多維度拆解視角與機制說明</button>
+    <button class="tab-button" onclick="switchTab('tab2')">分頁二：資料庫欄位對照與 ABM 變數映射</button>
+    <button class="tab-button" onclick="switchTab('tab3')">分頁三：互動多維拆解圖表與模擬數據</button>
+  </div>
+
+  <div class="content-container">
+
+    <!-- 分頁一：多維度拆解視角與機制說明 -->
+    <div id="tab1" class="tab-content active">
+      <h2>為什麼需要多維度拆解時間序列？</h2>
+      <p>單純觀察「單人戶上升」或「三代同堂下降」等巨觀總量，容易掩蓋不同社群的行為差異。透過以下 5 大關鍵變數進行多維交叉切分，能精準還原趨勢背後的實質動因：</p>
+      
+      <h3>1. 戶長/受訪者年齡層 (Age Cohort) —— 區分「獨立」還是「孤獨」</h3>
+      <p>將單人戶按年齡拆解：<strong>青年單人戶 (20-34歲)</strong> 反映延後結婚與就學就業離家的空檔期；<strong>壯年單人戶 (35-54歲)</strong> 反映不婚化與離婚不再婚；<strong>老年單人戶 (65歲+)</strong> 則反映喪偶、無子女可同住及老齡照護需求。</p>
+
+      <h3>2. 經濟與所得階層 (Income Quintiles) —— 區分「主觀選擇」還是「客觀被迫」</h3>
+      <p>高所得層的獨立居住多屬追求隱私與品質的「主觀選擇型」；低所得層的獨居或被迫同住（如無法購屋而留留在原生家庭之壯年）則屬「經濟約束型」。搭配房租房貸負擔比（Housing Burden），可觀察高房價對戶型拆解的擠壓效果。</p>
+
+      <h3>3. 教育程度與性別 (Gender & Education) —— 婚姻市場配對機制</h3>
+      <p>高學歷女性經濟獨立後未婚率與獨立居住顯著成長，反映傳統婚姻義務拘束力下降；中低學歷/低收入男性則易因婚姻市場競爭劣勢出現被動未婚與獨居現象。</p>
+
+      <h3>4. 地理區域與都市化程度 (Urbanization & Region) —— 空間與資源配置</h3>
+      <p>核心都會區（雙北、新竹）高房價與高就業機會，呈現高青年單身率與高度依賴托育支持 network；非都會/農業縣市青年外流，則呈現高留守高齡獨居戶與隔代家庭。</p>
+
+      <h3>5. 有無未成年/受扶養子女 (Presence of Dependent Children) —— 實質單親與空巢過濾</h3>
+      <p>將單親戶過濾「子女是否未成年」，可排除「老年父母與中年未婚子女同住」的假單親現象；將夫婦戶區分為「未生育頂客族 (DINK)」與「子女離家之空巢老偶戶」。</p>
+    </div>
+
+    <!-- 分頁二：資料庫欄位對照與 ABM 變數映射 -->
+    <div id="tab2" class="tab-content">
+      <h2>實證資料庫（FiES / TSCS）多維變數對照與 ABM 映射表</h2>
+      <p>下表提供將主計總處家庭收支調查 (FiES) 或台灣社會變遷基本調查 (TSCS) 轉換為多維分析與 ABM 主體模型初始化的編碼架構：</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>拆解維度</th>
+            <th>原始資料庫建議變數 (FiES / TSCS)</th>
+            <th>細分區間 / 分類標準</th>
+            <th>研究與 ABM 模型對應意義</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>戶長年齡層</strong></td>
+            <td><code>a2 / age</code> (戶長/受訪者年齡)</td>
+            <td>青年 (20-34)、壯年 (35-54)、初老 (55-64)、高齡 (65+)</td>
+            <td>區分生命週期階段，設定代理人 (Agent) 婚育與居住轉移機率。</td>
+          </tr>
+          <tr>
+            <td><strong>所得五分位</strong></td>
+            <td><code>itm210 / income</code> (可支配所得)</td>
+            <td>Q1 (最低 20%) 至 Q5 (最高 20%)</td>
+            <td>設定 Agent 獨立購屋/租屋或選擇同住共撫負擔之經濟能力閾值。</td>
+          </tr>
+          <tr>
+            <td><strong>房負擔比</strong></td>
+            <td><code>itm800 / rent_mortgage</code> (居住支出)</td>
+            <td>居住支出 / 可支配所得 (&gt;30% 為高負擔)</td>
+            <td>評估房價對年輕世代獨立門戶或擠壓同住的客觀約束力。</td>
+          </tr>
+          <tr>
+            <td><strong>教育與性別</strong></td>
+            <td><code>a3, a4 / edu, sex</code> (教育程度、性別)</td>
+            <td>國中以下、高中職、大專以上 × 男/女</td>
+            <td>設定婚姻市場擇偶條件配對 (Assortative Mating) 與不婚機率。</td>
+          </tr>
+          <tr>
+            <td><strong>未成年子女</strong></td>
+            <td><code>family_structure / A488</code> (家戶成員年齡)</td>
+            <td>有無 18 歲以下同住子女</td>
+            <td>精準辨識真單親育兒家庭與雙薪托育需求（三代同堂平緩動因）。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>ABM 代理人狀態轉移方程視角 (State Transition Framework)</h3>
+      <p>在 ABM 模型中，戶型轉變可表示為動態條件機率：</p>
+      <p style="background: #edf2f7; padding: 1rem; border-radius: 4px; font-family: monospace;">
+        P(State<sub>t+5</sub> = Single | State<sub>t</sub> = Nuclear) = f(Age, Income_Quintile, Housing_Burden, Marriage_Market_Status)
+      </p>
+    </div>
+
+    <!-- 分頁三：互動多維拆解圖表與模擬數據 -->
+    <div id="tab3" class="tab-content">
+      <h2>多維度切分互動視覺化 (以單人戶與三代同堂為例)</h2>
+      
+      <div class="controls">
+        <span>請選擇拆解視角：</span>
+        <button class="btn active" id="btnView1" onclick="switchDimension('age')">視角一：單人戶按「年齡層」拆解</button>
+        <button class="btn" id="btnView2" onclick="switchDimension('income')">視角二：單人戶按「所得分位」拆解</button>
+        <button class="btn" id="btnView3" onclick="switchDimension('threeGen')">視角三：三代同堂按「有無幼育需求」拆解</button>
+      </div>
+
+      <div class="chart-box">
+        <canvas id="multiDimChart"></canvas>
+      </div>
+
+      <h3 id="tableTitle">單人戶按年齡層拆解數據 (佔總戶數 %)</h3>
+      <div class="table-responsive">
+        <table>
+          <thead id="dimTableHead">
+            <!-- 動態帶入 -->
+          </thead>
+          <tbody id="dimTableBody">
+            <!-- 動態帶入 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. 單人戶按年齡層拆解 (佔總戶數 %)
+    const ageData = [
+      { year: 1990, totalSingle: 12.5, youth: 3.2, prime: 4.1, senior: 5.2 },
+      { year: 2000, totalSingle: 18.2, youth: 5.5, prime: 5.8, senior: 6.9 },
+      { year: 2010, totalSingle: 26.5, youth: 8.8, prime: 8.9, senior: 8.8 },
+      { year: 2020, totalSingle: 36.8, youth: 11.2, prime: 12.8, senior: 12.8 },
+      { year: 2025, totalSingle: 40.5, youth: 12.1, prime: 14.5, senior: 13.9 }
+    ];
+
+    // 2. 單人戶按所得分位拆解 (Q1低所得 vs Q5高所得 佔比 %)
+    const incomeData = [
+      { year: 1990, q1Low: 6.8, q234Mid: 4.2, q5High: 1.5 },
+      { year: 2000, q1Low: 8.9, q234Mid: 6.5, q5High: 2.8 },
+      { year: 2010, q1Low: 11.5, q234Mid: 10.2, q5High: 4.8 },
+      { year: 2020, q1Low: 14.2, q234Mid: 14.8, q5High: 7.8 },
+      { year: 2025, q1Low: 15.1, q234Mid: 16.2, q5High: 9.2 }
+    ];
+
+    // 3. 三代同堂按有無 0-6歲幼兒托育需求拆解 (%)
+    const threeGenData = [
+      { year: 1990, totalThreeGen: 16.8, withToddler: 9.5, noToddler: 7.3 },
+      { year: 2000, totalThreeGen: 12.4, withToddler: 6.8, noToddler: 5.6 },
+      { year: 2010, totalThreeGen: 7.7, withToddler: 4.5, noToddler: 3.2 },
+      { year: 2020, totalThreeGen: 3.4, withToddler: 2.3, noToddler: 1.1 },
+      { year: 2025, totalThreeGen: 2.7, withToddler: 1.9, noToddler: 0.8 }
+    ];
+
+    // 切換頁籤
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // Chart.js 設定
+    const ctx = document.getElementById('multiDimChart').getContext('2d');
+    let currentChart;
+
+    function renderChart(mode) {
+      if (currentChart) currentChart.destroy();
+
+      let labels, datasets, tableHead, tableBodyHTML, titleText;
+
+      if (mode === 'age') {
+        labels = ageData.map(d => d.year);
+        titleText = '視角一：單人戶按「戶長年齡層」拆解比率 (%)';
+        datasets = [
+          { label: '青年單人戶 (20-34歲)', data: ageData.map(d => d.youth), borderColor: '#3182ce', backgroundColor: '#3182ce', fill: false },
+          { label: '壯年單人戶 (35-54歲)', data: ageData.map(d => d.prime), borderColor: '#dd6b20', backgroundColor: '#dd6b20', fill: false },
+          { label: '老年單人戶 (65歲+)', data: ageData.map(d => d.senior), borderColor: '#805ad5', backgroundColor: '#805ad5', fill: false }
+        ];
+
+        tableHead = `<tr><th>年份</th><th>總單人戶比率 (%)</th><th>青年單人戶 (20-34歲)</th><th>壯年單人戶 (35-54歲)</th><th>老年單人戶 (65歲+)</th></tr>`;
+        tableBodyHTML = ageData.map(d => `<tr><td><strong>${d.year}</strong></td><td>${d.totalSingle}%</td><td>${d.youth}%</td><td>${d.prime}%</td><td>${d.senior}%</td></tr>`).join('');
+
+      } else if (mode === 'income') {
+        labels = incomeData.map(d => d.year);
+        titleText = '視角二：單人戶按「所得階層」拆解 (低所得被迫 vs 高所得自選)';
+        datasets = [
+          { label: '低所得 Q1 單人戶 (經濟約束/弱勢孤獨)', data: incomeData.map(d => d.q1Low), borderColor: '#e53e3e', backgroundColor: '#e53e3e', fill: false },
+          { label: '中所得 Q2-Q4 單人戶', data: incomeData.map(d => d.q234Mid), borderColor: '#319795', backgroundColor: '#319795', fill: false },
+          { label: '高所得 Q5 單人戶 (主觀選擇/高品質獨立)', data: incomeData.map(d => d.q5High), borderColor: '#3182ce', backgroundColor: '#3182ce', fill: false }
+        ];
+
+        tableHead = `<tr><th>年份</th><th>低所得 Q1 單人戶 (%)</th><th>中所得 Q2-Q4 單人戶 (%)</th><th>高所得 Q5 單人戶 (%)</th></tr>`;
+        tableBodyHTML = incomeData.map(d => `<tr><td><strong>${d.year}</strong></td><td>${d.q1Low}%</td><td>${d.q234Mid}%</td><td>${d.q5High}%</td></tr>`).join('');
+
+      } else if (mode === 'threeGen') {
+        labels = threeGenData.map(d => d.year);
+        titleText = '視角三：三代同堂按「有無 0-6 歲幼兒托育需求」拆解';
+        datasets = [
+          { label: '有幼育需求之三代同堂 (雙薪後勤支持)', data: threeGenData.map(d => d.withToddler), borderColor: '#319795', backgroundColor: '#319795', fill: false },
+          { label: '無幼育需求之三代同堂 (傳統/照護型)', data: threeGenData.map(d => d.noToddler), borderColor: '#805ad5', backgroundColor: '#805ad5', fill: false }
+        ];
+
+        tableHead = `<tr><th>年份</th><th>總三代同堂比率 (%)</th><th>有 0-6歲幼育需求</th><th>無幼育需求</th></tr>`;
+        tableBodyHTML = threeGenData.map(d => `<tr><td><strong>${d.year}</strong></td><td>${d.totalThreeGen}%</td><td>${d.withToddler}%</td><td>${d.noToddler}%</td></tr>`).join('');
+      }
+
+      document.getElementById('tableTitle').innerText = titleText;
+      document.getElementById('dimTableHead').innerHTML = tableHead;
+      document.getElementById('dimTableBody').innerHTML = tableBodyHTML;
+
+      currentChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: labels, datasets: datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' }
+          },
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: '占總戶數比例 (%)' } },
+            x: { title: { display: true, text: '年份' } }
+          }
+        }
+      });
+    }
+
+    function switchDimension(mode) {
+      document.getElementById('btnView1').classList.toggle('active', mode === 'age');
+      document.getElementById('btnView2').classList.toggle('active', mode === 'income');
+      document.getElementById('btnView3').classList.toggle('active', mode === 'threeGen');
+      renderChart(mode);
+    }
+
+    // 初始化渲染視角一
+    renderChart('age');
+  </script>
+</body>
+</html>
