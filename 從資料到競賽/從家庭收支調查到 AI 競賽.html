@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026智慧運算競賽：家庭收支調查數據應用與選題指引</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 1. 加入 MathJax 解析數學公式 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['[', ']']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        .gradient-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- 頁頭 -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-800 to-sky-800 text-white py-8 shadow-lg mb-8">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="bg-sky-400 text-blue-950 text-xs px-3 py-1 rounded-full font-extrabold uppercase tracking-wider">競賽與實作結合</span>
+                <span class="text-sky-200 text-xs">2026 年全國智慧運算與量子資訊創新應用競賽</span>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight">從「家庭收支調查」到 AI 競賽：經濟學決策與數據創新</h1>
+            <p class="text-blue-100 text-sm mt-2">結合個體經濟理論、數據科學與 AI 預測模型，打造亮眼競賽專案</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 space-y-8">
+
+        <!-- 1. 競賽資訊摘要 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="p-2 bg-blue-100 text-blue-800 rounded-lg text-2xl">🏆</div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">競賽背景與主旨摘要</h2>
+                    <p class="text-xs text-slate-500">中原大學 智慧運算與量子資訊學院 主辦</p>
+                </div>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                「2026年全國智慧運算與量子資訊創新應用競賽」旨在鼓勵學生運用<b>機器學習、巨量資料分析、生成式 AI 或智慧運算技術</b>，解決真實世界的社會、商業或民生問題。家庭收支調查資料庫包含全臺數萬戶微觀家庭的收支與社經特徵，正是最完美的實證分析素材！
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-semibold text-slate-700">
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex items-center gap-2">
+                    <span class="text-blue-600">🎯</span> 核心訴求：數據驅動的創新解決方案
+                </div>
+                <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100 flex items-center gap-2">
+                    <span class="text-indigo-600">🤖</span> 技術手段：AI 預測、機器學習、分群演算法
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 flex items-center gap-2">
+                    <span class="text-emerald-600">💡</span> 應用價值：商業策略、政策評估、民生福利
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 經濟學理論複習：生產者與消費者 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 border-b pb-3">
+                <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">理論複習</span>
+                個體經濟學的核心決策難題
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 生產者角度 -->
+                <div class="gradient-card p-5 rounded-xl border border-blue-200 space-y-3">
+                    <div class="flex items-center gap-2 text-blue-900 font-bold text-base">
+                        <span>🏭</span> 生產者的難題（Producer's Dilemma）
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        生產者追求<b>利潤最大化</b>，但在市場資訊不對稱下，正面臨以下關鍵決策：
+                    </p>
+                    <ul class="list-disc list-inside text-xs text-slate-700 space-y-1.5 font-medium">
+                        <li><b>生產什麼（What）？</b> 各消費類別（食品、資通訊、醫療、娛樂）的市場潛力與需求彈性為何？</li>
+                        <li><b>生產多少（How much）？</b> 目標客群的平均消費力與預算限制在哪？</li>
+                        <li><b>目標客群是誰（For whom）？</b> 高收入戶 vs. 青年單身戶的消費偏好差異。</li>
+                        <li><b>如何定價（Pricing strategy）？</b> 不同所得階層（分五位數）對價量的承受度。</li>
+                    </ul>
+                </div>
+
+                <!-- 消費者角度 -->
+                <div class="gradient-card p-5 rounded-xl border border-indigo-200 space-y-3">
+                    <div class="flex items-center gap-2 text-indigo-900 font-bold text-base">
+                        <span>🛒</span> 消費者的抉擇（Consumer's Choice）
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        消費者在<b>預算限制（Budget Constraint）</b>下追求<b>效用最大化</b>：
+                    </p>
+                    <ul class="list-disc list-inside text-xs text-slate-700 space-y-1.5 font-medium">
+                        <li><b>支出調配（Resource Allocation）：</b> 如何在房租/房貸、醫療保健與餐飲娛樂間取得平衡？</li>
+                        <li><b>必要 vs. 奢侈（Needs vs. Wants）：</b> 當可支配所得變動時，恩格爾係數（食品占比）與樂活支出如何調整？</li>
+                        <li><b>數位與生活品質需求：</b> 對資通訊設備（電腦、手機、上網）與節能家電的升級偏好。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 家庭收支調查能做什麼？競賽選題 4 大切入點 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">競賽選題</span>
+                如何利用「家庭收支調查」打造高分競賽作品？
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- 切入點 1 -->
+                <div class="border border-slate-200 p-4 rounded-xl hover:shadow-md transition space-y-2 bg-slate-50">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-blue-900">1. AI 商業精準行銷與客群分群</span>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold">生產者解方</span>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        利用 <code class="bg-white px-1 font-mono text-indigo-700">a18</code>（家庭組織）、<code class="bg-white px-1 font-mono text-indigo-700">a11</code>（教育程度）與 <code class="bg-white px-1 font-mono text-indigo-700">itm1130</code>（資通訊支出）進行 K-Means 聚類分析，協助企業預測哪些家庭最有可能購買最新 3C 或電動車。
+                    </p>
+                    <p class="text-xs text-indigo-600 font-semibold">💡 競賽題目建議：基於機器學習之臺灣家庭 3C 與家電產品購買力預測模型</p>
+                </div>
+
+                <!-- 切入點 2 -->
+                <div class="border border-slate-200 p-4 rounded-xl hover:shadow-md transition space-y-2 bg-slate-50">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-indigo-900">2. 智慧家庭財務健檢與消費警示 AI</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-bold">消費者解方</span>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        分析不同收入階層的必要支出比重，建立「家庭財務風險早期預警模型」。當家庭醫療（<code class="bg-white px-1 font-mono text-indigo-700">itm1080</code>）或房租（<code class="bg-white px-1 font-mono text-indigo-700">itm1041</code>）佔總收入比重過高時，發出預算配置優化建議。
+                    </p>
+                    <p class="text-xs text-indigo-600 font-semibold">💡 競賽題目建議：智慧理財 AI 助理：基於家庭收支調查數據之預算配置優化系統</p>
+                </div>
+
+                <!-- 切入點 3 -->
+                <div class="border border-slate-200 p-4 rounded-xl hover:shadow-md transition space-y-2 bg-slate-50">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-emerald-900">3. 跨縣市「數位落差」與教育資源評估</span>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">社會公益/政策</span>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        結合縣市代碼（<code class="bg-white px-1 font-mono text-indigo-700">area</code>）與設備變數（<code class="bg-white px-1 font-mono text-indigo-700">f38</code> 電腦、<code class="bg-white px-1 font-mono text-indigo-700">f57</code> 網際網路、<code class="bg-white px-1 font-mono text-indigo-700">itm1180</code> 教育支出），訓練決策樹模型，找出影響偏鄉家庭教育投入的核心因子。
+                    </p>
+                    <p class="text-xs text-indigo-600 font-semibold">💡 競賽題目建議：運用機器學習探索臺灣家庭數位落差與教育資源分配策略</p>
+                </div>
+
+                <!-- 切入點 4 -->
+                <div class="border border-slate-200 p-4 rounded-xl hover:shadow-md transition space-y-2 bg-slate-50">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-amber-900">4. 銀髮經濟與醫療保健需求預測</span>
+                        <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">產業趨勢</span>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        篩選高齡人口家庭（$\text{a19} \ge 1$），分析其在醫療保健（<code class="bg-white px-1 font-mono text-indigo-700">itm1080</code>）、看護費與開飲機/熱水器等設備的需求變化，預測未來高齡化社會的照護消費成長趨勢。
+                    </p>
+                    <p class="text-xs text-indigo-600 font-semibold">💡 競賽題目建議：銀髮浪潮下高齡家庭醫療與照顧支出之 AI 需求預測研究</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. Colab Gemini 指導 prompt 示範 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-sky-100 text-sky-800 text-xs px-2.5 py-1 rounded-full font-bold">實作 Prompt</span>
+                如何在 Colab 中讓 Gemini 幫你寫競賽雛形？
+            </h2>
+            <p class="text-sm text-slate-600">
+                將下述 Prompt 貼入 Colab Gemini，一步步完成競賽級別的機器學習分析：
+            </p>
+
+            <div class="relative">
+                <pre class="code-block p-4 rounded-xl text-xs leading-relaxed overflow-x-auto"><code id="compPrompt">請擔任我的「智慧運算與數據科學競賽導師」，協助我對已載入的 113 年家庭收支調查資料（inc113.dta）進行機器學習專題開發：
+
+1. 研究目標：建立一個「家庭高消費力分類預測模型」，目標變數為經常性支出 (itm1000) 是否高於全臺前 20% (高消費戶)。
+2. 特徵變數：包含經濟戶長年齡 (a6)、性別 (a7)、教育程度 (a11)、行業 (a4)、戶內人口 (a8)、住宅坪數 (c6b) 及資通訊設備數量 (f38, f52)。
+3. 請幫我寫 Python 程式碼：
+   - 進行特徵選擇與缺失值/異常值處理。
+   - 將資料切割為訓練集 (80%) 與測試集 (20%)。
+   - 使用 隨機森林 (Random Forest) 或 XGBoost 訓練分類模型。
+   - 計算 Accuracy、ROC-AUC 分數，並畫出「特徵重要性 (Feature Importance)」長條圖，說明哪些因子最影響家庭消費。
+4. 提供一段適合放入競賽報告書的「商業與決策洞察總結」。</code></pre>
+                <button onclick="copyText('compPrompt', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-3 py-1.5 rounded-lg transition font-semibold">
+                    複製 Prompt
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. 學習脈絡總結卡片 -->
+        <section class="bg-gradient-to-r from-indigo-900 to-blue-900 text-white p-6 rounded-2xl shadow-md space-y-3">
+            <h3 class="font-bold text-base flex items-center gap-2 text-sky-200">
+                🚀 給同學們的專題專案推進建議
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs text-blue-100 mt-2">
+                <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+                    <span class="font-bold text-sky-300 block mb-1">Step 1：確定研究切入點</span>
+                    選擇站在「生產者定價/行銷」或「消費者/社會福利」的角度選題。
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+                    <span class="font-bold text-sky-300 block mb-1">Step 2：解析變數欄位</span>
+                    利用 `code113.docx` 挑選出 5~10 個核心特徵變數。
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+                    <span class="font-bold text-sky-300 block mb-1">Step 3：Colab + AI 建模</span>
+                    使用 Python 進行清洗、交叉統計、機器學習訓練與視覺化繪圖。
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+                    <span class="font-bold text-sky-300 block mb-1">Step 4：報名智慧運算競賽</span>
+                    整理分析結果與圖表，撰寫專題報告書投遞參賽爭取佳績！
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = '已複製！';
+                btn.classList.replace('bg-slate-700', 'bg-emerald-600');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.replace('bg-emerald-600', 'bg-slate-700');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

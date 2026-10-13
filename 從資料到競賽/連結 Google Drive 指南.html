@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Colab 連結 Google Drive 操作指南</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- 頁頭 -->
+    <header class="bg-amber-600 text-white py-6 shadow-md mb-8">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">📁</span>
+                <div>
+                    <h1 class="text-2xl font-bold">Google Colab 連結 Google Drive 指南</h1>
+                    <p class="text-amber-100 text-sm mt-1">將雲端硬碟掛載至 Colab，輕鬆讀取與儲存資料集</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 space-y-8">
+
+        <!-- 1. 為什麼要連結 Google Drive -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">觀念</span>
+                為什麼需要連結 Google Drive？
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                Google Colab 是一個免費的暫存執行環境。如果不連結 Google Drive，當您的瀏覽器分頁關閉或連線中斷時，上傳到 Colab 左側的檔案<b>將會自動被系統清空與刪除</b>。
+            </p>
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded text-xs text-amber-900">
+                💡 <b>掛載（Mount）優點：</b>掛載後，您可以直接讀取存於 Google Drive 裡面的 CSV、Excel 或問卷資料，並且清洗後的資料也能直接存回雲端硬碟，永久保存不遺失！
+            </div>
+        </section>
+
+        <!-- 2. 三種連結方式 -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">實作</span>
+                如何連結（掛載）Google Drive？
+            </h2>
+
+            <!-- 方法 A -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-indigo-300 transition">
+                <h3 class="font-bold text-indigo-700 text-base mb-2 flex items-center gap-2">
+                    <span class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs">A</span>
+                    方法一：使用左側側邊欄（最推薦、最直覺）
+                </h3>
+                <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2 ml-1">
+                    <li>開啟 Colab 筆記本，點擊左側工具列的 📁 <b>「檔案」圖示</b>。</li>
+                    <li>在出現的檔案樹上方，點擊帶有 Google Drive 圖示的 <b>「掛載 Drive (Mount Drive)」按鈕</b>。</li>
+                    <li>畫面會跳出授權視窗，點擊 <b>「連線至 Google 雲端硬碟」</b> 並選擇您的 Google 帳號。</li>
+                    <li>完成後，左側檔案區出現 <code class="bg-slate-200 px-1 py-0.5 rounded text-xs text-slate-800">drive/MyDrive/</code> 資料夾即代表連結成功！</li>
+                </ol>
+            </div>
+
+            <!-- 方法 B -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-indigo-300 transition">
+                <h3 class="font-bold text-indigo-700 text-base mb-2 flex items-center gap-2">
+                    <span class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs">B</span>
+                    方法二：在程式碼儲存格（Code Cell）寫 Python 指令
+                </h3>
+                <p class="text-sm text-slate-600 mb-3">在 Colab 的第一個 Code Cell 貼上以下兩行程式碼並執行（Shift + Enter）：</p>
+                
+                <div class="relative">
+                    <pre class="code-block p-4 rounded-lg text-xs overflow-x-auto"><code id="codeBlock1">from google.colab import drive
+drive.mount('/content/drive')</code></pre>
+                    <button onclick="copyCode('codeBlock1', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">
+                        複製程式碼
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">執行後請點選出現的「連線至 Google 雲端硬碟」按鈕進行登入授權。</p>
+            </div>
+        </section>
+
+        <!-- 3. 路徑切換與確認檔案 -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+            <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">下一步</span>
+                確認路徑與讀取資料
+            </h2>
+
+            <p class="text-sm text-slate-600">
+                掛載成功後，您的 Google 雲端硬碟根目錄在 Colab 中的絕對路徑為：
+                <code class="bg-amber-100 text-amber-900 font-mono px-2 py-0.5 rounded font-bold text-xs">/content/drive/MyDrive/</code>
+            </p>
+
+            <div class="space-y-3">
+                <h3 class="font-semibold text-sm text-slate-700">常用驗證指令（程式碼範例）：</h3>
+                
+                <!-- 範例指令 -->
+                <div class="relative">
+                    <pre class="code-block p-4 rounded-lg text-xs overflow-x-auto"><code id="codeBlock2">import os
+
+# 切換工作目錄至您的 Google Drive 個人資料夾
+os.chdir('/content/drive/MyDrive/')
+
+# 列出當前目錄下的所有檔案與資料夾名稱，確認檔案已成功上傳
+print("目前 Google Drive 中的檔案清單：")
+print(os.listdir('.'))</code></pre>
+                    <button onclick="copyCode('codeBlock2', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">
+                        複製程式碼
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 課堂實作建議步驟 -->
+        <section class="bg-indigo-50 border border-indigo-200 p-6 rounded-xl text-indigo-950">
+            <h3 class="font-bold text-base text-indigo-900 mb-2 flex items-center gap-2">
+                📋 給同學的課堂實作步驟簡核
+            </h3>
+            <ul class="list-disc list-inside text-sm space-y-1.5 text-indigo-900">
+                <li><b>步驟 1：</b>開啟 Google Drive，新增一個專用資料夾（例如命名為 <code class="bg-white px-1.5 py-0.5 rounded font-mono text-xs text-indigo-800">Python_Data</code>）。</li>
+                <li><b>步驟 2：</b>將下載好的 CSV 資料檔（如學生數據或統計問卷）拖曳上傳至該資料夾。</li>
+                <li><b>步驟 3：</b>開啟 Colab，執行掛載語法連結 Google Drive。</li>
+                <li><b>步驟 4：</b>使用 Pandas 讀取資料：<code class="bg-white px-1.5 py-0.5 rounded font-mono text-xs text-indigo-800">df = pd.read_csv('/content/drive/MyDrive/Python_Data/您的資料檔.csv')</code>，準備開始進行資料清洗！</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script>
+        function copyCode(elementId, btn) {
+            const code = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = '已複製！';
+                btn.classList.replace('bg-slate-700', 'bg-emerald-600');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.replace('bg-emerald-600', 'bg-slate-700');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

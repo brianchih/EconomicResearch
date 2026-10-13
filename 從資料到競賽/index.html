@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭收支調查數據分析與 AI 競賽實作 - 課程教學總覽</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 數學公式支援 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['[', ']']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        .hub-card {
+            transition: all 0.3s ease;
+        }
+        .hub-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+
+    <!-- 頁頭 Banner -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white py-10 shadow-lg mb-10">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <span>Course Master Portal</span>
+                <span>•</span>
+                <span>經濟分析實務 / 頂石課程專題</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">家庭收支調查數據分析與 AI 競賽實作指南</h1>
+            <p class="text-indigo-200 text-sm mt-3 leading-relaxed max-w-3xl">
+                本系列教學整合 Google Colab、Gemini AI 輔助分析與個體經濟學理論，帶領同學從基礎雲端環境建置、Stata 數據轉檔，一路晉級至 AI 視覺化圖表繪製與全國智慧運算競賽選題實作。
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 space-y-10">
+
+        <!-- 學習路徑導航 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-3">
+                <span class="text-indigo-600">🧭</span> 階段式學習導覽地圖 (Learning Roadmap)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-semibold text-slate-700">
+                <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 flex items-center gap-2">
+                    <span class="bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center font-bold">1</span>
+                    <span>基礎建立：Colab & Drive 串接</span>
+                </div>
+                <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200 flex items-center gap-2">
+                    <span class="bg-indigo-600 text-white rounded-full w-5 h-5 flex items-center justify-center font-bold">2</span>
+                    <span>數據處理：Stata 轉 Excel (.dta)</span>
+                </div>
+                <div class="bg-teal-50 p-3 rounded-xl border border-teal-200 flex items-center gap-2">
+                    <span class="bg-teal-600 text-white rounded-full w-5 h-5 flex items-center justify-center font-bold">3</span>
+                    <span>探索分析：Gemini 視覺化提示詞</span>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 flex items-center gap-2">
+                    <span class="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center font-bold">4</span>
+                    <span>專題衝刺：AI 競賽應用與選題</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心教學模組卡片區 -->
+        <section class="space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">課程模組</span>
+                單元教學內容與入口
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- 卡片 1：連結 Google Drive 指南 -->
+                <div class="hub-card bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">單元 一</span>
+                            <span class="text-slate-400 text-xs font-mono">Environment Setup</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span>📁</span> 連結 Google Drive 指南
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            學習如何在 Google Colab 雲端執行環境中掛載個人的 Google Drive 雲端硬碟，確保資料集讀取順暢且清洗後的檔案永久保存不丟失。
+                        </p>
+                        <ul class="list-disc list-inside text-xs text-slate-500 space-y-1">
+                            <li>左側邊欄與 Python 語法兩種掛載方式</li>
+                            <li>路徑驗證與檔案清單列出 (<code class="text-slate-700 font-mono">os.chdir</code>)</li>
+                        </ul>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-slate-100">
+                        <a href="連結 Google Drive 指南.html" class="inline-flex items-center gap-2 text-xs font-bold text-amber-700 hover:text-amber-800 transition">
+                            進入單元指南 ➔
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 卡片 2：113年家庭收支調查 -->
+                <div class="hub-card bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">單元 二</span>
+                            <span class="text-slate-400 text-xs font-mono">Data Conversion</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span>📊</span> 113年家庭收支調查資料轉檔
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            指導 Colab Gemini 到 <code class="bg-slate-100 px-1 text-indigo-700 font-mono">113年家庭收支調查/release</code> 資料夾中，解析 <code class="bg-slate-100 px-1 text-indigo-700 font-mono">code113.doc</code> 欄位編碼表，並將 Stata 格式檔 (<code class="bg-slate-100 px-1 text-indigo-700 font-mono">inc113.dta</code>) 轉存為 Excel 檔。
+                        </p>
+                        <ul class="list-disc list-inside text-xs text-slate-500 space-y-1">
+                            <li>Stata <code class="text-slate-700 font-mono">.dta</code> 檔讀取與轉存 Excel 流程</li>
+                            <li>Colab Gemini 轉檔專用 Prompt 語法</li>
+                        </ul>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-slate-100">
+                        <a href="113年家庭收支調查.html" class="inline-flex items-center gap-2 text-xs font-bold text-indigo-700 hover:text-indigo-800 transition">
+                            進入單元指南 ➔
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 卡片 3：Gemini 視覺化提示詞指南 -->
+                <div class="hub-card bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-teal-100 text-teal-800 text-xs px-2.5 py-1 rounded-full font-bold">單元 三</span>
+                            <span class="text-slate-400 text-xs font-mono">AI Visualization</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span>📈</span> Gemini 視覺化提示詞指南
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            根據 <code class="bg-slate-100 px-1 text-teal-700 font-mono">code113.docx</code> 記載之戶長特徵、家庭設備與所得支出欄位，精選 5 組 AI 提示詞（Prompts），一鍵生成繪製專業圖表之 Python 程式碼。
+                        </p>
+                        <ul class="list-disc list-inside text-xs text-slate-500 space-y-1">
+                            <li>教育程度 vs. 所得分布箱形圖 / 數位落差分析</li>
+                            <li>八大家庭消費支出結構比重圓餅圖繪製</li>
+                        </ul>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-slate-100">
+                        <a href="Gemini 視覺化提示詞指南.html" class="inline-flex items-center gap-2 text-xs font-bold text-teal-700 hover:text-teal-800 transition">
+                            進入單元指南 ➔
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 卡片 4：從家庭收支調查到 AI 競賽 -->
+                <div class="hub-card bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-bold">單元 四</span>
+                            <span class="text-slate-400 text-xs font-mono">Contest Application</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span>🚀</span> 從家庭收支調查到 AI 競賽
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            結合個體經濟理論（生產者難題與消費者抉擇），說明如何將微觀家庭收支數據轉化為競賽題目，並提供專用的 AI 機器學習建模 Prompt 範本。
+                        </p>
+                        <ul class="list-disc list-inside text-xs text-slate-500 space-y-1">
+                            <li>生產者定價策略與消費者效用最大化選題切入點</li>
+                            <li>家庭高消費力預測與隨機森林 / XGBoost 建模</li>
+                        </ul>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-slate-100">
+                        <a href="從家庭收支調查到 AI 競賽.html" class="inline-flex items-center gap-2 text-xs font-bold text-blue-700 hover:text-blue-800 transition">
+                            進入單元指南 ➔
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 外部競賽資源區 -->
+        <section class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 md:p-8 rounded-2xl shadow-lg space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-full font-bold border border-sky-400/30">外部競賽連結</span>
+                    <h3 class="text-xl font-bold mt-2 text-white">2026年全國智慧運算與量子資訊創新應用競賽</h3>
+                    <p class="text-xs text-slate-300 mt-1">主辦單位：中原大學 智慧運算與量子資訊學院</p>
+                </div>
+                <a href="https://camihu14520.github.io/ICQI_Contest_2026/" target="_blank" rel="noopener noreferrer" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold text-xs px-5 py-3 rounded-xl shadow transition shrink-0 flex items-center gap-2">
+                    <span>前往競賽官方網站</span>
+                    <svg

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>113年家庭收支調查：Gemini 視覺化建議與 Prompt 範本</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- 頁頭 -->
+    <header class="bg-teal-700 text-white py-6 shadow-md mb-8">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">📈</span>
+                <div>
+                    <h1 class="text-2xl font-bold">113年家庭收支調查：Gemini 視覺化提示詞指南</h1>
+                    <p class="text-teal-100 text-xs mt-1">根據 code113.docx 欄位結構，引導 AI 生成專業的資料探索與圖表程式碼</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 space-y-8">
+
+        <!-- 1. 欄位架構解析總覽 -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span class="bg-teal-100 text-teal-800 text-xs px-2.5 py-1 rounded-full font-bold">欄位歸納</span>
+                基於 code113.docx 的視覺化面向
+            </h2>
+            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                經解析 <code class="bg-slate-100 px-1.5 py-0.5 rounded text-teal-700 font-mono">code113.docx</code> 過錄編碼簿，可將重點變數分為以下三大領域：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-teal-800 text-sm mb-1">👤 經濟戶長與人口特徵</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-1">
+                        <li><b>a6/a7：</b>年齡、性別</li>
+                        <li><b>a11：</b>教育程度 (1-10)</li>
+                        <li><b>a4/a5：</b>行業與職業分類</li>
+                        <li><b>a18：</b>家庭組織型態</li>
+                        <li><b>area：</b>縣市行政區</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-teal-800 text-sm mb-1">🏠 家庭設備與普及率</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-1">
+                        <li><b>f38/f52：</b>電腦、行動電話數</li>
+                        <li><b>f57/f61：</b>網際網路使用狀況</li>
+                        <li><b>f34/f23：</b>汽車與機車擁有量</li>
+                        <li><b>c1/c6b：</b>住宅所有權與坪數</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-teal-800 text-sm mb-1">💰 所得與消費支出</h3>
+                    <ul class="list-disc list-inside text-slate-600 space-y-1">
+                        <li><b>itm 210/220：</b>本業與兼業薪資</li>
+                        <li><b>itm 500/1000：</b>經常性收入與消費支出總計</li>
+                        <li><b>itm 1010/1130：</b>食品、資通訊、教育支出</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 5組精選視覺化提示詞 (Prompts) -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">Prompt 庫</span>
+                提供給 Gemini 的 5 組視覺化提示詞範本
+            </h2>
+
+            <!-- Prompt 1 -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-teal-300 transition space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-teal-800 text-sm">💡 提示詞 1：不同教育程度與縣市之所得分布（箱形圖 / 條形圖）</h3>
+                    <button onclick="copyText('p1', this)" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">複製 Prompt</button>
+                </div>
+                <pre class="code-block p-3 rounded text-xs overflow-x-auto"><code id="p1">請根據已載入的 `inc113.dta` 資料檔，使用 Python (Matplotlib / Seaborn) 繪製圖表：
+
+1. 參考代碼對照：`a11` 代表經濟戶長教育程度（03:國小, 05:高中職, 08:大學, 09:碩士, 10:博士），`itm500` 代表經常性收入總計。
+2. 請繪製各「教育程度」對應「經常性收入 (itm500)」的中位數與分布箱形圖 (Boxplot) 或平均數條形圖。
+3. 支援中文顯示（中文字型設定），標題設定為「113年經濟戶長教育程度與家庭經常性收入分布」，並將 y 軸標記為萬元。
+4. 請附上簡單的資料處理與圖表解說。</code></pre>
+            </div>
+
+            <!-- Prompt 2 -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-teal-300 transition space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-teal-800 text-sm">💡 提示詞 2：資通訊設備與網路普及率比較（百分比堆疊圖）</h3>
+                    <button onclick="copyText('p2', this)" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">複製 Prompt</button>
+                </div>
+                <pre class="code-block p-3 rounded text-xs overflow-x-auto"><code id="p2">請撰寫 Python 程式碼，分析家庭資通訊設備現況：
+
+1. 欄位變數：`f38` (家用電腦數量)、`f52` (行動電話數量)、`f57` (有無上網 1:有, 2:無)。
+2. 計算全臺家庭有上網與無上網的比例，並以圓餅圖 (Pie Chart) 或環狀圖呈現。
+3. 交叉分析：按家庭組織型態 (`a18`) 或戶長年齡層 (`a6`) 分組，計算「有電腦上網比例」，並繪製長條圖比較數位落差。
+4. 設定圖表色彩為現代化風格，並標註百分比數值。</code></pre>
+            </div>
+
+            <!-- Prompt 3 -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-teal-300 transition space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-teal-800 text-sm">💡 提示詞 3：家庭消費支出結構分析（圓餅圖與占比）</h3>
+                    <button onclick="copyText('p3', this)" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">複製 Prompt</button>
+                </div>
+                <pre class="code-block p-3 rounded text-xs overflow-x-auto"><code id="p3">請幫我分析家庭主要消費支出的結構比重：
+
+1. 支出欄位項目：
+   - 食品及非酒精飲料 (`itm1010`)
+   - 住宅服務與水電瓦斯 (`itm1040`)
+   - 醫療保健 (`itm1080`)
+   - 交通 (`itm1110`)
+   - 資通訊 (`itm1130`)
+   - 休閒與文化 (`itm1160`)
+   - 教育 (`itm1180`)
+   - 餐廳及住宿 (`itm1200`)
+2. 請計算這八大消費類別佔總消費支出 (`itm1000`) 的全臺平均比例。
+3. 繪製圓餅圖 (Pie Chart) 或樹狀圖 (Treemap)，顯示 113年台灣家庭消費支出的分布比重。</code></pre>
+            </div>
+
+            <!-- Prompt 4 -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-teal-300 transition space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-teal-800 text-sm">💡 提示詞 4：性別與行業別之所得差距（複式條形圖）</h3>
+                    <button onclick="copyText('p4', this)" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">複製 Prompt</button>
+                </div>
+                <pre class="code-block p-3 rounded text-xs overflow-x-auto"><code id="p4">請協助分析不同行業與性別的所得狀況：
+
+1. 使用欄位：`a4` (經濟戶長行業分類)、`a7` (戶長性別 1:男, 2:女)、`itm210` (本業薪資)。
+2. 根據 `code113.docx` 轉換行業代碼（如 08:製造業, 64:金融保險業, 85:教育服務業等）。
+3. 計算主要行業中，男性與女性戶長的平均本業薪資。
+4. 繪製雙色交叉長條圖，呈現各行業間及性別間的薪資差異。</code></pre>
+            </div>
+
+            <!-- Prompt 5 -->
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50 hover:border-teal-300 transition space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-teal-800 text-sm">💡 提示詞 5：住宅坪數與房屋所有權對消費支出的影響（散佈圖與迴歸線）</h3>
+                    <button onclick="copyText('p5', this)" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">複製 Prompt</button>
+                </div>
+                <pre class="code-block p-3 rounded text-xs overflow-x-auto"><code id="p5">請針對住宅特徵與消費進行相關性繪圖：
+
+1. 變數設定：`c6b` (住宅建坪)、`c1` (住宅所有權 1:自有, 3:租押)、`itm1000` (消費支出總計)。
+2. 繪製住宅建坪 (x軸) 對應消費支出 (y軸) 的散佈圖 (Scatter Plot)，並依據「自有」與「租押」加入不同顏色與趨勢線 (Regression line)。
+3. 排除極端值（如建坪過大或支出異常高者），使圖表更易於觀察趨勢。</code></pre>
+            </div>
+        </section>
+
+        <!-- 3. 教學步驟建議 -->
+        <section class="bg-teal-50 border border-teal-200 p-6 rounded-xl text-teal-950 space-y-2">
+            <h3 class="font-bold text-base text-teal-900 flex items-center gap-2">
+                🎓 課堂應用建議
+            </h3>
+            <p class="text-sm text-teal-900 leading-relaxed">
+                在同學完成資料轉檔（將 <code class="bg-white px-1.5 py-0.5 rounded text-teal-800 font-mono text-xs">inc113.dta</code> 讀入 Pandas）後，可讓同學直接複製上述提示詞貼給 Colab Gemini，讓 AI 自動產生對應的色彩豐富圖表，體驗從「理解變數說明」到「視覺化分析」的完整數據科學流程！
+            </p>
+        </section>
+
+    </main>
+
+    <script>
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = '已複製！';
+                btn.classList.replace('bg-slate-700', 'bg-emerald-600');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.replace('bg-emerald-600', 'bg-slate-700');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Colab + Gemini：113年家庭收支調查資料轉換教學</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- 頁頭 -->
+    <header class="bg-indigo-700 text-white py-6 shadow-md mb-8">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">📊</span>
+                <div>
+                    <h1 class="text-2xl font-bold">113年家庭收支調查：Colab + Gemini 資料轉檔教學</h1>
+                    <p class="text-indigo-200 text-xs mt-1">透過 AI 讀取欄位代碼表 (.doc) 並將 Stata 格式 (.dta) 轉存為 Excel 檔</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 space-y-8">
+
+        <!-- 1. 任務情境與路徑說明 -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-3">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">任務情境</span>
+                資料路徑與檔案結構
+            </h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                我們要把 Google Drive 中的家庭收支調查 Stata 檔案（<code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-700 font-mono">inc113.dta</code>）轉為 Excel 檔案。在轉換之前，需先讓 Colab AI / Gemini 解析編碼表（<code class="bg-slate-100 px-1.5 py-0.5 rounded text-indigo-700 font-mono">code113.doc</code>）以了解欄位含義。
+            </p>
+            <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100 text-xs font-mono text-indigo-900 space-y-1">
+                <p class="font-bold text-indigo-950">📂 雲端硬碟目標資料夾路徑：</p>
+                <p class="text-slate-700">/content/drive/MyDrive/家庭收支調查/113年家庭收支調查/release/</p>
+                <p class="font-bold text-indigo-950 mt-2">📄 目標檔案：</p>
+                <ul class="list-disc list-inside text-slate-700">
+                    <li><code class="font-bold">code113.doc</code>：欄位與變數代碼說明文件</li>
+                    <li><code class="font-bold">inc113.dta</code>：家庭收支原始資料檔 (Stata 格式)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. 給 Gemini 的提示詞 (Prompt) -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">AI 提示詞</span>
+                給 Colab Gemini 的 Prompt 指令範本
+            </h2>
+            <p class="text-sm text-slate-600">
+                打開 Colab 右上角的 <b>Gemini 助手</b>（或點擊「用 AI 撰寫程式碼」），直接複製貼上以下 Prompt：
+            </p>
+
+            <div class="relative">
+                <pre class="code-block p-4 rounded-lg text-xs leading-relaxed overflow-x-auto"><code id="promptText">請幫我撰寫一段 Python 程式碼，執行以下步驟：
+
+1. 自動掛載我的 Google Drive。
+2. 切換工作目錄到：
+   `/content/drive/MyDrive/家庭收支調查/113年家庭收支調查/release`
+3. 使用 python-docx 套件讀取 `code113.doc` (若為舊版 doc，請處理讀取或提示；若為 docx 則提取內文)，解析並印出資料欄位說明。
+4. 使用 pandas 讀取 Stata 格式資料檔 `inc113.dta`。
+5. 將 `inc113.dta` 轉換並儲存為同目錄下的 `inc113.xlsx` Excel 檔案。
+6. 請加上完整的套件安裝指令（如 python-docx, pandas, openpyxl）與轉檔進度印出提示。</code></pre>
+                <button onclick="copyText('promptText', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">
+                    複製 Prompt
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. Colab 完整程式碼範例 -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">Python 程式碼</span>
+                Colab 實作程式碼 (可直接執行)
+            </h2>
+            <p class="text-sm text-slate-600">
+                如果選擇手動建立儲存格，可以將以下程式碼貼入 Colab 執行：
+            </p>
+
+            <!-- 步驟 A：安裝必要套件 -->
+            <div class="space-y-2">
+                <h3 class="font-bold text-sm text-slate-700">步驟 1：安裝與載入必要套件</h3>
+                <div class="relative">
+                    <pre class="code-block p-4 rounded-lg text-xs overflow-x-auto"><code id="codeStep1"># 1. 安裝讀取 Word 檔與 Excel 轉檔所需的套件
+!pip install python-docx openpyxl pandas -q
+
+import os
+import pandas as pd
+from google.colab import drive
+
+# 2. 掛載 Google Drive
+drive.mount('/content/drive')
+
+# 3. 切換至家庭收支調查 release 資料夾
+target_dir = '/content/drive/MyDrive/家庭收支調查/113年家庭收支調查/release'
+os.chdir(target_dir)
+print(f"目前工作目錄：{os.getcwd()}")
+print("資料夾檔案清單：", os.listdir('.'))</code></pre>
+                    <button onclick="copyText('codeStep1', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">
+                        複製程式碼
+                    </button>
+                </div>
+            </div>
+
+            <!-- 步驟 B：讀取 code113 與轉檔 -->
+            <div class="space-y-2 pt-2">
+                <h3 class="font-bold text-sm text-slate-700">步驟 2：讀取 code113.doc 欄位定義並將 inc113.dta 轉存為 Excel</h3>
+                <div class="relative">
+                    <pre class="code-block p-4 rounded-lg text-xs overflow-x-auto"><code id="codeStep2"># 1. 讀取與了解欄位資訊 (處理 .doc / .docx 說明檔)
+doc_path = 'code113.doc'
+
+try:
+    import docx
+    doc = docx.Document(doc_path)
+    print("--- code113 欄位代碼表前 10 行內文 ---")
+    for p in doc.paragraphs[:10]:
+        if p.text.strip():
+            print(p.text)
+except Exception as e:
+    print(f"提示：若 {doc_path} 為舊型二進位 .doc 檔，建議先手動另存為 .docx，或直接使用 pandas 讀取 .dta 的內建欄位標籤 (labels)。")
+
+# 2. 讀取 Stata 格式的家庭收支資料檔 (.dta)
+print("\n正在讀取 inc113.dta...")
+df = pd.read_stata('inc113.dta')
+
+# 印出資料維度與欄位摘要
+print(f"資料讀取完成！共 {df.shape[0]} 筆紀錄，{df.shape[1]} 個欄位。")
+print("\n--- 前 5 筆資料預覽 ---")
+print(df.head())
+
+# 3. 轉存為 Excel 檔案 (.xlsx)
+output_excel = 'inc113.xlsx'
+print(f"\n正在將資料寫入 Excel 檔 ({output_excel})...")
+df.to_excel(output_excel, index=False)
+print(f"🎉 轉檔成功！已儲存至：{os.path.join(target_dir, output_excel)}")</code></pre>
+                    <button onclick="copyText('codeStep2', this)" class="absolute top-2 right-2 bg-slate-700 hover:bg-slate-600 text-white text-xs px-2.5 py-1 rounded transition">
+                        複製程式碼
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 常見問題與教學提示卡片 -->
+        <section class="bg-indigo-50 border border-indigo-200 p-6 rounded-xl text-indigo-950 space-y-2">
+            <h3 class="font-bold text-base text-indigo-900 flex items-center gap-2">
+                💡 課堂教學與除錯提示 (Teacher's Note)
+            </h3>
+            <ul class="list-disc list-inside text-sm space-y-2 text-indigo-900">
+                <li>
+                    <b>舊版 .doc 檔案說明：</b>主計總處提供之 <code class="bg-white px-1 py-0.5 rounded font-mono text-xs text-indigo-800">code113.doc</code> 若為舊版 Word 二進位格式，Python 的 <code class="bg-white px-1 py-0.5 rounded font-mono text-xs text-indigo-800">python-docx</code> 套件可能無法直接讀取。若遇此狀況，建議先在雲端硬碟中雙擊開啟該檔案並另存為 <code class="bg-white px-1 py-0.5 rounded font-mono text-xs text-indigo-800">.docx</code> 格式。
+                </li>
+                <li>
+                    <b>Stata 欄位標籤優勢：</b><code class="bg-white px-1 py-0.5 rounded font-mono text-xs text-indigo-800">pd.read_stata('inc113.dta')</code> 會自動讀取 Stata 檔案中內建的英文變數名稱與中文欄位標籤，方便同學後續進行清洗與交叉分析！
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script>
+        function copyText(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = '已複製！';
+                btn.classList.replace('bg-slate-700', 'bg-emerald-600');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.replace('bg-emerald-600', 'bg-slate-700');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
