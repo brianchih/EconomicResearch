@@ -278,14 +278,36 @@
   <script>
     // 基礎數據集
     const dataset = [
-      { year: 1990, total: 5110, single: 12.5, couple: 8.2, nuclear: 58.0, singleParent: 4.5, threeGen: 16.8 },
-      { year: 1995, total: 5810, single: 15.1, couple: 9.8, nuclear: 55.4, singleParent: 5.2, threeGen: 14.5 },
-      { year: 2000, total: 6680, single: 18.2, couple: 11.5, nuclear: 52.1, singleParent: 5.8, threeGen: 12.4 },
-      { year: 2005, total: 7250, single: 22.0, couple: 13.0, nuclear: 48.5, singleParent: 6.3, threeGen: 10.2 },
-      { year: 2010, total: 7940, single: 26.5, couple: 14.8, nuclear: 44.2, singleParent: 6.8, threeGen: 7.7 },
-      { year: 2015, total: 8430, single: 31.0, couple: 16.5, nuclear: 41.5, singleParent: 7.2, threeGen: 3.8 },
-      { year: 2020, total: 8930, single: 36.8, couple: 18.1, nuclear: 39.2, singleParent: 7.5, threeGen: 3.4 },
-      { year: 2025, total: 9280, single: 40.5, couple: 19.5, nuclear: 37.5, singleParent: 7.8, threeGen: 2.7 }
+      { year: 1995, total: 5331157, nuclear: 53.31, threeGen: 21.24, couple: 10.48, single: 7.81, singleParent: 7.15 },
+      { year: 1996, total: 5302145, nuclear: 53.02, threeGen: 21.61, couple: 10.14, single: 7.99, singleParent: 7.24 },
+      { year: 1997, total: 5134661, nuclear: 51.35, threeGen: 21.12, couple: 10.94, single: 8.90, singleParent: 7.70 },
+      { year: 1998, total: 6754617, nuclear: 52.41, threeGen: 19.95, couple: 10.23, single: 9.31, singleParent: 8.10 },
+      { year: 1999, total: 6708574, nuclear: 50.65, threeGen: 19.44, couple: 11.51, single: 9.64, singleParent: 8.75 },
+      { year: 2000, total: 6708575, nuclear: 50.80, threeGen: 19.97, couple: 11.86, single: 9.67, singleParent: 7.70 },
+      { year: 2001, total: 6730886, nuclear: 47.47, threeGen: 20.33, couple: 13.03, single: 10.73, singleParent: 8.45 },
+      { year: 2002, total: 6839390, nuclear: 48.27, threeGen: 21.59, couple: 12.88, single: 8.51, singleParent: 8.75 },
+      { year: 2003, total: 6961560, nuclear: 47.27, threeGen: 20.03, couple: 14.28, single: 9.27, singleParent: 9.16 },
+      { year: 2004, total: 7083445, nuclear: 47.12, threeGen: 20.23, couple: 14.17, single: 9.94, singleParent: 8.55 },
+      { year: 2005, total: 7206883, nuclear: 44.99, threeGen: 19.68, couple: 15.98, single: 9.92, singleParent: 9.43 },
+      { year: 2006, total: 7307999, nuclear: 45.08, threeGen: 19.89, couple: 15.03, single: 10.54, singleParent: 9.47 },
+      { year: 2007, total: 7414281, nuclear: 43.67, threeGen: 20.33, couple: 15.91, single: 9.60, singleParent: 10.49 },
+      { year: 2008, total: 7544629, nuclear: 43.28, threeGen: 19.99, couple: 15.44, single: 10.76, singleParent: 10.53 },
+      { year: 2009, total: 7688014, nuclear: 42.06, threeGen: 20.62, couple: 16.11, single: 10.54, singleParent: 10.68 },
+      { year: 2010, total: 7840923, nuclear: 42.17, threeGen: 19.04, couple: 15.97, single: 11.21, singleParent: 11.61 },
+      { year: 2011, total: 7959828, nuclear: 40.85, threeGen: 20.56, couple: 17.05, single: 10.12, singleParent: 11.41 },
+      { year: 2012, total: 8077323, nuclear: 39.75, threeGen: 20.74, couple: 16.77, single: 11.02, singleParent: 11.72 },
+      { year: 2013, total: 8191640, nuclear: 38.64, threeGen: 21.64, couple: 16.85, single: 11.08, singleParent: 11.78 },
+      { year: 2014, total: 8290000, nuclear: 38.08, threeGen: 20.10, couple: 17.93, single: 11.85, singleParent: 12.04 },
+      { year: 2015, total: 8386495, nuclear: 36.22, threeGen: 20.47, couple: 19.06, single: 11.82, singleParent: 12.42 },
+      { year: 2016, total: 8458223, nuclear: 36.71, threeGen: 20.00, couple: 18.98, single: 12.09, singleParent: 12.22 },
+      { year: 2017, total: 8559187, nuclear: 36.44, threeGen: 20.17, couple: 18.70, single: 12.11, singleParent: 12.57 },
+      { year: 2018, total: 8643140, nuclear: 35.72, threeGen: 20.53, couple: 18.77, single: 12.81, singleParent: 12.17 },
+      { year: 2019, total: 8734576, nuclear: 35.24, threeGen: 20.26, couple: 19.29, single: 12.26, singleParent: 12.94 },
+      { year: 2020, total: 8829466, nuclear: 33.64, threeGen: 18.98, couple: 20.25, single: 14.37, singleParent: 12.75 },
+      { year: 2021, total: 8919896, nuclear: 33.72, threeGen: 18.08, couple: 20.33, single: 13.95, singleParent: 13.92 },
+      { year: 2022, total: 8968428, nuclear: 33.75, threeGen: 16.80, couple: 20.69, single: 15.15, singleParent: 13.61 },
+      { year: 2023, total: 9119999, nuclear: 32.43, threeGen: 17.18, couple: 21.44, single: 15.40, singleParent: 13.56 },
+      { year: 2024, total: 9262020, nuclear: 31.82, threeGen: 17.36, couple: 21.84, single: 15.62, singleParent: 13.37 }
     ];
 
     // 切換頁籤
