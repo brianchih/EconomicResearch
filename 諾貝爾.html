@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>為什麼經濟学需要個體基礎？從微觀數據到 2026 諾貝爾經濟學獎</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js 畫圖庫 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax 數學公式支援 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+
+    <!-- 頁頭 -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white py-8 shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
+                <span>淡江大學 經濟學系 專題教學</span>
+                <span>•</span>
+                <span>2026 年最新諾貝爾獎專題</span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">為什麼經濟學需要「個體基礎」？</h1>
+            <p class="text-indigo-200 text-xs md:text-sm mt-1">從家庭收支個體資料優勢到 2026 年諾貝爾經濟學獎核心突破</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4">
+
+        <!-- 分頁標籤導覽列 (Tabs Header) -->
+        <div class="flex border-b border-slate-200 mb-8 overflow-x-auto bg-white rounded-t-2xl p-2 shadow-sm border space-x-2">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm">
+                <span>📊</span> 1. 個體 vs 總體資料優勢
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🏆</span> 2. 2026 諾貝爾經濟學獎
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>💬</span> 3. 課堂口述與實務貫通
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>📈</span> 4. 互動展示與影音專區
+            </button>
+        </div>
+
+        <!-- 分頁 1：個體 vs 總體資料優勢 -->
+        <div id="tab1" class="tab-content space-y-6">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full">比較分析</span>
+                    個體資料（Microdata）相較於總體資料（Macrodata）的四大優勢
+                </h2>
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                    在數據分析中，總體數據（如全台平均薪資、失業率）就像從萬米高空俯瞰地面，能看到總量全貌，卻看不清地上每個人的處境；而個體數據（如家庭收支調查的單一微觀紀錄）則能深入捕捉異質性與真實行為。
+                </p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                <th class="p-3">比較維度</th>
+                                <th class="p-3">總體資料（Macrodata）</th>
+                                <th class="p-3">個體資料（Microdata）</th>
+                                <th class="p-3">個體資料的教學與分析優勢</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">數據型態</td>
+                                <td class="p-3">加總平均數（如全台平均月薪 5 萬元）</td>
+                                <td class="p-3">單一家庭/個人的紀錄（如 A 戶 3 萬、B 戶 10 萬）</td>
+                                <td class="p-3 font-medium text-indigo-700"><b>揭露異質性（Heterogeneity）</b>：避免平均數掩蓋貧富差距。</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">分配特徵</td>
+                                <td class="p-3">單一總量，無法觀察內部結構</td>
+                                <td class="p-3">具備完整的分配資訊（Distribution）</td>
+                                <td class="p-3 font-medium text-indigo-700"><b>掌握異質衝擊</b>：精準評估政策對高/低收入戶的不同影響。</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">分析層次</td>
+                                <td class="p-3">僅能觀察相關性，易陷入偽相關</td>
+                                <td class="p-3">可針對個體選擇進行因果推論 (Causal Inference)</td>
+                                <td class="p-3 font-medium text-indigo-700"><b>避免合成謬誤 (Fallacy of Composition)</b>：個體最佳化不等於總體疊加。</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">政策精準度</td>
+                                <td class="p-3">粗放式政策（如一律降息或全面發錢）</td>
+                                <td class="p-3">支援精準政策（Targeted Policy）制定</td>
+                                <td class="p-3 font-medium text-indigo-700"><b>資源不浪費</b>：精準協助最需要的弱勢或受害族群。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- 分頁 2：2026 諾貝爾經濟學獎理論突破 -->
+        <div id="tab2" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b pb-3">
+                    <span class="text-3xl">🏅</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">2026 諾貝爾經濟學獎焦點</h2>
+                        <p class="text-xs text-slate-500">將個體基礎（Microfoundations）導入總體經濟穩定政策的歷史性突破</p>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-amber-900 text-xs md:text-sm space-y-2">
+                    <p class="font-bold">🏆 得獎學者：Robert E. Hall（史丹佛大學）& Michael Woodford（哥倫比亞大學）</p>
+                    <p class="leading-relaxed">
+                        表彰他們在<b>「總體經濟穩定政策的個體經濟基礎（Microeconomic Foundations of Macroeconomic Stabilization）」</b>上的關鍵貢獻[span_0](start_span)[span_0](end_span)。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs md:text-sm">
+                    <div class="border border-slate-200 p-4 rounded-xl space-y-2 bg-slate-50">
+                        <h3 class="font-bold text-indigo-900 text-sm">1. Robert E. Hall 的理論貢獻</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            提出<b>「消費隨機漫步假說（Random Walk Hypothesis of Consumption）」</b>。從個體消費者在面對未來不確定性時，如何調配跨期效用最大化（Utility Maximization）出發，證明總體消費的變動取決於個體對未來的預期，而非僅由當期收入決定。
+                        </p>
+                    </div>
+                    <div class="border border-slate-200 p-4 rounded-xl space-y-2 bg-slate-50">
+                        <h3 class="font-bold text-indigo-900 text-sm">2. Michael Woodford 的理論貢獻</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            身為<b>「新凱因斯主義（New Keynesian Economics）」</b>奠基者，建立了一套將個體廠商粘性價格（Sticky Prices）與個體決策完全微觀基礎化（Micro-founded）的總體模型，成為全球中央銀行制定貨幣與利率政策的核心骨幹。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-900 text-white p-4 rounded-xl text-xs space-y-1">
+                    <p class="font-bold text-sky-300">💡 核心學術總結：</p>
+                    <p class="text-indigo-100">
+                        沒有堅實個體行為基礎的總體模型只是沙灘上的城堡；只有深入理解個體（微觀）的決策機制，才能真正掌握總體（巨觀）經濟的運作與波動！
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- 分頁 3：課堂口述與實務貫通 -->
+        <div id="tab3" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full">口述講稿</span>
+                    課堂引導與「家庭收支調查」貫通話術範本
+                </h2>
+
+                <div class="bg-slate-900 text-slate-100 p-6 rounded-2xl text-xs md:text-sm leading-relaxed space-y-4 font-sans">
+                    <p class="text-sky-300 font-bold text-base">老師可以這樣對同學們說：</p>
+                    <p>
+                        「同學們，我們上課一直請大家用《家庭收支調查》這種<b>個體資料（Microdata）</b>，而不是直接去抓政府公布的全台平均消費數據，原因就在這裡！
+                    </p>
+                    <p>
+                        如果我們只看全台灣的『平均經常性收入』，你只會看到一個平滑的數字。但當你點開每一戶個體資料，你會看到有人剛失業（$0$ 收入）、有人是雙薪家庭、有人家裡有三個小孩要撫養、有人身為高齡長者醫療支出極高。<b>這些『異質性（Heterogeneity）』才是真實世界的全貌。</b>
+                    </p>
+                    <p>
+                        這也是為什麼 <b>2026 年剛剛頒發的諾貝爾經濟學獎</b>，會頒給研究『總體經濟的個體基礎』的學者！他們告訴全球經濟學家：<b>如果你不從每一個家庭、每一家廠商怎麼做決策（個體）去研究，你永遠不可能真正搞懂全台灣乃至全球的經濟現象（總體）。</b>
+                    </p>
+                    <p>
+                        我們現在在 Colab 裡處理的每一筆家庭資料、畫的每一個分群圖與預測模型，就是在學習現代頂尖經濟學家看待世界的角度！」
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- 分頁 4：互動展示與影音專區 -->
+        <div id="tab4" class="tab-content space-y-6 hidden">
+            
+            <!-- 互動統計圖表卡片 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="bg-sky-100 text-sky-800 text-xs px-2.5 py-1 rounded-full font-bold">互動展示</span>
+                    平均數的陷阱：總體數據 vs. 個體異質性
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 text-center space-y-2">
+                        <span class="text-xs font-bold text-slate-500 uppercase">總體平均數 (Macro Level)</span>
+                        <p class="text-3xl font-extrabold text-indigo-600">全台平均所得：50,000 元</p>
+                        <p class="text-xs text-slate-500 leading-relaxed pt-2 border-t border-slate-200">
+                            政策制定者若只看總體平均，會誤認為「大家過得還不錯，無須特別補貼」。
+                        </p>
+                    </div>
+
+                    <div class="relative h-56 w-full">
+                        <canvas id="microChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- YouTube 影音播放專區 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-2 border-b pb-3">
+                    <span class="text-2xl">🎥</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">2026 諾貝爾經濟學獎報導影音專區</h2>
+                        <p class="text-xs text-slate-500">Robert Hall & Michael Woodford 獲獎報導與專題影片</p>
+                    </div>
+                </div>
+
+                <!-- 嵌入 YouTube 播放器 -->
+                <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+                    <iframe 
+                        class="w-full h-full"
+                        src="https://www.youtube.com/embed/ufIC1Mcijow" 
+                        title="2026 Nobel Prize in Economics: Robert Hall & Michael Woodford" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="text-xs text-slate-500 text-center">影片來源：YouTube - Robert Hall, Michael Woodford Wins Prize For Economic Stabilisation</p>
+            </section>
+
+        </div>
+
+    </main>
+
+    <script>
+        // 分頁切換邏輯 (Tab Switcher)
+        function switchTab(tabId) {
+            // 隱藏所有分頁內容
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // 重置所有按鈕樣式
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100";
+            });
+
+            // 顯示目標分頁內容
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // 亮顯點擊的按鈕
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm";
+
+            // 若切換到第4頁，觸發 Chart.js 重繪
+            if(tabId === 'tab4') {
+                renderChart();
+            }
+        }
+
+        // 畫圖邏輯 (Chart.js)
+        let chartInstance = null;
+        function renderChart() {
+            if(chartInstance) return; // 避免重複渲染
+            const ctx = document.getElementById('microChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['低收入戶 A', '一般家庭 B', '一般家庭 C', '高收入戶 D', '富豪家庭 E'],
+                    datasets: [{
+                        label: '個體真實所得 (Microdata)',
+                        data: [15000, 32000, 38000, 65000, 100000],
+                        backgroundColor: ['#ef4444', '#f59e0b', '#f59e0b', '#10b981', '#6366f1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
