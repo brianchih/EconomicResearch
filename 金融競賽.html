@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「金融雙豐，誰與徵鋒」前瞻金融研究競賽 | 課程專題與實務對接</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #020617 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -10px rgba(217, 119, 6, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
+
+    <!-- Hero 主視覺宣傳區 -->
+    <section class="hero-bg relative overflow-hidden py-20 px-4 md:px-8 border-b border-amber-900/40">
+        <div class="max-w-6xl mx-auto text-center space-y-6 relative z-10">
+            
+            <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs md:text-sm px-4 py-1.5 rounded-full font-semibold backdrop-blur-md">
+                <span class="flex h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
+                <span>重磅金融實務競賽 • 總獎金每主題高達 31 萬元</span>
+            </div>
+
+            <h1 class="text-3xl md:text-6xl font-black tracking-tight leading-tight">
+                金融雙豐，誰與徵鋒！<br>
+                <span class="gradient-text">前瞻金融研究競賽 號召組隊參賽</span>
+            </h1>
+
+            <p class="text-slate-300 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed">
+                由<strong class="text-amber-300">永豐銀行、兆豐銀行、金融聯合徵信中心</strong>三大權威機構出題！以嚴謹量化研究回應金融實務議題，入選隊伍更可與合作機構面對面進行職涯探索交流！
+            </p>
+
+            <!-- 報名資訊與行動呼籲按鈕 -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+                <a href="https://web.tabf.org.tw/frontierfin" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-sm md:text-base px-8 py-4 rounded-xl shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+                    <span>🏆 立即前往官方競賽專區報名</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+                <a href="index.html" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-sm md:text-base px-6 py-4 rounded-xl transition flex items-center justify-center gap-2">
+                    <span>📚 進入本課程個體數據與 AI 分析講義</span>
+                </a>
+            </div>
+
+            <p class="text-xs text-amber-200/80 font-mono">
+                📅 報名時間：2026/10/15（四）09:00 － 11/18（三）23:59 截止
+            </p>
+
+        </div>
+    </section>
+
+    <!-- 三大研究主題與課程對接說明 -->
+    <section class="py-16 px-4 md:px-8 max-w-6xl mx-auto space-y-12">
+        
+        <div class="text-center space-y-2">
+            <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold">Research Themes & Course Alignment</h2>
+            <h3 class="text-2xl md:text-4xl font-extrabold text-white">三大研究主題 ✕ 課程量化專題對接</h3>
+            <p class="text-slate-400 text-xs md:text-sm max-w-2xl mx-auto">
+                將課堂所學之個體微觀數據分析、生成式 AI 提示詞工程與機器學習風險預測，直接轉換為高品質的競賽參賽報告！
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- 主題 1 -->
+            <div class="card-hover bg-slate-900/80 border border-slate-800 p-6 rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="p-3 bg-amber-500/10 text-amber-400 rounded-xl text-2xl font-bold">🏦</span>
+                    <span class="text-xs font-bold bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-full border border-amber-500/30">永豐銀行出題</span>
+                </div>
+                <h4 class="text-lg font-bold text-white">生成式 AI 與行為財務研究</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <b>對接課程技巧：</b>運用家庭收支調查之個體消費與投資行為資料（如 <code class="text-amber-300">itm350</code> 投資收益），結合 Prompt Engineering 與生成式 AI 模型，分析投資人行為偏差與自動化財富管理建議。
+                </p>
+            </div>
+
+            <!-- 主題 2 -->
+            <div class="card-hover bg-slate-900/80 border border-slate-800 p-6 rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="p-3 bg-sky-500/10 text-sky-400 rounded-xl text-2xl font-bold">💳</span>
+                    <span class="text-xs font-bold bg-sky-500/20 text-sky-300 px-2.5 py-1 rounded-full border border-sky-500/30">兆豐銀行出題</span>
+                </div>
+                <h4 class="text-lg font-bold text-white">數位金融、穩定幣與跨境支付</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <b>對接課程技巧：</b>結合家庭資通訊設備（<code class="text-sky-300">f38</code> 電腦、<code class="text-sky-300">f52</code> 手機）與數位工具普及率，評估青年與跨國消費族群對數位金融服務、加密資產與新興跨境支付工具之接受度。
+                </p>
+            </div>
+
+            <!-- 主題 3 -->
+            <div class="card-hover bg-slate-900/80 border border-slate-800 p-6 rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl text-2xl font-bold">📊</span>
+                    <span class="text-xs font-bold bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full border border-emerald-500/30">金融聯合徵信中心出題</span>
+                </div>
+                <h4 class="text-lg font-bold text-white">金融市場信用風險管理</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    <b>對接課程技巧：</b>利用家庭負債與房貸支出（<code class="text-emerald-300">itm510</code>）等個體財務指標，透過 Colab 訓練隨機森林 (Random Forest) 或 XGBoost 信用違約預測模型，建構精準風險預警機制。
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 獎項設置與參賽資格 -->
+    <section class="py-12 px-4 md:px-8 max-w-6xl mx-auto space-y-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- 獎金細節 -->
+            <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-2xl space-y-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span>🎁</span> 豐富獎項設置（每研究主題皆設）
+                </h3>
+                <p class="text-xs text-slate-400">三大主題各自獨立設獎，總獎金高達 93 萬元！</p>
+
+                <div class="space-y-3 pt-2">
+                    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex justify-between items-center text-xs">
+                        <span class="font-bold text-amber-300">🥇 決賽組 - 首獎</span>
+                        <span class="font-mono font-extrabold text-amber-400 text-sm">獎金 NT$ 80,000 元</span>
+                    </div>
+                    <div class="p-3 bg-slate-800 border border-slate-700 rounded-xl flex justify-between items-center text-xs">
+                        <span class="font-bold text-slate-200">🥈 決賽組 - 優等獎</span>
+                        <span class="font-mono font-extrabold text-slate-300 text-sm">獎金 NT$ 50,000 元</span>
+                    </div>
+                    <div class="p-3 bg-slate-800 border border-slate-700 rounded-xl flex justify-between items-center text-xs">
+                        <span class="font-bold text-slate-200">🥉 決賽組 - 佳作獎</span>
+                        <span class="font-mono font-extrabold text-slate-300 text-sm">獎金 NT$ 30,000 元</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/60 border border-slate-800 rounded-xl flex justify-between items-center text-xs">
+                        <span class="font-bold text-slate-300">⭐ 成果發表組 - 潛力獎 / 入選獎</span>
+                        <span class="font-mono font-extrabold text-slate-400">NT$ 20,000 / 10,000 元</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 參賽資格與報名規定 -->
+            <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-2xl space-y-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span>👥</span> 參賽資格與組隊規則
+                </h3>
+
+                <ul class="space-y-3 text-xs text-slate-300 leading-relaxed list-disc list-inside">
+                    <li><b>學生身份：</b>歡迎大三、大四、碩士班及博士班同學組隊參賽。</li>
+                    <li><b>跨域組隊：</b>同校 3 ~ 5 人組隊，<b>可跨系所、跨學制自由搭配</b>。</li>
+                    <li><b>指導教授：</b>需由一名現任大專院校教師擔任指導教授（碩士在職專班除外）。歡迎各位同學邀請授課老師擔任指導！</li>
+                    <li><b>職涯交流：</b>入選隊伍將獲邀與永豐銀行、兆豐銀行及聯徵中心面對面進行職涯探索交流。</li>
+                </ul>
+
+                <div class="p-4 bg-indigo-950/60 border border-indigo-800/50 rounded-xl text-xs text-indigo-200 space-y-1 mt-4">
+                    <p class="font-bold text-indigo-300">📧 競賽主辦聯絡資訊（台灣金融研訓院）：</p>
+                    <p>信箱：<a href="mailto:ptcfax@tabf.org.tw" class="underline text-sky-300">ptcfax@tabf.org.tw</a></p>
+                    <p>電話：02-3365-3666 分機 #707 朱小姐、#705 涂小姐、#701 王小姐</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="py-8 text-center text-xs text-slate-500 border-t border-slate-900">
+        <p>© 2026 淡江大學 經濟學系 課程教學團隊 | 「金融雙豐，誰與徵鋒」前瞻金融研究競賽宣傳門戶</p>
+    </footer>
+
+</body>
+</html>
