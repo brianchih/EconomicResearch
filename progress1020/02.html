@@ -1,687 +1,380 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="dark">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第 02 組：專案研討 - 專案啟動與教學輔導報告</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            900: '#14532d',
-                        },
-                        darkbg: '#0f172a',
-                        darkcard: '#1e293b'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>第 02 組專案研討 - 專案啟動、工具摸索與教學輔導報告</title>
     <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #d97706;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #fef3c7;
+            --tag-text: #92400e;
+        }
+
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
         }
-        code, textarea.code-font {
-            font-family: 'Fira Code', monospace;
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
         }
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(100, 116, 139, 0.5);
-            border-radius: 4px;
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(100, 116, 139, 0.8);
+
+        .alert-box {
+            background-color: #fffbe3;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            color: #b45309;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-darkbg text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 flex flex-col">
+<body>
 
-    <!-- 頂部導覽列 -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-darkbg/80 border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <span class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-2 rounded-xl text-lg font-bold shadow-md shadow-emerald-500/20">
-                    <i class="fa-solid fa-code"></i>
-                </span>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">第 02 組教學輔導</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">最新 HTML 語意化與現代架構</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <!-- 深淺色模式切換 -->
-                <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-all">
-                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
-                </button>
-                <a href="#playground" class="hidden sm:inline-flex items-center space-x-2 text-sm bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl transition shadow-sm font-medium">
-                    <i class="fa-solid fa-terminal"></i>
-                    <span>程式碼演練</span>
-                </a>
-            </div>
-        </div>
+<div class="container">
+    <header>
+        <h1>第 02 組專案研討 - 專案啟動與教學輔導報告</h1>
+        <p>成員：謝佳恩、陳奇揚、魏子翔、林韋廷、楊皓棠 ｜ 主題：巨觀資料庫探勘、RStudio 工具學習與主題收斂指南</p>
     </header>
 
-    <!-- 英雄區塊 (Hero Banner) -->
-    <section class="relative overflow-hidden pt-12 pb-16 bg-gradient-to-b from-emerald-50/50 via-transparent to-transparent dark:from-emerald-950/20 dark:via-transparent dark:to-transparent">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 mb-4 border border-emerald-200 dark:border-emerald-700/50">
-                <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> 2026 前端必備規範
-            </span>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-                掌握 HTML5 語意標籤、表單驗證<br class="hidden sm:block">與最新 Web 元件規範
-            </h2>
-            <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-8">
-                深入探索現代網頁開發的核心標準。從 SEO 友善的語意結構到免 JavaScript 的原生互動與彈出視窗（Popover API），打造高無障礙性（A11y）與最佳效能的 Web 應用。
-            </p>
-        </div>
-    </section>
-
-    <!-- 主體內容區塊 -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-1 w-full space-y-12">
-
-        <!-- 課程單元頁籤導覽 (Tabs) -->
-        <section class="bg-white dark:bg-darkcard rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 transition-colors">
-            <div class="flex flex-wrap border-b border-slate-200 dark:border-slate-700 mb-6 gap-2" role="tablist">
-                <button onclick="switchTab('unit1')" id="tab-unit1" class="tab-btn active px-4 py-3 font-semibold text-sm rounded-t-xl border-b-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-sitemap"></i>
-                    <span>單元一：語意化結構</span>
-                </button>
-                <button onclick="switchTab('unit2')" id="tab-unit2" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span>單元二：現代表單驗證</span>
-                </button>
-                <button onclick="switchTab('unit3')" id="tab-unit3" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-photo-film"></i>
-                    <span>單元三：多媒體與效能</span>
-                </button>
-                <button onclick="switchTab('unit4')" id="tab-unit4" class="tab-btn px-4 py-3 font-semibold text-sm rounded-t-xl border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-window-restore"></i>
-                    <span>單元四：Web 元件與互動</span>
-                </button>
-            </div>
-
-            <!-- 單元內容容器 -->
-            <div id="tab-contents">
-                
-                <!-- 單元一內容 -->
-                <article id="content-unit1" class="tab-content block space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span class="text-emerald-500"><i class="fa-solid fa-sitemap"></i></span>
-                            語意化結構 (Semantic HTML)
-                        </h3>
-                        <button onclick="loadSnippet('unit1')" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-play"></i> 載入 Playgound 演練
-                        </button>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        語意化標籤（Semantic Tags）能清楚地向瀏覽器與搜尋引擎傳達網頁內容的結構與含意。不僅大幅提升 <strong>SEO（搜尋引擎最佳化）</strong> 排名，更對螢幕閱讀器等 <strong>無障礙輔助技術（Accessibility / A11y）</strong> 至關重要。
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-2"><i class="fa-solid fa-circle-check"></i> 常用語意標籤職責</h4>
-                            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-2">
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;header&gt;</code>：頁尾或區塊的導覽與標題檔頭。</li>
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;nav&gt;</code>：主要導覽連結選單。</li>
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;main&gt;</code>：網頁獨一無二的核心主要內容（全頁僅一個）。</li>
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;article&gt;</code>：具獨立意義、可單獨轉載的文章或卡片。</li>
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;section&gt;</code>：邏輯主題分區（通常搭配標題使用）。</li>
-                                <li><code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;aside&gt;</code>：側邊欄、補充資訊或相關廣告。</li>
-                            </ul>
-                        </div>
-                        <div class="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex flex-col justify-between">
-                            <div>
-                                <h4 class="font-bold text-emerald-700 dark:text-emerald-300 mb-2"><i class="fa-solid fa-chart-line"></i> SEO 與無障礙效益</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                    避免濫用無意義的 <code class="bg-slate-200 dark:bg-slate-700 px-1 rounded">&lt;div&gt;</code>（Div Soup）。適當使用語意標籤能使爬蟲精確索引網頁層級，有助於搜尋結果中顯示豐富摘要（Rich Snippets）。
-                                </p>
-                            </div>
-                            <div class="mt-4 p-3 bg-white dark:bg-slate-800 rounded-lg text-xs font-mono border border-slate-200 dark:border-slate-700">
-                                結構範例：<br>
-                                &lt;header&gt;&rarr;&lt;nav&gt;<br>
-                                &lt;main&gt;&rarr;&lt;article&gt; + &lt;aside&gt;<br>
-                                &lt;footer&gt;
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- 單元二內容 -->
-                <article id="content-unit2" class="tab-content hidden space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span class="text-emerald-500"><i class="fa-solid fa-list-check"></i></span>
-                            現代表單與原生活動 (Modern Forms)
-                        </h3>
-                        <button onclick="loadSnippet('unit2')" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-play"></i> 載入 Playgound 演練
-                        </button>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        HTML5 引入了豐富的原生表單控制項與動態驗證機制，無需額外撰寫大量 JS 即可實現即時驗證、自動彈出行動端專屬鍵盤與選項清單（<code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;datalist&gt;</code>）。
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm"><i class="fa-solid fa-keyboard text-emerald-500"></i> 新型 Input 類別</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">如 <code class="text-emerald-500">type="color"</code>, <code class="text-emerald-500">type="date"</code>, <code class="text-emerald-500">type="range"</code> 等，會自動喚起原生視覺選擇器。</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm"><i class="fa-solid fa-filter text-emerald-500"></i> &lt;datalist&gt; 自動完成</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">搭配 input 的 <code class="text-emerald-500">list</code> 屬性，提供可搜尋過濾的原生下拉建議選單。</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm"><i class="fa-solid fa-shield-halved text-emerald-500"></i> 原生約束驗證</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">善用 <code class="text-emerald-500">required</code>, <code class="text-emerald-500">pattern</code> (正規表達式) 與 <code class="text-emerald-500">min/max</code> 進行即時檢查。</p>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- 單元三內容 -->
-                <article id="content-unit3" class="tab-content hidden space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span class="text-emerald-500"><i class="fa-solid fa-photo-film"></i></span>
-                            多媒體與新式嵌入 (Media & Embedding)
-                        </h3>
-                        <button onclick="loadSnippet('unit3')" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-play"></i> 載入 Playgound 演練
-                        </button>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        針對不同螢幕尺寸與網絡環境，現代 HTML 提供更優良的媒體處理方式。包含根據螢幕條件切換圖檔格式的 <code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;picture&gt;</code>、以及提升載入速度的 <code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">loading="lazy"</code> 懶載入。
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2"><i class="fa-solid fa-image text-emerald-500"></i> &lt;picture&gt; 藝術指導 (Art Direction)</h4>
-                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">允許根據媒體查詢（Media Query）載入 WebP/AVIF 等高壓縮率圖片，支援不同尺寸載入不同比例裁切。</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2"><i class="fa-solid fa-bolt text-emerald-500"></i> 原生 iframe 與圖片 懶載入</h4>
-                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">只需設置 <code class="text-emerald-500">loading="lazy"</code>，瀏覽器會在元素滾動至視窗附近時才發送 HTTP 請求，顯著優化 Core Web Vitals (LCP) 指標。</p>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- 單元四內容 -->
-                <article id="content-unit4" class="tab-content hidden space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span class="text-emerald-500"><i class="fa-solid fa-window-restore"></i></span>
-                            最新 Web 元件與互動 (Web Components & Interactive)
-                        </h3>
-                        <button onclick="loadSnippet('unit4')" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition flex items-center gap-1 font-medium">
-                            <i class="fa-solid fa-play"></i> 載入 Playgound 演練
-                        </button>
-                    </div>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        HTML 規範新增了極強大的互動元件！原生 <code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;dialog&gt;</code>、無須 JS 的手風琴摺疊 <code class="bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded text-emerald-600 dark:text-emerald-300">&lt;details&gt;</code> 與最新 <strong>popover</strong> 屬性，大幅降低組件開發門檻。
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1 text-sm">&lt;dialog&gt; 對話框</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">原生支援 Modal 模式、背景遮罩 (<code class="text-emerald-500">::backdrop</code>) 與 Esc 鍵關閉。</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1 text-sm">&lt;details&gt; & &lt;summary&gt;</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">原生實現問答手風琴（Accordion），具備語意化展開與收合狀態。</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-                            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1 text-sm">Popover API</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">只需 HTML 屬性即可讓任何元素變身為浮動選單或提示視窗（Tooltip）。</p>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-        </section>
-
-        <!-- 即時程式碼編輯與預覽器 (Live Code Playground) -->
-        <section id="playground" class="bg-white dark:bg-darkcard rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors">
-            <div class="bg-slate-100 dark:bg-slate-800/80 px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center space-x-2">
-                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                    <h3 class="font-bold text-sm text-slate-700 dark:text-slate-200 ml-2">
-                        <i class="fa-solid fa-laptop-code mr-1.5 text-emerald-500"></i>即時 HTML 程式碼 Playground
-                    </h3>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="copyCode()" class="text-xs bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg transition flex items-center space-x-1">
-                        <i class="fa-solid fa-copy"></i>
-                        <span>複製程式碼</span>
-                    </button>
-                    <button onclick="updatePreview()" class="text-xs bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg transition font-medium flex items-center space-x-1 shadow-sm">
-                        <i class="fa-solid fa-rotate-right"></i>
-                        <span>重新執行</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 dark:divide-slate-800 min-h-[420px]">
-                <!-- Code Editor -->
-                <div class="p-4 flex flex-col bg-slate-900">
-                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-                        <span>HTML 輸入區</span>
-                        <span class="text-emerald-400 font-mono">HTML5 Live</span>
-                    </div>
-                    <textarea id="htmlInput" class="code-font flex-1 w-full bg-transparent text-slate-200 text-sm focus:outline-none resize-none leading-relaxed" spellcheck="false"></textarea>
-                </div>
-
-                <!-- Preview Output -->
-                <div class="p-4 flex flex-col bg-white dark:bg-slate-900/50">
-                    <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
-                        <span>動態渲染結果</span>
-                        <span class="flex items-center text-xs"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-1 animate-pulse"></span> 即時預覽</span>
-                    </div>
-                    <div class="flex-1 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white overflow-hidden min-h-[300px]">
-                        <iframe id="previewFrame" class="w-full h-full border-0"></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 隨堂自我檢測 (Quiz) -->
-        <section class="bg-white dark:bg-darkcard rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transition-colors">
-            <div class="mb-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-4">
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <span class="text-emerald-500"><i class="fa-solid fa-clipboard-question"></i></span>
-                        隨堂觀念自我檢測
-                    </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">鞏固學習成果，點擊選項立即獲得觀念解析</p>
-                </div>
-                <span class="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 font-bold px-3 py-1 rounded-full">共 4 題</span>
-            </div>
-
-            <div class="space-y-6" id="quizContainer">
-                <!-- Quiz Items will be dynamically generated/managed -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- 頁尾區域 -->
-    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-darkbg py-6 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
-            <p>© 2026 前端教學輔導系統 —— 第 02 組：最新 HTML 語意化與現代網頁架構課程</p>
-            <p>Designed with Semantic HTML5, Tailwind CSS & Vanilla JavaScript</p>
-        </div>
-    </footer>
-
-    <!-- 全局提示 (Toast Notice) -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white dark:bg-emerald-600 text-sm px-4 py-3 rounded-xl shadow-2xl opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2 z-50 flex items-center space-x-2">
-        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-white"></i>
-        <span id="toastMsg">成功訊息</span>
+    <div class="alert-box">
+        <strong>📌 組別異動與歷史資料說明：</strong> 經資料庫原始紀錄核對，第 02 組共有 9 筆填報紀錄（謝佳恩、陳奇揚、魏子翔、林韋廷、楊皓棠），填報題目均為「未定」。部分成員後期分流並在第 12 組（孫靖淳等）展開 TIGPS 追蹤研究。本報告專為「第 02 組原始成員」之實作進度進行精準分析與轉型輔導。
     </div>
 
-    <!-- JavaScript 邏輯 -->
-    <script>
-        // 預設代碼範例庫
-        const codeSnippets = {
-            unit1: `<!-- 單元一：語意化結構範例 -->
-<header style="background: #10b981; color: white; padding: 1rem; border-radius: 8px;">
-  <h2>前端科技誌</h2>
-  <nav>
-    <a href="#" style="color: white; margin-right: 10px;">首頁</a>
-    <a href="#" style="color: white;">技術文章</a>
-  </nav>
-</header>
-
-<main style="margin-top: 1rem; display: flex; gap: 1rem; font-family: sans-serif;">
-  <article style="flex: 2; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-    <h3>HTML5 語意化的核心價值</h3>
-    <p>使用 article 與 section 能幫助搜尋引擎精準抓取內容...</p>
-  </article>
-  
-  <aside style="flex: 1; background: #f3f4f6; padding: 1rem; border-radius: 8px; color: #333;">
-    <h4>熱門標籤</h4>
-    <p>#SEO #A11y #HTML5</p>
-  </aside>
-</main>`,
-
-            unit2: `<!-- 單元二：現代表單與原生活動 -->
-<form onsubmit="event.preventDefault(); alert('表單驗證成功！');" style="font-family: sans-serif; padding: 1rem; display: grid; gap: 1rem; max-width: 400px;">
-  
-  <label style="display: flex; flex-col; font-weight: bold;">
-    選擇主題顏色：
-    <input type="color" value="#10b981" style="height: 40px; border: none; cursor: pointer;">
-  </label>
-
-  <label style="display: flex; flex-col; font-weight: bold;">
-    喜愛前端技術（Datalist 選單）：
-    <input list="frameworks" name="framework" placeholder="請輸入或選擇..." required style="padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-top: 4px;">
-    <datalist id="frameworks">
-      <option value="HTML5 & CSS3">
-      <option value="Vue.js">
-      <option value="React.js">
-      <option value="Angular">
-    </datalist>
-  </label>
-
-  <label style="font-weight: bold;">
-    滿意度評分 (1-100)：
-    <input type="range" min="1" max="100" value="80" style="width: 100%;">
-  </label>
-
-  <button type="submit" style="background: #10b981; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
-    提交表單驗證
-  </button>
-</form>`,
-
-            unit3: `<!-- 單元三：多媒體與新式嵌入 -->
-<div style="font-family: sans-serif; space-y: 1rem;">
-  <h3>響應式圖片 &lt;picture&gt;</h3>
-  <picture>
-    <!-- 當螢幕寬度小於 600px 時載入高對比或小圖 -->
-    <source media="(max-width: 600px)" srcset="https://picsum.photos/400/200?grayscale">
-    <!-- 預設載入圖片 -->
-    <img src="https://picsum.photos/800/300" alt="示範圖片" loading="lazy" style="width: 100%; border-radius: 8px;">
-  </picture>
-
-  <h3 style="margin-top: 1.5rem;">Lazy Loading Iframe 嵌入</h3>
-  <iframe 
-    src="https://maps.google.com/maps?q=Taipei101&t=&z=13&ie=UTF8&iwloc=&output=embed" 
-    width="100%" 
-    height="200" 
-    loading="lazy" 
-    style="border:0; border-radius: 8px;">
-  </iframe>
-</div>`,
-
-            unit4: `<!-- 單元四：最新 Web 元件與互動 -->
-<div style="font-family: sans-serif; padding: 1rem; space-y: 1rem;">
-
-  <!-- 原生 details 手風琴 -->
-  <details style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-    <summary style="font-weight: bold; cursor: pointer; color: #166534;">什麼是 Popover API？ (點擊展開)</summary>
-    <p style="margin-top: 8px; font-size: 0.9rem; color: #374151;">Popover 允許開發者免用額外套件，即可建立浮動式快訊視窗與提示圖層。</p>
-  </details>
-
-  <!-- 原生 Dialog 視窗 -->
-  <button onclick="document.getElementById('myDialog').showModal()" style="background: #0284c7; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-    開啟原生 Dialog 視窗
-  </button>
-
-  <dialog id="myDialog" style="border: none; border-radius: 12px; padding: 1.5rem; border: 1px solid #ccc; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-    <h3 style="margin-top: 0; color: #0284c7;">原生對話框 (&lt;dialog&gt;)</h3>
-    <p>這不需要傳統套件！內建對焦鎖定與 Esc 鍵關閉功能。</p>
-    <button onclick="document.getElementById('myDialog').close()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-      關閉對話框
-    </button>
-  </dialog>
-
-</div>`
-        };
-
-        // 測驗題目數據
-        const quizData = [
-            {
-                id: 1,
-                question: "1. 關於 HTML5 的語意標籤，下列何者描述最為正確？",
-                options: [
-                    "A. 全頁可以出現多個 <main> 標籤以強調主要內容",
-                    "B. <article> 適合用在具備獨立意義、可被獨立轉載的內容卡片",
-                    "C. 使用 <aside> 標籤會使搜尋引擎扣分，應該盡量避免",
-                    "D. <section> 可以完全取代所有的 <div> 標籤"
-                ],
-                answer: 1,
-                explanation: "<article> 表示頁面中一塊獨立、完整的內容結構（如部落格文章、新聞或產品卡片）。而 <main> 在全網頁中應是獨一無二的。"
-            },
-            {
-                id: 2,
-                question: "2. 若希望在輸入框提供建議清單，但同時允許使用者自由輸入非清單中的內容，應使用哪種標籤組合？",
-                options: [
-                    "A. <select> 搭配 <option>",
-                    "B. <input> 搭配 list 屬性與 <datalist>",
-                    "C. <form> 搭配 <fieldset>",
-                    "D. <details> 搭配 <summary>"
-                ],
-                answer: 1,
-                explanation: "<input list='myList'> 搭配 <datalist id='myList'> 可以在使用者打字時自動過濾建議選單，同時仍保有自訂文字輸入彈性。"
-            },
-            {
-                id: 3,
-                question: "3. 關於 <iframe loading=\"lazy\"> 屬性的主要效益何者正確？",
-                options: [
-                    "A. 可以自動將嵌入的圖片轉換為 WebP 格式",
-                    "B. 當元素滾動到靠近視窗時才進行請求，以優化網頁載入效能",
-                    "C. 能夠防止 XSS 攻擊與跨網域發送數據",
-                    "D. 自動修正 iframe 內部網頁的響應式尺寸"
-                ],
-                answer: 1,
-                explanation: "loading=\"lazy\" 是瀏覽器原生支援的延遲載入（Lazy Loading），能大幅減少初次渲染（First Contentful Paint）時的網路流量與負載。"
-            },
-            {
-                id: 4,
-                question: "4. 若要使用 HTML 原生彈出視窗（Modal Dialog），應該呼叫 <dialog> 元素的哪一個 JavaScript 方法？",
-                options: [
-                    "A. element.openModal()",
-                    "B. element.showModal()",
-                    "C. element.setAttribute('visible', true)",
-                    "D. element.popover('show')"
-                ],
-                answer: 1,
-                explanation: "呼叫 <dialog>.showModal() 會將對話框顯示為最高層級 (Top Layer) Modal 視窗，並附帶預設背景遮罩 (::backdrop) 效果。"
-            }
-        ];
-
-        // 初始化
-        window.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            loadSnippet('unit1');
-            renderQuiz();
-        });
-
-        // 頁籤切換
-        function switchTab(unitKey) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
-                btn.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
-            });
-
-            const activeBtn = document.getElementById(`tab-${unitKey}`);
-            activeBtn.classList.add('active', 'border-emerald-500', 'text-emerald-600', 'dark:text-emerald-400');
-            activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
-
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-                content.classList.remove('block');
-            });
-
-            const activeContent = document.getElementById(`content-${unitKey}`);
-            activeContent.classList.remove('hidden');
-            activeContent.classList.add('block');
-
-            // 同步切換 Playground 範例
-            loadSnippet(unitKey);
-        }
-
-        // 載入代碼片段到編輯器
-        function loadSnippet(unitKey) {
-            const editor = document.getElementById('htmlInput');
-            if (codeSnippets[unitKey]) {
-                editor.value = codeSnippets[unitKey];
-                updatePreview();
-                showToast(`已載入 ${unitKey.toUpperCase()} 範例代碼`);
-            }
-        }
-
-        // 更新動態預覽
-        function updatePreview() {
-            const htmlContent = document.getElementById('htmlInput').value;
-            const iframe = document.getElementById('previewFrame');
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-            iframeDoc.open();
-            iframeDoc.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <style>
-                        body { font-family: system-ui, sans-serif; padding: 12px; margin: 0; color: #1e293b; }
-                    </style>
-                </head>
-                <body>
-                    ${htmlContent}
-                </body>
-                </html>
-            `);
-            iframeDoc.close();
-        }
-
-        // 即時監聽編輯器輸入（Debounce）
-        let timeoutId;
-        document.getElementById('htmlInput').addEventListener('input', () => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(updatePreview, 500);
-        });
-
-        // 複製代碼
-        function copyCode() {
-            const code = document.getElementById('htmlInput').value;
-            // 優先使用標準 Clipboard API，若受限於 iframe/環境則降級處理
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(code).then(() => {
-                    showToast("代碼已成功複製到剪貼簿！");
-                }).catch(() => {
-                    fallbackCopy(code);
-                });
-            } else {
-                fallbackCopy(code);
-            }
-        }
-
-        function fallbackCopy(text) {
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            textarea.style.position = "fixed";
-            textarea.style.left = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                showToast("代碼已成功複製到剪貼簿！");
-            } catch (err) {
-                showToast("複製失敗，請手動複製");
-            }
-            document.body.removeChild(textarea);
-        }
-
-        // Toast 訊息顯示
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMsg');
-            toastMsg.innerText = msg;
-            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
-            toast.classList.add('opacity-100', 'translate-y-0');
-
-            setTimeout(() => {
-                toast.classList.remove('opacity-100', 'translate-y-0');
-                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
-            }, 2500);
-        }
-
-        // 深淺色模式切換邏輯
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-
-        function initTheme() {
-            if (localStorage.theme === 'light') {
-                document.documentElement.classList.remove('dark');
-                themeIcon.className = 'fa-solid fa-sun text-lg text-amber-500';
-            } else {
-                document.documentElement.classList.add('dark');
-                themeIcon.className = 'fa-solid fa-moon text-lg';
-            }
-        }
-
-        themeToggle.addEventListener('click', () => {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                themeIcon.className = 'fa-solid fa-sun text-lg text-amber-500';
-                showToast('已切換為明亮模式');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                themeIcon.className = 'fa-solid fa-moon text-lg';
-                showToast('已切換為深色模式');
-            }
-        });
-
-        // 渲染隨堂測驗
-        function renderQuiz() {
-            const container = document.getElementById('quizContainer');
-            container.innerHTML = quizData.map((q, idx) => `
-                <div class="p-5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 transition">
-                    <h4 class="font-bold text-slate-800 dark:text-slate-100 mb-3 text-base">${q.question}</h4>
-                    <div class="space-y-2 mb-4">
-                        ${q.options.map((opt, optIdx) => `
-                            <button onclick="checkAnswer(${idx}, ${optIdx})" id="q${idx}-opt${optIdx}" class="quiz-opt-${idx} w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-700 transition flex items-center justify-between">
-                                <span>${opt}</span>
-                                <i class="fa-regular fa-circle text-slate-400 opacity-50"></i>
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div id="explanation-${idx}" class="hidden p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                        <span class="font-bold text-emerald-600 dark:text-emerald-400 block mb-1">💡 觀念解析：</span>
-                        ${q.explanation}
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 實際研究演進脈絡</h2>
+                <span class="badge">三階段工具與主題摸索</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：多元資料庫帳號申請與探勘 (09/23 - 10/06)</div>
+                    <div class="timeline-title">跨資料庫試採 (AREMOS, Open Data, SRDA)</div>
+                    <div class="timeline-desc">
+                        陳奇揚、楊皓棠、魏子翔與林韋廷建立雲端資料資料夾，廣泛嘗試政府資料開放平臺 (data.gov.tw)、AREMOS 總經資料庫，並申請中研院 SRDA 學術調查資料庫帳號。
                     </div>
                 </div>
-            `).join('');
-        }
 
-        // 檢查答案
-        function checkAnswer(qIdx, optIdx) {
-            const q = quizData[qIdx];
-            const buttons = document.querySelectorAll(`.quiz-opt-${qIdx}`);
-            const explanation = document.getElementById(`explanation-${qIdx}`);
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：統計工具多軌學習與測試 (09/23 - 10/09)</div>
+                    <div class="timeline-title">學習 RStudio 與 Gemini AI 協作繪圖</div>
+                    <div class="timeline-desc">
+                        謝佳恩學習使用 RStudio 進行數據匯整與清理；陳奇揚則透過 Gemini AI 建立對話，測試程式碼生成與圖表對接邏輯。
+                    </div>
+                </div>
 
-            // 停用當前題目的選項點擊
-            buttons.forEach(btn => btn.disabled = true);
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：主題聚焦與專案定位期 (10/17 至今)</div>
+                    <div class="timeline-title">尋找核心經濟學命題與實證架構</div>
+                    <div class="timeline-desc">
+                        團隊已具備基礎數據抓取與 R/Python 工具操作經驗，目前正處於將「基礎資料工具試用」轉化為「具體產業分析/計量論文命題」的關鍵過渡期。
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            buttons.forEach((btn, i) => {
-                const icon = btn.querySelector('i');
-                if (i === q.answer) {
-                    btn.classList.remove('bg-white', 'dark:bg-slate-800', 'border-slate-200');
-                    btn.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-700', 'dark:text-emerald-300', 'font-semibold');
-                    icon.className = 'fa-solid fa-circle-check text-emerald-500';
-                } else if (i === optIdx && optIdx !== q.answer) {
-                    btn.classList.remove('bg-white', 'dark:bg-slate-800');
-                    btn.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
-                    icon.className = 'fa-solid fa-circle-xmark text-rose-500';
-                }
-            });
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">跨工具探勘團隊</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">謝佳恩</div>
+                    <div class="member-role">數據分析 Lead / RStudio 實作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>學習並掌握 RStudio 數據處理環境</li>
+                            <li>進行外部資料匯整與清理作業</li>
+                            <li>負責資料檔案上傳與格式驗證</li>
+                        </ul>
+                    </div>
+                </div>
 
-            explanation.classList.remove('hidden');
-        }
-    </script>
+                <div class="member-card">
+                    <div class="member-name">陳奇揚</div>
+                    <div class="member-role">資料庫採集 / Gemini AI 協作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導 SRDA 帳號申請與論文檢索</li>
+                            <li>檢索 AREMOS 與 data.gov.tw 公開數據</li>
+                            <li>編寫 Gemini 提示詞進行計量圖表測試</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">魏子翔</div>
+                    <div class="member-role">雲端架構 / 數據檔案管理</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>建立與維護 Google Drive 共享資料夾</li>
+                            <li>協助原始數據清理與欄位轉換</li>
+                            <li>管理小組專案檔案版本</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">林韋廷</div>
+                    <div class="member-role"> Open Data 探勘 / AI 工具輔助</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋政府公開平臺經濟相關數據</li>
+                            <li>嘗試運用 AI 工具輔助程式碼除錯</li>
+                            <li>協助整理小組討論素材</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">楊皓棠</div>
+                    <div class="member-role">專案營運 / 資料整理與歸檔</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>協助上傳與備份專案資料連結</li>
+                            <li>檢視巨觀經濟數據之完整性</li>
+                            <li>參與主題討論與進度彙整</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 02 組突破與定題的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、從「工具學習」跨越至「核心命題確立」（擺脫未定狀態）</h4>
+            <ul>
+                <li><strong>研究主題定位與發想</strong>：小組目前已學會 RStudio 與 SRDA/AREMOS 讀檔，但題目仍標示為「未定」。小組更偏向研究「總體經濟（如通膨與利率對投資之影響）」還是「個體/產業面（如金融科技、永續消費或房價負擔）」？</li>
+                <li><strong>資料庫確定 (Data Source Commitment)</strong>：如果打算使用 RStudio 或 Python，是否能在本週確定主要使用的資料集（例如：SRDA 家庭收支調查、AREMOS 總經年報或政府實價登登錄檔）？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、工具整合與分析深化（RStudio + Python / AI 雙軌應用）</h4>
+            <ul>
+                <li><strong>R 與 Python 之協同分工</strong>：謝佳恩已掌握 RStudio，陳奇揚善用 AI 生成程式碼。小組能否建立一套流程，由 RStudio 負責前置資料清理與敘述統計，再由 Colab / Python 產出迴歸散佈圖與計量模型？</li>
+                <li><strong>相關性與迴歸驗證</strong>：下載資料後，小組能否在下週產出第一張含有趨勢線與相關係數的散佈圖，並試著解釋其經濟邏輯？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、團隊定位與競賽目標對接</h4>
+            <ul>
+                <li><strong>團隊分工與固定會議機制</strong>：經歷過成員流動後，第 02 組目前的成員架構已趨穩定。小組是否已確立每週固定開會時間與進度檢核點？</li>
+                <li><strong>競賽對接方向建議</strong>：
+                    <ul>
+                        <li>若選擇「總體金融與經濟波動」，可對接<strong>《金融研訓院 前瞻金融研究競賽》</strong>。</li>
+                        <li>若選擇「個體調查與社會經濟」，極適合投稿<strong>《臺灣經驗實證調查資料論文獎》</strong>。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 02 組專案深度輔導報告</p>
+    </footer>
+</div>
+
 </body>
 </html>
+02.html
+目前顯示的是「02.html」。
