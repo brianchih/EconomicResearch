@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程重點摘要與小組進度診斷（第六週） | 淡江大學經濟學系</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 數學公式支援 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+
+    <!-- 頁頭 Banner -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white py-8 shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
+                    <span>淡江大學 經濟學系</span>
+                    <span>•</span>
+                    <span>產業分析實作 / 頂石課程專題（第六週）</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">課程重點摘要、競賽對接與成果展規劃</h1>
+                <p class="text-indigo-200 text-xs md:text-sm mt-1">個體數據優勢、2026諾貝爾經濟學獎理論、小組診斷與 12/15 頂石成果展流程</p>
+            </div>
+            <button onclick="window.print()" class="no-print bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold py-2 px-4 rounded-lg shadow transition flex items-center gap-2 shrink-0">
+                🖨️ 列印 / 另存 PDF
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 space-y-8">
+
+        <!-- 分頁標籤導覽列 (Tabs Header) -->
+        <div class="no-print flex border-b border-slate-200 mb-6 overflow-x-auto bg-white rounded-2xl p-2 shadow-sm border space-x-2">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm">
+                <span>🏦</span> 1. 金融雙豐競賽
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>📊</span> 2. 個體優勢與諾貝爾獎
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>📂</span> 3. SRDA / TEJ 與數據演變
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🔍</span> 4. 各組進度診斷
+            </button>
+            <button onclick="switchTab('tab5')" id="btn-tab5" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🏆</span> 5. 12/15 成果展規劃
+            </button>
+        </div>
+
+        <!-- TAB 1: 金融雙豐競賽 -->
+        <div id="tab1" class="tab-content space-y-6">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center justify-between border-b pb-3">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">最新競賽</span>
+                        「金融雙豐，誰與徵鋒」前瞻金融研究競賽
+                    </h2>
+                    <a href="https://web.tabf.org.tw/frontierfin" target="_blank" rel="noopener noreferrer" class="no-print bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs px-4 py-2 rounded-xl shadow transition">
+                        🔗 競賽官方報名專區
+                    </a>
+                </div>
+
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                    由永豐銀行、兆豐銀行與金融聯合徵信中心共同出題，鼓勵學生運用嚴謹量化研究回應金融實務議題。每研究主題總獎金高達 31 萬元（首獎 8 萬、優等 5 萬、佳作 3 萬），入選隊伍可參加金融機構面對面職涯交流與線上諮詢。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <span class="font-bold text-amber-700 block text-sm">永豐銀行出題</span>
+                        <h3 class="font-bold text-slate-800">生成式 AI 與行為財務研究</h3>
+                        <p class="text-slate-600">探討 AI 對行為財務理論之驗證、投資客群行為偏誤（損失趨避、處分效果）與模擬決策差異。</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <span class="font-bold text-sky-700 block text-sm">兆豐銀行出題</span>
+                        <h3 class="font-bold text-slate-800">數位金融、穩定幣與跨境支付</h3>
+                        <p class="text-slate-600">評估穩定幣對跨境支付效率/成本影響、數位貨幣與傳統法幣服務競爭及金融監理架構。</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <span class="font-bold text-emerald-700 block text-sm">金融聯徵中心出題</span>
+                        <h3 class="font-bold text-slate-800">金融市場信用風險管理</h3>
+                        <p class="text-slate-600">結合聯徵開放資料（產業違約率、房貸/信貸評分），分析 ESG 氣候風險或普惠金融下之信用風險預測。</p>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                    <div>
+                        <b>📌 報名規定：</b>同校 3 ~ 5 人組隊（可跨系所/跨學制），須由一名專任教師指導。
+                        <br><b>📅 重要時程：</b>即日起至 <b>2026/11/18（三）23:59 截止</b>上傳研究報告（與中原競賽截止日一致）。
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: 個體優勢與諾貝爾獎 -->
+        <div id="tab2" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">理論突破</span>
+                    個體資料（Microdata）優勢與 2026 諾貝爾經濟學獎微觀基礎
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- 個體四大優勢 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">💡 個體資料相較總體數據的四大優勢</h3>
+                        <ul class="list-disc list-inside space-y-1.5 text-slate-600">
+                            <li><b>揭露異質性（Heterogeneity）：</b>避開平均數陷阱，看見極端貧富差距與極端處境。</li>
+                            <li><b>掌握異質衝擊：</b>完整分配資訊能精準評估相同政策對高/低收入戶的不同影響。</li>
+                            <li><b>精準因果推論：</b>避免合成謬誤（個體最佳化不等於總體疊加）與偽相關。</li>
+                            <li><b>支援精準政策（Targeted Policy）：</b>精準將資源補助發放給最需要的受害族群。</li>
+                        </ul>
+                    </div>
+
+                    <!-- 諾貝爾獎 -->
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-200 space-y-2">
+                        <h3 class="font-bold text-amber-900 text-sm">🏆 2026 諾貝爾經濟學獎核心價值</h3>
+                        <p class="text-amber-950 leading-relaxed">
+                            得主 <b>Robert E. Hall</b>（消費隨機漫步假說）與 <b>Michael Woodford</b>（新凱因斯名目價格黏性與前瞻定價）打破總體黑盒子，從家戶與企業的個體決策（Microfoundations）建立總體穩定政策[span_0](start_span)[span_0](end_span)。
+                        </p>
+                        <blockquote class="bg-white p-2.5 rounded-lg border-l-4 border-amber-500 font-medium text-amber-900">
+                            「沒有個體行為基礎的總體模型，就像建立在沙灘上的城堡[span_1](start_span)[span_1](end_span)；唯有深入微觀決策，才能真正掌握總體經濟波動。」
+                        </blockquote>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 3: SRDA / TEJ 與數據演變 -->
+        <div id="tab3" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">數據實務</span>
+                    SRDA / TEJ 資料庫規範與台灣家庭跨世代演變 (90年 vs 113年)
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- SRDA 規範 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">🔒 SRDA 學術調查資料庫合規守則</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            學生身分申請須選「課堂練習」並附選課截圖。恪守五大原則：<b>禁止轉讓他人、限學術/課堂使用、不得試圖反向識別個人身分、發現資安疑慮立即停用、公開成果須確實引用出處</b>。
+                        </p>
+                        <p class="text-indigo-600 font-semibold pt-1 border-t border-slate-200">
+                            🏛️ TEJ 存取：圖書館搜尋「TEJ」，事件研究系統預設通行帳號 <code class="bg-white px-1 font-mono">TKU</code>，密碼 <code class="bg-white px-1 font-mono">TEJ</code>。
+                        </p>
+                    </div>
+
+                    <!-- 90年 vs 113年對比 -->
+                    <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 space-y-2">
+                        <h3 class="font-bold text-emerald-900 text-sm">📈 台灣家庭特徵縱貫演變分析</h3>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1">
+                            <li><b>戶長職業：</b>90 年以「製造業」為主；113 年因高齡化，「無業者（退休）」躍居第一。</li>
+                            <li><b>戶內人口：</b>90 年以 4 人核心家庭為主；113 年縮減至 2 人（單身/頂客族增加）。</li>
+                            <li><b>就業人數：</b>90 年以雙薪（2人就業）為主；113 年以單薪（1人就業）居多。</li>
+                            <li><b>高齡衝擊：</b>113 年戶內有 65 歲以上長者的家庭比例已超過 50%。</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 4: 各組進度診斷 -->
+        <div id="tab4" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">進度診斷</span>
+                    第六週各專題小組進度檢視與精進建議
+                </h2>
+
+                <div class="space-y-4 text-xs">
+                    
+                    <!-- 第四組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第四組：ESG 空汙與企業數據對接（佩軒、支橋、子成）</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono font-bold">具備 18 筆填報紀錄</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <b>優勢：</b>已串接 TEJ 公司治理評鑑與 AQI/PM2.5 空汙開放資料，檢索 PLOS ONE 期刊對接。<br>
+                            <b>診斷指引：</b>須處理企業總部/廠區坐標與空汙測站空間配對誤差，並解決 ESG 與低空汙地區之間的反向因果（內生性問題），可加入滯後項（Lag）與工具變數（IV）。可包裝為綠色授信審查或氣候風險定價模組投遞金融競賽。
+                        </p>
+                    </div>
+
+                    <!-- 第十組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十組：循環經濟 SustainAI 追溯平台（淤泥、尾城、玉林、燕龍）</span>
+                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-bold">填報最勤奮小組</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <b>優勢：</b>運用 VSCode、Supabase 資料庫建置動態網頁展示平台，具備跨領域整合。<br>
+                            <b>診斷指引：</b>概念創新度高但缺乏個體/總體數據的實證劑量驗證；須進一步確認回收轉換率、碳權扣抵等財務參數。建議將平台定位轉為金融機構的「綠色融資審查工具」對接金融研訓院競賽。
+                        </p>
+                    </div>
+
+                    <!-- 第十一組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十一組：GDP 年增率與 CPI 物價傳導（以程、小韓）</span>
+                            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono font-bold">實作經驗豐富</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <b>優勢：</b>完成 Arimos 時間序列抓取、繪製雙 Y 軸圖與散佈圖，導入 Lag effect 概念。<br>
+                            <b>診斷指引：</b>須進行平穩性檢定（ADF 單根檢定）避免虛假迴歸；建議拆解 CPI 與 GDP 結構，並納入匯率與進口物價控制變數。可包裝為台灣總體通膨傳導預測模型參加競賽。
+                        </p>
+                    </div>
+
+                    <!-- 第十二組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十二組：TIGPS 青少年數位成長縱貫研究（淨存、僅層、韋漢、博業）</span>
+                            <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-mono font-bold">成功下載 SRDA 資料</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <b>優勢：</b>成功申請並下載 SRDA 之 TIGPS 追蹤問卷資料庫。<br>
+                            <b>診斷指引：</b>熟悉問卷編碼簿之變數轉換；發揮追蹤資料（Panel Data）優勢，利用固定效應模型（Fixed Effects）分析數位使用時間對學業與心理表現（如情緒低落）的影響。極度契合「臺灣經驗實證調查資料論文獎」。
+                        </p>
+                    </div>
+
+                    <!-- 第九組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <span class="font-bold text-indigo-900 text-sm block">第九組：住宅負擔與生育率實證分析</span>
+                        <p class="text-slate-600 leading-relaxed">
+                            <b>診斷指引：</b>目前多為總體數據，建議結合 SRDA 之「社會變遷基本調查」或家庭收支個體資料，驗證房價對青年家戶生育決策之抑制效果。
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 5: 12/15 成果展規劃 -->
+        <div id="tab5" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">12/15 頂石課程期末成果展（企劃組/第三組規劃）</h2>
+                        <p class="text-xs text-slate-500">規劃背景、時間地點、評分機制與獎金細則</p>
+                    </div>
+                    <span class="bg-rose-100 text-rose-800 text-xs px-3 py-1 rounded-full font-bold">12月15日 (二) 12:00 - 15:00</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    
+                    <!-- 場地與流程 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">📍 場地安排與簡報流程</h3>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li><b>集合與等候地點：</b>B507 教室（12:00 可進場，13:00 正式開幕）。</li>
+                            <li><b>評審面談研討室：</b>3 樓研討室共 3 間（每間設 1 校外 + 1 校內評審）。</li>
+                            <li><b>兩輪簡報發表：</b>每組發表 2 輪（分別面對不同評審組合）。</li>
+                            <li><b>簡報時間：</b>報告 8 分鐘 + Q&A 答辯 4 分鐘（第 5 分鐘按一聲鈴，第 6 分鐘按兩聲，第 10 分鐘長鈴強制結束）。</li>
+                            <li><b>流暢度要求：</b>簡報檔須提前上傳預載於研討室電腦，嚴禁現場登入，全組成員均須準備答辯。</li>
+                        </ul>
+                    </div>
+
+                    <!-- 評分與獎金採計優化 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">⚖️ 評分占比與獎金優化</h3>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li><b>初審 (40%)：</b>展前 10 天 (12/5) 繳交完整書面專題報告。</li>
+                            <li><b>複審 (60%)：</b>成果展現場兩輪發表（取兩輪平均）。</li>
+                            <li><b>獎金設置：</b>第一名 3,000 元、第二名 2,000 元、第三名 1,500 元（含個人獎狀與證書夾）。</li>
+                            <li><b>當天不頒獎：</b>為確保分數核算精確無誤，成果展當天完成簡報與團拍後閉幕，成績與頒獎移至次週課堂頒發。</li>
+                            <li><b>午餐餐盒：</b>運用課程計畫額度，為 12:00 提前到場準備之同學與評審提供餐盒/茶點。</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto px-4 mt-12 text-center text-xs text-slate-400">
+        <p>© 2026 淡江大學 經濟學系 課程教學團隊 | 本網頁整合今日課堂講學重點、競賽對接與頂石成果展規劃</p>
+    </footer>
+
+    <script>
+        // 分頁切換邏輯 (Tab Switcher)
+        function switchTab(tabId) {
+            // 隱藏所有分頁內容
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // 重置所有按鈕樣式
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100";
+            });
+
+            // 顯示目標分頁內容
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // 亮顯點擊的按鈕
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm";
+        }
+    </script>
+
+</body>
+</html>
