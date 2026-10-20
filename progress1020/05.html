@@ -8,13 +8,13 @@
         :root {
             --primary-color: #1a365d;
             --secondary-color: #2b6cb0;
-            --accent-color: #d69e2e;
+            --accent-color: #d97706;
             --bg-color: #f7fafc;
             --card-bg: #ffffff;
             --text-color: #2d3748;
             --border-color: #e2e8f0;
-            --tag-bg: #feefc3;
-            --tag-text: #744210;
+            --tag-bg: #fef3c7;
+            --tag-text: #92400e;
         }
 
         body {
@@ -32,7 +32,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
             color: white;
             padding: 30px;
             border-radius: 12px;
@@ -50,6 +50,15 @@
             margin: 0;
             opacity: 0.9;
             font-size: 1.05em;
+        }
+
+        .alert-box {
+            background-color: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            color: #2b6cb0;
         }
 
         .grid-2 {
@@ -172,14 +181,10 @@
             padding-left: 18px;
         }
 
-        .member-skills li {
-            margin-bottom: 6px;
-        }
-
         /* Questions Section */
         .question-box {
-            background: #f0fdf4;
-            border-left: 4px solid #16a34a;
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
             padding: 18px;
             border-radius: 0 8px 8px 0;
             margin-bottom: 18px;
@@ -187,7 +192,7 @@
 
         .question-box h4 {
             margin: 0 0 8px 0;
-            color: #15803d;
+            color: var(--accent-color);
             font-size: 1.1em;
         }
 
@@ -215,47 +220,43 @@
 
 <div class="container">
     <header>
-        <h1>第 05 組專案研討 - 研究議題演進與教學引導報告</h1>
-        <p>成員：蔡宥嫻、周語婕、張采葳、李宜珊、林品言 ｜ 主題：數位平台經濟與消費行為模式研究</p>
+        <h1>第 05 組專案研討 - 專案啟動與教學輔導報告</h1>
+        <p>成員：陳柏霖、邱聖傑、朱昱丞、黃冠峻、洪承緯 ｜ 主題：Colab 繪圖模組開發、AI 提示詞工程與資料集獲取突破</p>
     </header>
+
+    <div class="alert-box">
+        <strong>📌 實務紀錄與專案進度校正說明：</strong> 經查核第 05 組 8 筆原始填報紀錄（陳柏霖、邱聖傑、朱昱丞、黃冠峻、洪承緯），全組累計投入工時高達 47 小時。舊版報告誤植為「外送平台經濟」，本報告已精準校正為小組實際進行之「Colab 繪圖 Prompt 模板建立與巨觀數據（CPI vs. 實質薪資）測試」，並提供明確的資料集尋找與定題轉型指引。
+    </div>
 
     <div class="grid-2">
         <!-- 議題演進過程 -->
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">📌 研究議題演進脈絡</h2>
-                <span class="badge">穩定進階學習</span>
+                <h2 class="card-title">📌 實際研究演進脈絡</h2>
+                <span class="badge">三階段開發與實作</span>
             </div>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-date">階段一：工具適應與 Python/Colab 測試</div>
-                    <div class="timeline-title">基礎數據清理與 AI 輔助提問學習</div>
+                    <div class="timeline-date">階段一：AI 提示詞模組建置 (10/02)</div>
+                    <div class="timeline-title">撰寫結構化繪圖 Prompt 範本</div>
                     <div class="timeline-desc">
-                        專案初期主要進行 Colab 環境熟練、嘗試匯入 CSV 數據，並學習如何向 Gemini / ChatGPT 下達指令以進行基礎數據過濾。
+                        陳柏霖撰寫並共享結構化 AI Prompt，包含「雙 Y 軸時間序列折線圖（解決 Matplotlib 中文字型亂碼）」與「相關性散佈圖加趨勢線」兩大通用模板。
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-date">階段二：主題方向確立「數位平台與消費行為」</div>
-                    <div class="timeline-title">鎖定平台經濟、電商與數位消費趨勢</div>
+                    <div class="timeline-date">階段二：Google Colab 團隊協作與測試 (10/06 - 10/14)</div>
+                    <div class="timeline-title">全組共享 Colab Notebook 高強度實作</div>
                     <div class="timeline-desc">
-                        組內進行方向收斂，選擇貼近常生活且數據容易取得的個體經濟題材，聚焦於數位平台使用狀況與特定消費型態之關聯。
+                        邱聖傑、朱昱丞、黃冠峻、洪承緯相繼加入共享 Colab (`1nOF4ZgMf8W5...`)，測試讀取物價指數與實質薪資數據，累積投入超過 40 小時進行程式除錯與圖表繪製。
                     </div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-date">階段三：Prompt 模板設計與視覺化突破</div>
-                    <div class="timeline-title">撰寫進階 Prompt 產出雙 Y 軸圖與散佈圖趨勢線</div>
+                    <div class="timeline-date">階段三：資料源瓶頸與主題收斂突破期 (10/19 至今)</div>
+                    <div class="timeline-title">突破無數據可用困境，邁向主題確立</div>
                     <div class="timeline-desc">
-                        組員共同建立 Prompt 提問範本，成功讓 AI 寫出繪製雙 Y 軸折線圖與相關性散佈圖（Scatter Plot）的 Python 程式碼，突破繪圖門檻。
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-date">階段四：資料集擴充與多元指標對齊</div>
-                    <div class="timeline-title">嘗試導入 Open Data 與經濟調查資料集</div>
-                    <div class="timeline-desc">
-                        將研究從「純圖表產出」延伸至「變數間顯著性檢定」，嘗試串接政府數位經濟或產業消費 Open Data，邁向實證分析。
+                        陳柏霖於最新填報反應「無實體檔案難以實作」之困境。團隊技術底子扎實，目前急需教學團隊指引精準的「公開經濟數據集」，以擺脫主題「未定」狀態。
                     </div>
                 </div>
             </div>
@@ -265,65 +266,65 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">👥 成員專長與任務分工</h2>
-                <span class="badge">高工時穩定投入（5人）</span>
+                <span class="badge">技術扎實 5 人團隊</span>
             </div>
             <div class="member-list">
                 <div class="member-card">
-                    <div class="member-name">蔡宥嫻</div>
-                    <div class="member-role"> Prompt 模板編寫 / 數據清理</div>
+                    <div class="member-name">陳柏霖</div>
+                    <div class="member-role">Prompt 架構師 / 技術 PM</div>
                     <div class="member-skills">
                         <ul>
-                            <li>設計雙 Y 軸與 Scatter Plot 之提問 Prompt</li>
-                            <li>負責 Colab 程式執行與語法 Debug</li>
-                            <li>處理公開資料集格式轉置</li>
+                            <li>設計雙 Y 軸與散佈圖之結構化 Prompt 模板</li>
+                            <li>建立並維護小組共享 Colab Notebook 檔案</li>
+                            <li>發現資料源缺口並提出實作瓶頸與反饋</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-name">周語婕</div>
-                    <div class="member-role">開放資料採集 / 敘述統計分析</div>
+                    <div class="member-name">洪承緯</div>
+                    <div class="member-role">資料清理 / 程式除錯 Lead</div>
                     <div class="member-skills">
                         <ul>
-                            <li>負責平台經濟與數位消費 Open Data 搜尋</li>
-                            <li>整理變數定義與資料欄位說明</li>
-                            <li>協助繪圖成果之初步敘述解讀</li>
+                            <li>負責 Colab 內的資料轉置與缺失值處理</li>
+                            <li>進行相關性迴歸散佈圖之 Python Code 測試</li>
+                            <li>投入 13 小時高強度實作與程式除錯</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-name">張采葳</div>
-                    <div class="member-role">AI 協作測試 / 報告彙整</div>
+                    <div class="member-name">朱昱丞</div>
+                    <div class="member-role">資料搜集 / 經濟數據下載</div>
                     <div class="member-skills">
                         <ul>
-                            <li>測試不同 LLM 工具之程式生成品質</li>
-                            <li>彙整各階段分析結果與圖表產出</li>
-                            <li>控管專案時間節點與填報進度</li>
+                            <li>搜尋 AREMOS 與政府 Open Data 之總經數據</li>
+                            <li>協助進行變數編碼與欄位轉置驗證</li>
+                            <li>單次投入 10 小時進行資料庫探勘</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-name">李宜珊</div>
-                    <div class="member-role">文獻收集 / 經濟邏輯對接</div>
+                    <div class="member-name">黃冠峻</div>
+                    <div class="member-role">AI 協作與驗證 / Code 審查</div>
                     <div class="member-skills">
                         <ul>
-                            <li>蒐集平台經濟與消費者行為相關參考文獻</li>
-                            <li>確認分析結果是否符合商業 logic</li>
-                            <li>協助編撰報告引言與結論</li>
+                            <li>運用 Prompt 產生之程式碼進行真偽查核</li>
+                            <li>單次投入 10 小時協助小組完成 Colab 測試</li>
+                            <li>優化圖表中文標籤與標題呈現效果</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="member-card">
-                    <div class="member-name">林品言</div>
-                    <div class="member-role">圖表美化 / 簡報視覺化設計</div>
+                    <div class="member-name">邱聖傑</div>
+                    <div class="member-role">語法測試 / EDA 圖表繪製</div>
                     <div class="member-skills">
                         <ul>
-                            <li>調整 Python 圖表字體、顏色與標籤設定</li>
-                            <li>製作專案簡報與團隊進度視覺化</li>
-                            <li>協助跨成員檔案備份與雲端管理</li>
+                            <li>測試 Prompt 範本於 Colab 執行之穩定度</li>
+                            <li>協助產出物價與薪資之時間序列草圖</li>
+                            <li>參與主題討論與資料夾檔案整理</li>
                         </ul>
                     </div>
                 </div>
@@ -334,37 +335,47 @@
     <!-- 深層引導問題 -->
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">💡 協助第 05 組突破與進步的深層引導問題</h2>
+            <h2 class="card-title">💡 協助第 05 組突破與定題的深層引導問題</h2>
             <span class="badge">導師教學指引</span>
         </div>
 
         <div class="question-box">
-            <h4>一、數據品質與變數定義（突破「描述性統計」之侷限）</h4>
+            <h4>一、解決「找不到數據檔」的困境：精準資料集推薦</h4>
             <ul>
-                <li><strong>指標操作化定義 (Operationalization)</strong>：目前使用的「數位平台使用率」或「消費金額」是來自政府總體調查（如經濟部零售業網路銷售額），還是個體調查數據？變數的時間解析度（月、季、年）是否一致？</li>
-                <li><strong>物價因素剔除</strong>：討論歷年消費金額變化時，是否已使用「消費者物價指數 (CPI)」將名目消費金額平減為實質消費金額，以排除通膨帶來的假性成長？</li>
+                <li><strong>擺脫無檔案可做之瓶頸</strong>：小組已有極強的 Colab 繪圖能力，但卡在缺乏合適檔案。建議直接下載以下三個「即插即用」的官方數據集：
+                    <ul>
+                        <li><strong>方向 A（總體物價與薪資）</strong>：主計總處《薪資與生產力統計資料庫》（直接有各行業名目與實質薪資 CSV）。</li>
+                        <li><strong>方向 B（不動產實價登錄）</strong>：內政部不動產交易實價查詢服務網（可直接下載各縣市 10,000+ 筆交易 CSV）。</li>
+                        <li><strong>方向 C（環境與企業）</strong>：環境部空氣品質監測網歷史 CSV + TEJ 上市公司財務檔。</li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
         <div class="question-box">
-            <h4>二、計量分析與經濟邏輯（從「畫圖」走向「因果推論」）</h4>
+            <h4>二、將繪圖模板升級為「計量迴歸故事」（擺脫未定狀態）</h4>
             <ul>
-                <li><strong>相關性不等於因果性</strong>：散佈圖上的強相關可能來自於「第三方共同趨勢」（如人口結構或整體經濟成長）。小組是否考慮加入控制變數（如可支配所得、教育程度），進行多元迴歸分析？</li>
-                <li><strong>外部衝擊控制 (External Shock)</strong>：COVID-19 疫情大幅改變了民眾對數位平台的使用習慣。模型中是否有設定虛擬變數 (Dummy Variable) 來控制疫情期間的結構性改變？</li>
+                <li><strong>從「CPI vs. 薪資」跨越至核心命題</strong>：小組目前測試的「CPI vs 薪資」偏向基礎描述。若取得上述資料，能否將 Prompt 升級為包含控制變數（如 GDP 成長率、失業率）的「OLS 多元迴歸模型」？</li>
+                <li><strong>變數平減與實質化</strong>：小組目前的模板已能畫出雙 Y 軸，是否能在 Python 中加入 `實質薪資 = 名目薪資 / (CPI / 100)` 的運算式，並繪製購買力剝蝕圖？</li>
             </ul>
         </div>
 
         <div class="question-box">
-            <h4>三、競賽轉化與創意落地策略</h4>
+            <h4>三、團隊分工深化與競賽目標對接</h4>
             <ul>
-                <li><strong>中原智慧運算與量子資訊競賽 (創意構想組)</strong>：第 05 組累積了極佳的 Prompt 使用經驗與平台經濟構想。能否將目前的分析結果，包裝為「基於生成式 AI 之消費者平台選擇輔助與精準推薦構想」報名創意構想組？</li>
-                <li><strong>作品包裝亮點</strong>：如何將目前的「資料分析」進一步轉化為可以解決商業痛點的「商業模式提案」？這將是競賽簡報能否脫穎而出的關鍵。</li>
+                <li><strong>高工時團隊之量能轉化</strong>：全組累積工時達 47 小時，團隊執行力極高。建議本週確立題目並下載數據，下週直接產出完整的 EDA 簡報。</li>
+                <li><strong>競賽對接方向建議</strong>：
+                    <ul>
+                        <li>若選擇「通膨、薪資與產業衝擊」，可投稿<strong>《金融研訓院 前瞻金融研究競賽》</strong>。</li>
+                        <li>若選擇「不動產實價登錄或家庭收支」，極適合投稿<strong>《政治大學 臺灣經驗實證調查資料論文獎》</strong>。</li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 05 組專屬指導文件</p>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 05 組專案深度輔導報告</p>
     </footer>
 </div>
 
