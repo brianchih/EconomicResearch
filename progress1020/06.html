@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 06 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #dd6b20;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 06 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：翁羽辰、邱倢妤 ｜ 主題：實價登錄數據、區域房價影響因素與都市發展趨勢分析</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">三階段主題聚焦</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：探索開放資料與教育/區域數據 (10/06)</div>
+                    <div class="timeline-title">資料索取清單檢視與開放資料探索</div>
+                    <div class="timeline-desc">
+                        組員初步檢閱台灣資料庫索取清單，嘗試下載縣市年資料（包含教育統計與基本區域指標），進行數據解讀與環境設定。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：聚焦房地產與實價登錄 (10/12 - 10/14)</div>
+                    <div class="timeline-title">轉向「實價登錄 Open Data」與區域房價衝擊</div>
+                    <div class="timeline-desc">
+                        翁羽辰與邱倢妤將主題定錨於房地產市場，抓取內政部實價登錄開放資料，進行屋齡、坪數、交易總價與單價之資料清理。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：EDA 圖表繪製與跨區域對比 (10/15 - 10/18)</div>
+                    <div class="timeline-title">建構房價分佈圖與特徵價格法 (Hedonic Price) 框架</div>
+                    <div class="timeline-desc">
+                        運用 Python / Pandas 進行缺失值剔除與極端值處理，繪製區域房價走勢圖與箱型圖 (Boxplot)，嘗試建構特徵價格估計模型。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">精簡雙人組合作</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">翁羽辰</div>
+                    <div class="member-role">實價登錄資料採集 / 數據清理與 EDA 繪圖</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導內政部實價登錄 Open Data 下載與解碼</li>
+                            <li>處理房屋交易極端值與字串轉置（如樓層、屋齡計算）</li>
+                            <li>負責 Colab 房價分佈圖與特徵圖表產出</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">邱倢妤</div>
+                    <div class="member-role">區域指標對接 / 統計分析與報告撰寫</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋區域發展指標（如捷運站距離、學區、人口密度）</li>
+                            <li>對接縣市與行政區級別之外部開放資料</li>
+                            <li>協助撰寫房價影響因素分析與報告論述</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 06 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、資料清洗與特徵工程 (Feature Engineering) 嚴謹度</h4>
+            <ul>
+                <li><strong>屋齡與樓層變數轉換</strong>：實價登錄資料中包含「建築完成年月」與「交易年月」，小組是否已精準計算出「交易時之實質屋齡」？對於特殊樓層（如地下室、頂樓加蓋）與車位面積剔除，是否已建立標準化清洗過濾條件？</li>
+                <li><strong>實質單價計算（扣除車位）</strong>：含車位之總價直接除以總坪數會嚴重低估真實房屋單價。小組在程式中是否已經拆分「車位總價」與「車位坪數」進行單價平減？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、空間計量與特徵價格模型 (Hedonic Pricing Model)</h4>
+            <ul>
+                <li><strong>空間鄰近性與外部性 (Spatial Exteriority)</strong>：房價高度受周邊設施（如捷運站、公園、學校、嫌惡設施）影響。小組是否考慮加入空間經緯度資料，或是利用行政區 Dummy 變數來控制區域固有的空間效應？</li>
+                <li><strong>特徵價格迴歸模型</strong>：除了傳統的線性迴歸 (OLS)，小組是否嘗試對房價取對數 ($\ln(Price)$) 進行半對數模型估計，以解釋特徵變數（如每增加一年屋齡、每增加一坪）對房價的百分比影響？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、填報節奏推進與競賽對接策略</h4>
+            <ul>
+                <li><strong>提高填報頻率與實作產出</strong>：第 06 組目前填報次數與累積工時較少。建議建立每週 Colab 實作與填報習慣，將資料清理與視覺化成果穩定上傳備份。</li>
+                <li><strong>中原智慧運算競賽 / 政大實證論文獎對接</strong>：
+                    <ul>
+                        <li>若投稿**《中原智慧運算與量子資訊競賽》**：可將特徵價格模型升級為「基於機器學習 (Random Forest / XGBoost) 之智慧區域房價預測模型」。</li>
+                        <li>若投稿**《政大臺灣經驗實證調查論文獎》**：可聚焦於「新青安房貸或特定政策衝擊對特定區域房價與青年負擔力之實證」。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 06 組專屬指導文件</p>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+html_content = """<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 09 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #c05621;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 09 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：陳盈琪、周律綺、陳鈺縈、林岑恣、邱歆喬、謝琬瑩 ｜ 主題：臺灣住宅負擔與生育率關聯分析</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">四階段收斂過程</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：初步摸索與工具測試 (09/29 - 10/04)</div>
+                    <div class="timeline-title">基礎數據清理與 Colab 程式模組測試</div>
+                    <div class="timeline-desc">
+                        組員各自進行 Colab 程式測試（如 GDP、CPI 數據探索），同時進行專案管理與分工，試驗團隊之 Python 與繪圖能力。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：主題發想與收斂討論 (10/06 - 10/11)</div>
+                    <div class="timeline-title">探索「所得 vs 房價」與「房價 vs 生育率」</div>
+                    <div class="timeline-desc">
+                        透過 ChatGPT 與團隊會議討論，在所得、房價、生育率等多個巨觀議題間進行評估，初步聚焦於「買不起房，所以不生了嗎？」。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：主題精緻化與理論定義 (10/11 - 10/14)</div>
+                    <div class="timeline-title">確立主軸「臺灣住宅負擔與生育率之關聯」</div>
+                    <div class="timeline-desc">
+                        將通俗的口號轉化為嚴謹學術命題，定義「住宅負擔」（如房價所得比、貸款負擔率）與「生育率」（總生育率、粗出生率）之對應變數。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段四：計量模組全員實作 (10/13 - 10/14)</div>
+                    <div class="timeline-title">全員共同投入 Panel Data 與 Colab 迴歸模型建置</div>
+                    <div class="timeline-desc">
+                        6位成員同時產出多個 Colab 運算檔，進行各縣市跨時間之縱橫資料處理、 scatter plot 繪製與初步計量迴歸測試。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">全員 6 人高度參與</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">陳盈琪</div>
+                    <div class="member-role">專案 PM / 議題收斂與報告統整</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導議題討論與專案進度追蹤</li>
+                            <li>負責 AI 協作 Prompt 編寫</li>
+                            <li>主導題目精緻化與敘述定題</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">周律綺</div>
+                    <div class="member-role">AI 發想 / 數據採集與計量搭建</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>運用 ChatGPT 協助議題比較</li>
+                            <li>建立基礎 EDA 與 Colab 運算檔</li>
+                            <li>負責資料清理與變數轉置</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳鈺縈</div>
+                    <div class="member-role">進階計量分析 / 可視化與簡報</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>單次投入 4 小時完成多項統計</li>
+                            <li>負責 EDA 繪圖與迴歸模型除錯</li>
+                            <li>整合分析結果與簡報視覺化</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">林岑恣</div>
+                    <div class="member-role">數據清洗 / 統計與計量實作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>處理解析度缺失值與格式編碼</li>
+                            <li>負責 Colab 迴歸模型調校</li>
+                            <li>建立雙軸時間序列與散佈圖</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">邱歆喬</div>
+                    <div class="member-role"> Open Data 抓取 / 迴歸模組建構</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>抓取縣市級房價與生育率資料</li>
+                            <li>負責編碼轉換與多源合併</li>
+                            <li>協助計量模型檢定</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">謝琬瑩</div>
+                    <div class="member-role">基礎資料清理 / 計量模型協作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋並匯入政府公開統計檔</li>
+                            <li>撰寫 Python 讀檔與基礎圖表</li>
+                            <li>協助模型除錯與測試</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 09 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、計量嚴謹性與因果推論（突破「相關不等於因果」）</h4>
+            <ul>
+                <li><strong>遺漏變數控制 (Omitted Variable Bias)</strong>：除了房價之外，女性勞動參與率、教育程度、育兒津貼補助、可支配所得等變數對生育率皆有巨大影響。小組在迴歸模型中是否包含了這些控制變數？</li>
+                <li><strong>內生性問題 (Endogeneity) 與反向因果</strong>：房價高抑制了生育，但人口密集、經濟繁榮（婚育人口多）的區域也可能推升房價。小組打算如何處理這種雙向因果問題？（如使用滯期變數 Lagged Variables 或固定效應模型 Fixed Effects）。</li>
+                <li><strong>縱橫資料 (Panel Data) 之模型選擇</strong>：資料包含台灣 20 個縣市、歷年數據，小組是否比較過池化迴歸 (Pooled OLS)、固定效應 (FE) 與隨機效應 (RE) 的檢定結果？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、資料維度與指標操作化定義</h4>
+            <ul>
+                <li><strong>住宅負擔指標的選擇</strong>：目前使用的是「平均房屋總價」、「單價/坪」還是「房價所得比 (Housing Affordability Index)」或「房貸負擔率」？哪一種指標更能真實反映年輕世代的購屋壓力？</li>
+                <li><strong>生育率指標的選擇</strong>：「粗出生率 (CBR)」容易受到人口結構年齡影響，而「總生育率 (TFR)」能更精準反映育齡婦女的生育意願，小組所使用的 Open Data 是哪一種？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽對接與學術論文落地策略</h4>
+            <ul>
+                <li><strong>政大實證調查論文獎對接</strong>：該組進度領先且全員皆有 Colab 實作，極度適合投稿《政治大學 臺灣經驗實證調查資料論文獎》。小組是否已將政府 Open Data 結合國內實證資料庫（如社會變遷基本調查），提升論文的學術含金量？</li>
+                <li><strong>政策意涵與結論產出</strong>：如果實證結果顯示房價確實顯著抑制生育率，小組能提出何種創新的「健全房市與少子化對策」建議？這將是競賽簡報獲得高分的關鍵。</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 09 組專案深度輔導報告</p>
+    </footer>
+</div>
+
+</body>
+</html>
+"""
+
+with open("group09_analysis_report.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("HTML generated successfully: group09_analysis_report.html")

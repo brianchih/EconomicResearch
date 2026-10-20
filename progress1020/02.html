@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 02 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #2c5282;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #ebf8ff;
+            --tag-text: #2b6cb0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .member-skills li {
+            margin-bottom: 6px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: #15803d;
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 02 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：謝佳恩、陳奇揚、魏子翔、林韋廷等 ｜ 主題：國際大宗物資與總體經濟傳導機制</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">紮實數據工程型</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：多源總經與產業數據採集</div>
+                    <div class="timeline-title">AREMOS 資料庫與 Open Data 抓取</div>
+                    <div class="timeline-desc">
+                        成員著手進行大量開放資料與 AREMOS 資料庫的檢索，目標涵蓋國際石油、天然氣、糧食等大宗物資價格與台灣物價指數。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：系統化資料清理與缺失值轉置</div>
+                    <div class="timeline-title">進行變數編碼、插補與資料集整合</div>
+                    <div class="timeline-desc">
+                        專注於原始資料處置，克服時間序列不連續、單位不一與缺失值問題，並建立共享 Google Drive 雲端資料庫。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：主題聚焦「大宗物資與物價傳導」</div>
+                    <div class="timeline-title">鎖定國際地緣政治/大宗物資對國內 CPI 衝擊</div>
+                    <div class="timeline-desc">
+                        將龐雜的總經數據收斂至明確題目：分析能源與糧食價格波動如何影響國內生產者物價 (PPI) 與消費者物價 (CPI)。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段四：探索性圖表繪製與跨期變數對齊</div>
+                    <div class="timeline-title">產出時間序列趨勢圖與變數相關性探討</div>
+                    <div class="timeline-desc">
+                        運用 Python / Pandas 進行雙軸對比與滯後效應觀察，準備將經驗轉化為計量傳導模型。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">全員穩定參與（5人）</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">謝佳恩</div>
+                    <div class="member-role">專案協調 / AREMOS 資料抓取</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導 AREMOS 資料庫指標檢索</li>
+                            <li>對接總體經濟變數時間刻度</li>
+                            <li>統整雲端資料夾架構</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳奇揚</div>
+                    <div class="member-role"> Open Data 清理 / 缺失值處理</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>負責開放資料下載與格式轉換</li>
+                            <li>處理時間序列缺失值與異常值</li>
+                            <li>撰寫資料清理腳本</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">魏子翔</div>
+                    <div class="member-role">變數編碼 / 時間序列繪圖</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>進行跨資料集欄位對齊與轉置</li>
+                            <li>繪製大宗物資與物價指數走勢圖</li>
+                            <li>協助初步統計數據觀察</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">林韋廷</div>
+                    <div class="member-role">文獻收集 / 傳導邏輯分析</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋央行與總經研究機構論文</li>
+                            <li>梳理進口物價至本土 CPI 之傳導管道</li>
+                            <li>協助報告論述文字編寫</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 02 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、傳導機制與滯後效應（從「表面相關」走向「結構分析」）</h4>
+            <ul>
+                <li><strong>傳導時間差 (Pass-through Lag)</strong>：國際原油或糧食價格變動，通常需要 1 至 3 個月才會反映在國內 PPI（生產者物價），再進一步傳導至 CPI。小組在檢視相關性時，是否建立了<strong>滯後階數 (Lagged Terms)</strong>？</li>
+                <li><strong>非對稱傳導 (Asymmetric Pass-through)</strong>：國際大宗物資「漲價時傳導快、下跌時傳導慢」是常見的市場現象。小組的模型是否考慮過這種非對稱效果？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、計量模型嚴謹度（避免「偽迴歸」）</h4>
+            <ul>
+                <li><strong>平穩性與單根檢定 (ADF Test)</strong>：物價指數與大宗物資價格大多具有顯著的趨勢性（非平穩時間序列）。小組是否對變數進行了平穩性檢定，或是採用「年增率 (YoY)」與「一階差分」來進行估計？</li>
+                <li><strong>向量自迴歸模型 (VAR / Vector Autoregression)</strong>：考慮到國際價格、匯率與國內物價之間的相互影響，小組是否嘗試過運用 VAR 模型或衝擊反應函數 (Impulse Response Function, IRF) 來觀察價格衝擊的動態軌跡？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽對接與產學價值（衝刺金融研訓院競賽）</h4>
+            <ul>
+                <li><strong>金融研訓院 - 前瞻金融研究競賽對接</strong>：第 02 組的主題高度契合金融研訓院對「總體經濟與金融市場衝擊」的重視。能否將題目定為**「國際地緣政治衝擊對台灣物價傳導機制之實證：基於大宗物資價格與匯率變數」**？</li>
+                <li><strong>政策意涵與央行貨幣政策對接</strong>：研究結論能否連結至中央銀行通膨控制與政府平抑物價政策？這將大幅提升報告的實用價值與競爭力。</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 02 組專屬指導文件</p>
+    </footer>
+</div>
+
+</body>
+</html>

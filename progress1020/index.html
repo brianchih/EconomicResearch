@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淡江大學經濟學系 - 產業分析實作 全班各組專題總覽與戰略輔導儀表板</title>
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #1e3a8a;
+            --accent-blue: #2563eb;
+            --accent-green: #059669;
+            --accent-orange: #d97706;
+            --accent-purple: #7c3aed;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Area */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 36px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        header .header-text h1 {
+            margin: 0 0 8px 0;
+            font-size: 2.2em;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+        }
+
+        header .header-text p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 1.1em;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #60a5fa;
+            line-height: 1;
+        }
+
+        .stat-box .label {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Group Grid Cards */
+        .group-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(410px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .group-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .group-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(30, 58, 138, 0.1);
+            border-color: #93c5fd;
+        }
+
+        .card-top {
+            padding: 20px 24px 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .group-tag {
+            background: #1e3a8a;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .group-tag.warning {
+            background: #dc2626;
+        }
+
+        .group-tag.ops {
+            background: #7c3aed;
+        }
+
+        .group-title {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0 4px 0;
+            line-height: 1.3;
+        }
+
+        .member-names {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+        .card-body {
+            padding: 20px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-block h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-block h4.pros { color: var(--accent-green); }
+        .section-block h4.cons { color: #dc2626; }
+        .section-block h4.recom { color: var(--accent-purple); }
+
+        .section-block p, .section-block ul {
+            margin: 0;
+            font-size: 0.9em;
+            color: #334155;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .section-block ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+        }
+
+        .section-block ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+        }
+
+        .recom-tag {
+            display: inline-block;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+
+        .card-footer {
+            padding: 14px 24px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: color 0.2s;
+        }
+
+        .btn-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-text">
+            <h1>產業分析實作 - 全班小組專題總覽儀表板</h1>
+            <p>全班 12 組研究議題演進、優劣勢評估與建議題目總覽（淡江大學經濟學系）</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-box">
+                <div class="number">12</div>
+                <div class="label">專案小組總數</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">108</div>
+                <div class="label">個人貢獻筆數</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">100%</div>
+                <div class="label">專屬輔導報告</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="group-grid">
+
+        <!-- 第 01 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 01 組</span>
+                    <div class="group-title">各國油品產業定價策略與總體經濟衝擊比較研究</div>
+                    <div class="member-names">組員：劉家碩、陳建勳、張以辰、徐筱涵</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>具備極強的 SRDA 微觀數據處理能力（如 Stata .dta 格式解析）。</li>
+                        <li>已建立結構化 AI Prompt 繪製雙 Y 軸與相關性散佈圖之模組。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>技術填報過度集中於特定組員（張以辰），全組程式掌握度需平衡。</li>
+                        <li>個體家庭油料費與「各國油品定價」總體資料之間存在對接斷層。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 不對稱油價傳導效應：台灣中油浮動油價與國際原油之火箭與羽毛效應檢定</span>
+                    <span class="recom-tag">2. 油價通膨衝擊下的家庭能源負擔與消費彈性：基於 SRDA 113年家庭收支微觀實證</span>
+                    <span class="recom-tag">3. 地緣政治風險、油價波動與金融市場傳嫁：以台股能源敏感產業為例</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="01.html" class="btn-link">查看第 01 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 02 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 02 組</span>
+                    <div class="group-title">家庭社經地位與青少年數位成長歷程 (TIGPS) 之實證研究</div>
+                    <div class="member-names">組員：謝佳恩、陳奇揚、魏子翔、林韋廷、楊皓棠</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>嘗試使用多元分析工具（包含 RStudio 與 SRDA 學術問卷庫）。</li>
+                        <li>選取國內最具代表性之追蹤調查數據 (TIGPS)。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>組員人數調整後仍處於主題磨合期，實質 Python Code 產出較少。</li>
+                        <li>多停留在文獻與網址查找，尚未建立迴歸模型的實證數據庫。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 數位落差還是數位紅利？家庭社經背景對青少年網路使用與學業表現之追蹤研究</span>
+                    <span class="recom-tag">2. 臺灣數位世代青少年的心理健康與社群媒體依賴：TIGPS 追蹤資料之 Panel Data 分析</span>
+                    <span class="recom-tag">3. 父母數位教養模式對青少年資訊素養之傳承效應</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="02.html" class="btn-link">查看第 02 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 03 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag ops">第 03 組 (專案營運)</span>
+                    <div class="group-title">淡江經濟系頂石課程成果展專案營運與企劃管考</div>
+                    <div class="member-names">組員：陳昱庭、翁于晴、黃品淳、呂晏瑜、吳佩蓉、楊詩語</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>專案管理執行力極佳，企劃書已進行至第三版，評審與預算皆精確落實。</li>
+                        <li>全組 6 人角色分工極為明確（企劃、設計、場控、PM）。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>偏向純行政企劃執行，缺乏定量數據分析與計量模型支撐。</li>
+                        <li>未將專案管考轉化為量化 Dashboard 或展後滿意度數據分析。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 數據驅動的學術展覽專案管理：淡江經濟頂石成果展之關鍵績效 (KPI) 與流量分析</span>
+                    <span class="recom-tag">2. 評審評分機制的不對稱資訊與標準化校正：以高專展覽評分卡設計為例</span>
+                    <span class="recom-tag">3. 基于 AI 協作之學術活動動態預算與邊際資源配置 Optimization</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="03.html" class="btn-link">查看第 03 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 04 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 04 組</span>
+                    <div class="group-title">空氣污染指標與企業 ESG 績效評等之實證分析</div>
+                    <div class="member-names">組員：黃子宸、朱珮瑄、何之喬</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>成功跨庫串接 TEJ 企業公司治理評等與 Open Data 地區空汙數據。</li>
+                        <li>已有高強度 Colab 實作，且對接 ScienceDirect / PLOS ONE 國際文獻。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>個體企業地址與區域總體測站空汙數據之間的空間級配對齊問題。</li>
+                        <li>尚未加入企業規模、產業 Dummy 等關鍵控制變數以解決內生性。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 氣候外部性與綠色洗白：區域空汙壓力對上市櫃公司 ESG 環境評等之衝擊檢定</span>
+                    <span class="recom-tag">2. 碳費徵收前夕的企業綠色轉型：環境邊際成本對台灣製造業 Tobin's Q 之影響</span>
+                    <span class="recom-tag">3. 基於 GIS 空間權重模型之空汙暴露量對企業永續資訊揭露品質之影響</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="04.html" class="btn-link">查看第 04 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 05 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 05 組</span>
+                    <div class="group-title">平台經濟、網路消費與外送產業發展分析</div>
+                    <div class="member-names">組員：陳柏霖、邱聖傑、朱昱丞、黃冠峻、洪承緯</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>確立具前瞻性之「平台經濟」主題，並共享結構化 Prompt 運算模板。</li>
+                        <li>全員工時投入充沛（累積達 47 小時），且具備基礎雙 Y 軸繪圖能力。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>數據缺乏平減（未剔除通膨），名目與實質金額混用。</li>
+                        <li>尚未找到高解析度之平台外送與零工經濟專屬數據源。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 疫情衝擊與平台經濟崛起：台灣餐飲外送需求彈性與傳統實體門市替換效應</span>
+                    <span class="recom-tag">2. 零工經濟下的勞工彈性與薪資成長：外送平台從業人員對區域實質薪資之影響</span>
+                    <span class="recom-tag">3. 電子商務滲透率對零售業市場集中度與價格傳遞機制之衝擊</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="05.html" class="btn-link">查看第 05 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 06 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 06 組</span>
+                    <div class="group-title">不動產實價登錄價格決定因素與空間特徵價格模型</div>
+                    <div class="member-names">組員：翁羽辰、邱倢妤</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>數據源極為明確（實價登錄巨量交易個案檔），具實務應用價值。</li>
+                        <li>技術執行精準，能進行極端值剔除與特徵價格變數編碼。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>僅 2 人團隊，面對巨量交易個案檔時之清理與計算負擔較重。</li>
+                        <li>車位價格分離與純建物單價計算邏輯尚未完全統一。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 基於 Hedonic 模型之捷運站距離對台北市住宅價格溢價效應與邊際遞減檢定</span>
+                    <span class="recom-tag">2. 選擇性信用管制政策下新北市屋齡與單價之分位數迴歸分析</span>
+                    <span class="recom-tag">3. 利用機器學習 (XGBoost) 預測中古屋成交價與特徵重要性擬合</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="06.html" class="btn-link">查看第 06 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 07 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag warning">第 07 組 (需補齊進度)</span>
+                    <div class="group-title">專案啟動、主題聚焦與數據對接輔導</div>
+                    <div class="member-names">組員：組員待確認（目前尚未填報）</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>擁有最大的主題選擇自由度，可直接套用精準的實證架構。</li>
+                        <li>可參照全班其他組別之優秀 Colab 模板快速追平進度。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>目前紀錄表尚無進度填報，專案進度嚴重滯後。</li>
+                        <li>尚未確立團隊 PM 與核心數據分析人員。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 升息循環下台灣房貸負擔率對青年可支配所得之擠出效應</span>
+                    <span class="recom-tag">2. 綠色金融與企業融資成本：TEJ ESG 評等對上市公司借款利率之影響</span>
+                    <span class="recom-tag">3. 高齡化社會下的健康醫療支出與家庭儲蓄率變遷：SRDA 數據實證</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="07.html" class="btn-link">查看第 07 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 08 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 08 組</span>
+                    <div class="group-title">總體經濟 CPI 物價指數與受僱薪資之實證分析</div>
+                    <div class="member-names">組員：蔡沛吟、傅琬恬</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>巨觀經濟觀念清晰，已成功產出雙 Y 軸時間序列圖與 AREMOS 轉置檔。</li>
+                        <li>2 人團隊配合默契佳，資料清理與程式流程完整。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>題目「CPI vs 薪資」較偏向基礎圖表展示，缺乏深度計量故事。</li>
+                        <li>尚未對薪資進行 CPI 平減以計算真正的「實質薪資 (Real Wage)」。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 通膨衝擊下的實質薪資停滯與產業衝擊：以台灣製造業與服務業對比實證</span>
+                    <span class="recom-tag">2. 基本工資調升對低薪產業就業人數與物價傳遞效應之滯後迴歸分析</span>
+                    <span class="recom-tag">3. 台灣名目薪資黏性 (Wage Rigidity) 與通膨預期對購買力剝蝕之衝擊</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="08.html" class="btn-link">查看第 08 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 09 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 09 組</span>
+                    <div class="group-title">臺灣住宅負擔與生育率之關聯實證分析</div>
+                    <div class="member-names">組員：陳盈琪、周律綺、陳鈺縈、林岑恣、邱歆喬、謝琬瑩</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>全員 6 人高強度投入（多個 Colab 檔案），主題極具社會關注度。</li>
+                        <li>將通俗議題精緻化為嚴謹的縣市級縱橫資料 (Panel Data) 模型。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>面臨高房價與高生育率區域的「雙向因果/內生性」計量難題。</li>
+                        <li>缺乏女性勞動參與率、托育補助等關鍵控制變數。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 房貸負擔擠壓還是育兒成本推升？台灣縣市房價所得比對總生育率 (TFR) 之固定效應實證</span>
+                    <span class="recom-tag">2. 住宅政策與婚育意願：社會住宅供給對區域少子化趨勢緩和之邊際效果</span>
+                    <span class="recom-tag">3. 世代間資產轉移與青年購屋：家庭房產財富對婚育時程之滯後影響分析</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="09.html" class="btn-link">查看第 09 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 10 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 10 組</span>
+                    <div class="group-title">循環經濟模型－結合智慧科技與數位追溯之管理平台</div>
+                    <div class="member-names">組員：田育妮、朱育麟、陳韋辰、褚彥蓉</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>全班紀錄最為豐富（28筆填報），且對接《中原智慧運算競賽》。</li>
+                        <li>跨領域整合 AI、區塊鏈追溯與永續循環經濟商業模式。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>概念創新度高，但缺乏經濟學個體/總體數據的實證量化驗證。</li>
+                        <li>回收成本、碳權扣抵等財務可行性參數需要真實數據精算。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 基于智慧追溯之電子廢棄物循環經濟回收成本與碳邊際效益 Optimization 模型</span>
+                    <span class="recom-tag">2. 循環經濟平台的雙邊市場網絡效應：用戶誘因機制與綠色價值主張之賽局分析</span>
+                    <span class="recom-tag">3. 企業導入數位追溯循環供應鏈對 ESG 環境評等與資本成本之實證影響</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="10.html" class="btn-link">查看第 10 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 11 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 11 組</span>
+                    <div class="group-title">各國油品產業定價策略與家庭收支微觀分析</div>
+                    <div class="member-names">組員：張以辰、徐筱涵</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>展現頂尖的 SRDA 微觀問卷清洗與自動化 Prompt 生成能力。</li>
+                        <li>已完成 113 年家庭收支微觀數據 (.dta) 之解壓與三圖連發。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>技術產出多由張以辰執行，徐筱涵等組員需要更深度的分工。</li>
+                        <li>油品定價題目與家庭收支資料集之間的理論邏輯需要更嚴謹扣合。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 不對稱油價傳導與消費彈性：基於 SRDA 113年家庭收支個體微觀數據之實證</span>
+                    <span class="recom-tag">2. 國際油價衝擊對不同所得階層家庭交通能源支出之累退性效應分析</span>
+                    <span class="recom-tag">3. 中油浮動油價公式對國內 CPI 物價指數傳播時間與衝擊幅度檢定</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="11.html" class="btn-link">查看第 11 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+        <!-- 第 12 組 -->
+        <div class="group-card">
+            <div class="card-top">
+                <div>
+                    <span class="group-tag">第 12 組</span>
+                    <div class="group-title">家庭社經地位與青少年數位成長歷程 (TIGPS) 之實證研究</div>
+                    <div class="member-names">組員：孫靖淳、陳璟辰、陳韋翰、陳柏諺</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="section-block">
+                    <h4 class="pros">💪 專案優勢</h4>
+                    <ul>
+                        <li>成功申請中研院 SRDA 資料庫並鎖定學術價值極高的 TIGPS 追蹤問卷。</li>
+                        <li>PM 組織溝通力強，善用 Gemini AI 協助梳理論文脈絡。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="cons">⚠️ 專案劣勢與瓶頸</h4>
+                    <ul>
+                        <li>組員新加入後尚處於磨合期，實質 Python Code 產出較少。</li>
+                        <li>尚未將 SRDA .dta 檔讀入 Colab 繪製出第一張實證圖表。</li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h4 class="recom">💡 推薦進階題目建議 (2-3 個)</h4>
+                    <span class="recom-tag">1. 數位落差還是數位紅利？家庭社經背景對青少年網路使用與學業表現之追蹤研究</span>
+                    <span class="recom-tag">2. 臺灣數位世代青少年的心理健康與社群媒體依賴：TIGPS 追蹤資料之 Panel Data 分析</span>
+                    <span class="recom-tag">3. 父母數位教養模式對青少年資訊素養之傳承效應</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="12.html" class="btn-link">查看第 12 組專屬輔導報告 ➔</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 淡江大學經濟學系 產業分析實作 課程教學團隊製作 ｜ 全班 12 組專題進度總覽與戰略輔導儀表板</p>
+    </footer>
+</div>
+
+</body>
+</html>

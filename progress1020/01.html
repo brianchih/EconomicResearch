@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 01 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #c05621;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 01 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：劉家碩、陳建勳、張以辰、徐筱涵 ｜ 主題：各國油品產業定價策略與總體經濟衝擊比較研究</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">三階段跨度演進</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：基礎工具與資料庫摸索 (09/23 - 10/04)</div>
+                    <div class="timeline-title">環境建置、AREMOS 雙軸圖與 Prompt 繪圖模組測試</div>
+                    <div class="timeline-desc">
+                        張以辰與劉家碩透過 Gemini AI 撰寫 Prompt，成功清理 AREMOS 資料庫中的「GDP 年增率」與「物價指數 (CPI)」，解決 Matplotlib 中文字型亂碼，並繪製雙 Y 軸時間序列與散佈趨勢圖。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：多源資料與公開平臺試採 (10/06)</div>
+                    <div class="timeline-title">跨資料庫檢索（政府 Open Data 與淡江學生數歷史變遷）</div>
+                    <div class="timeline-desc">
+                        陳建勳搜尋政府資料開放平臺，張以辰則測試大專院校學生數 CSV 檔之 Python 自動化讀取與分類篩選，測試團隊對多元資料格式的清理能力。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：主題聚焦與微觀資料庫對接 (10/17)</div>
+                    <div class="timeline-title">鎖定「各國油品產業定價策略」，對接 SRDA 家庭收支微觀資料</div>
+                    <div class="timeline-desc">
+                        確定研究題目「各國油品產業定價策略之比較研究(暫定)」。張以辰透過中研院 SRDA 取得 113 年家庭收支微觀數據 (.dta)，進行解壓縮、變數中文化、可支配所得與消費支出迴歸散佈圖建構。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">跨領域技術與營運</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">劉家碩</div>
+                    <div class="member-role">組內營運 / 程式碼測試與回報</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>負責了解整體專案規劃並向組員回報</li>
+                            <li>使用 Google Colab 與 Gemini 進行跑圖與讀檔測試</li>
+                            <li>協助嘗試 Python 繪圖除錯與程式碼修正</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳建勳</div>
+                    <div class="member-role"> Open Data 探勘 / 主題資料採集</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>檢索政府資料開放平臺 (data.gov.tw) 相關數據</li>
+                            <li>尋找符合產業分析與定價策略之公開資料</li>
+                            <li>協助整理外部文獻與資料來源</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">張以辰</div>
+                    <div class="member-role">核心技術 Lead / SRDA & Colab 實作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>精通 SRDA .dta 微觀資料庫讀取與轉置</li>
+                            <li>編寫完整結構化 Prompt 輔助 AI 產出 Code</li>
+                            <li>負責建立雙軸折線圖、環狀圖與迴歸散佈圖</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">徐筱涵</div>
+                    <div class="member-role">文獻邏輯 / 實證結果撰寫與 PM 協作</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>負責實證結果之經濟邏輯解讀與文字撰寫</li>
+                            <li>協助組內進度追蹤與會議主持</li>
+                            <li>進行油品產業與消費支出文獻查閱</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 01 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、核心主題與數據資料庫的「對齊與聚焦」（克服數據斷層）</h4>
+            <ul>
+                <li><strong>油品定價與家庭收支資料的對接邏輯</strong>：目前題目定為「各國油品產業定價策略」，但實作數據包含了主計總處「家庭收支調查（能源與交通支出）」。小組打算如何將個體家庭的油料費支出，對接至總體/跨國的「油品市場定價機制」（如浮動油價公式、亞鄰最低價政策）？</li>
+                <li><strong>跨國數據 (Cross-Country Data) 取得可行性</strong>：若要比較「各國」油品定價，除了台灣數據外，小組是否已規劃從 EIA (美國能源資訊局) 或 OECD 下載各國汽柴油零售價格與稅率結構？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、計量模型與經濟邏輯（國際油價衝擊與轉嫁率）</h4>
+            <ul>
+                <li><strong>不對稱傳導 (Asymmetrical Pass-Through) 檢定</strong>：油品市場常有「漲快跌慢（火箭與羽毛效應）」的疑慮，小組能否運用現有的 Python 技能，建立布蘭特原油 (Brent) 價格與國內油價變動之滯後迴歸模型，檢驗定價轉嫁率？</li>
+                <li><strong>油價上漲對家庭消費的彈性效果</strong>：利用已處理好的 113 年家庭收支微觀數據，小組能否計算出不同所得階層（所得五分位數）對油料費支出的「需求價格彈性」？這將能大幅提升報告之政策價值。</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、團隊分工均衡度與競賽落地策略</h4>
+            <ul>
+                <li><strong>全組技術共享與任務平衡</strong>：目前技術填報多集中於張以辰，建議劉家碩與陳建勳在下階段負責特定子模組（例如：劉家碩負責油價雙軸圖模組、陳建勳負責跨國資料爬取），提升全組對 Colab 程式碼的掌控度。</li>
+                <li><strong>競賽投遞雙軌策略</strong>：
+                    <ul>
+                        <li>若偏向「總體油價與金融市場/物價衝擊」，建議包裝投遞<strong>《金融研訓院 前瞻金融研究競賽》</strong>。</li>
+                        <li>若偏向「家庭能源支出與實證調查」，則非常契合<strong>《政治大學 臺灣經驗實證調查資料論文獎》</strong>。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 01 組專案深度輔導報告</p>
+    </footer>
+</div>
+
+</body>
+</html>

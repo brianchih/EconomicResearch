@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 11 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #2c7a7b;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #e6fffa;
+            --tag-text: #234e52;
+            --highlight-bg: #f0fdf4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .member-skills li {
+            margin-bottom: 6px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: #15803d;
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 11 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：張以辰、陳姵妤 ｜ 主題：臺灣 GDP 年增率與消費者物價指數 (CPI) 雙軸時間序列與相關性分析</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">精準敏捷發展</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：總經變數數據對接 (AREMOS 探索)</div>
+                    <div class="timeline-title">獲取台灣 GDP 年增率與 CPI 時間序列數據</div>
+                    <div class="timeline-desc">
+                        成員直接目標明確地運用 AREMOS 資料庫下戴關鍵總體經濟變數（GDP 年增率、CPI 指數），迅速完成原始數據累積與整理。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：Prompt 指令迭代與自動化發酵</div>
+                    <div class="timeline-title">精準 Prompt 指令編寫（跳過雜訊列、字型解決）</div>
+                    <div class="timeline-desc">
+                        展現極強的 Prompt 工程優勢，編寫詳細指令要求 AI 跳過檔頭註記列、處理中文亂碼，並自動在 Colab 載入所需之 pandas / matplotlib 工具庫。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：高階雙軸圖與散佈圖趨勢線實作</div>
+                    <div class="timeline-title">成功繪製雙 Y 軸時間序列與相關性趨勢線</div>
+                    <div class="timeline-desc">
+                        成功透過 Colab 繪製左軸 GDP、右軸 CPI 之雙 Y 軸折線圖，並進一步產出兩者之 Scatter Plot 散佈圖與趨勢線，進行初步相關性探討。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段四：總體經濟模型與政策滯後效應延伸</div>
+                    <div class="timeline-title">轉向「滯後效應 (Lagged Effect) 與物價傳導機制」</div>
+                    <div class="timeline-desc">
+                        將研究從小組初期的純圖表繪製，逐步深化至「經濟成長率對物價膨脹率是否存在滯後傳導期」之深層計量理論問題。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">精簡高效型團隊</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">張以辰</div>
+                    <div class="member-role"> Prompt 工程 / 程式除錯與圖表繪製</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>精通大型語言模型 (Gemini / ChatGPT) 提問技巧</li>
+                            <li>編寫詳細 Prompt 指令排除 pandas 讀檔雜訊與亂碼</li>
+                            <li>負責 Colab 雙 Y 軸時間序列與散佈圖程式實作</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳姵妤</div>
+                    <div class="member-role">總經資料採集 / 敘述統計與報告整合</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>負責 AREMOS 資料庫指標下載與維度轉置</li>
+                            <li>對接 GDP 與 CPI 時間序列變數之時間刻度</li>
+                            <li>撰寫數據解讀與總體經濟邏輯說明</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 11 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、時間序列與計量嚴謹性（突破「假性相關」與「時間滯後」）</h4>
+            <ul>
+                <li><strong>滯後效應 (Lagged Effect) 的量化</strong>：經濟成長 (GDP) 對物價 (CPI) 的影響往往具有滯後性（例如 1-2 個季度後才反映在物價上）。小組在繪製散佈圖時使用的是當期（t 期）數據，是否嘗試過計算 $t-1$ 或 $t-2$ 期之交叉相關係數 (Cross-Correlation)？</li>
+                <li><strong>平穩性檢定 (Unit Root Test / ADF Test)</strong>：時間序列變數若未經單根檢定直接作迴歸，容易產生「偽迴歸 (Spurious Regression)」。小組是否了解如何運用 Python (statsmodels) 進行 ADF 檢定與一階差分 (First Difference) 處理？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、變數豐富度與經濟機制深化</h4>
+            <ul>
+                <li><strong>結構拆解 (Decomposition)</strong>：CPI 包含食物類、能源類、房租等，而 GDP 包含消費、投資、出口等。小組是否考慮將 CPI 拆解為「核心 CPI (Core CPI)」，以排除短期波動嚴重的油價與蔬果價格，使相關性更為顯著？</li>
+                <li><strong>外部衝擊控制 (External Shocks)</strong>：台灣為高度出口導向之小型開放經濟體，匯率 (USD/TWD) 與進口物價指數 (IPI) 對 GDP 與 CPI 的影響巨大。模型中是否需要納入匯率或國際原油價格作為控制變數？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽對接與作品包裝策略</h4>
+            <ul>
+                <li><strong>金融研訓院 - 前瞻金融研究競賽</strong>：該組研究極為符合金融研訓院對總經趨勢研究的要求。若要投稿，能否將研究題目升級為**「通膨預期與經濟成長之滯後傳導機制：台灣總體數據之實證」**？</li>
+                <li><strong>中原智慧運算與量子資訊競賽</strong>：該組展現出極強的 Prompt 編寫與 AI 協作經驗，能否將「運用 Prompt 自動清理 AREMOS 時間序列並繪製進階經濟圖表」的流程，封裝為一份**「智慧金融時間序列分析自動化工作流」**投稿實作組？</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 11 組專屬指導文件</p>
+    </footer>
+</div>
+
+</body>
+</html>

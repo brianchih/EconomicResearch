@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 12 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #dd6b20;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #e2e8f0;
+            --tag-text: #2d3748;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 12 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：孫靖淳、陳璟辰、陳韋翰、陳柏諺 ｜ 主題：家庭社經地位與青少年數位成長歷程 (TIGPS) 之實證研究</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">三階段轉型過程</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：探索發想與 AI 對話測試 (10/07)</div>
+                    <div class="timeline-title">初步聚焦「家庭社經地位對青少年學業表現之影響」</div>
+                    <div class="timeline-desc">
+                        孫靖淳透過 Gemini 進行 AI 對話與邏輯梳理，陳璟辰檢索相關學術文獻 (PDF)，陳韋翰進行主題資料初步查找。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：主題轉向與專業資料庫尋找 (10/14)</div>
+                    <div class="timeline-title">轉向 SRDA 資料庫並鎖定 TIGPS 調查</div>
+                    <div class="timeline-desc">
+                        陳柏諺嘗試註冊並使用「學術調查研究資料庫 (SRDA)」，小組將議題精緻化為「臺灣數位世代青少年的成長歷程追蹤研究 (TIGPS)」。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：成員新進與專案再規劃 (10/16 - 10/17)</div>
+                    <div class="timeline-title">組員重組整合與學術實證摸索期</div>
+                    <div class="timeline-desc">
+                        因新成員加入，孫靖淳主持會議進行分工重組。小組進入學術論文架構與實證數據處理之適應與摸索階段。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">跨成員合作與組織</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">孫靖淳</div>
+                    <div class="member-role">專案 PM / AI 邏輯協作與報告統整</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>運用 Gemini 進行議題對話與發想</li>
+                            <li>主導組內會議主持與分工重新分配</li>
+                            <li>負責專案進度追蹤與實證結果解釋</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳璟辰</div>
+                    <div class="member-role">文獻檢索 / 追蹤研究主題發想</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋並研讀學術論文與簡報檔</li>
+                            <li>參與 TIGPS 追蹤研究主題之討論</li>
+                            <li>協助定義青少年成長歷程分析範疇</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳韋翰</div>
+                    <div class="member-role">主題資料檢閱 / 資源搜集</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>進行 TIGPS 資料庫相關文獻蒐集</li>
+                            <li>檢視相關統計數據與資料可得性</li>
+                            <li>協助彙整小組討論素材</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳柏諺</div>
+                    <div class="member-role">專業資料庫採集 / SRDA 串接</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>註冊並申請中研院 SRDA 資料庫權限</li>
+                            <li>尋找符合 TIGPS 主題之微觀問卷資料</li>
+                            <li>協助資料檔下載與格式轉換</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 12 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、數據實作落實（從「查找文獻」跨越至「Python / Colab 實作」）</h4>
+            <ul>
+                <li><strong>微觀問卷資料 (SRDA .dta / .sav) 之解讀</strong>：目前小組已鎖定 SRDA 的 TIGPS 資料，是否已成功下載資料並使用 Python (Pandas/Statsmodels) 開啟？是否了解如何對問卷選項（如家庭收入分位、父母教育程度）進行變數編碼？</li>
+                <li><strong>擺脫純文獻/AI 對話</strong>：目前產出紀錄多為 Gemini 對話或 PDF 連結，能否在下週試著在 Colab 產出第一張「家庭社經地位 vs. 青少年數位使用時間」的散佈圖或交叉表？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、議題聚焦與因果推論（TIGPS 追蹤資料的優勢）</h4>
+            <ul>
+                <li><strong>追蹤資料 (Panel Data) 的優勢利用</strong>：TIGPS 是「追蹤研究（Follow-up Study）」，小組打算比較的是「同一群青少年在不同時間點的變化（固定效應 FE）」，還是「單一時間點的橫斷面差異（Cross-sectional）」？</li>
+                <li><strong>數位使用（數位落差）與學業/心理表現</strong>：家庭社經地位影響的是青少年的「硬體設備取得（數位近用）」還是「使用時間/內容掌控（數位素養）」？這兩者對學業表現的影響有何不同？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、團隊磨合與競賽落地對接策略</h4>
+            <ul>
+                <li><strong>新成員磨合與專案里程碑</strong>：隨著團隊成員加入，建議小組明確建立「每週實質產出檢核點」（例如：每週一人負責一段 Colab 程式碼或資料表）。</li>
+                <li><strong>政大實證調查論文獎對接</strong>：TIGPS 屬於國內最具代表性的調查資料之一，極度契合《政治大學 臺灣經驗實證調查資料論文獎》。若能在期中前完成初步計量迴歸，將大有獲獎機會！</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 12 組專案深度輔導報告</p>
+    </footer>
+</div>
+
+</body>
+</html>

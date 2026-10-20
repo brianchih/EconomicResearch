@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 03 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #c05621;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 03 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：翁于晴、呂晏瑜、陳昱庭、黃品淳、吳佩蓉、楊詩語 ｜ 主題：淡江經濟系頂石課程成果展專案營運與活動企劃</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">三階段行政與組織推進</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：組織架構與任務分工 (10/03 - 10/11)</div>
+                    <div class="timeline-title">啟動大專成果展營運，確立分工架構</div>
+                    <div class="timeline-desc">
+                        陳昱庭與翁于晴召開組內會議，確認專案營運與管考職責。翁于晴進行初期人力配置，規劃展覽現場人員動線與工作權責分配。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：企劃書編撰與評分機制運籌 (10/12 - 10/13)</div>
+                    <div class="timeline-title">產出活動企劃草案、評審邀請與預算控管</div>
+                    <div class="timeline-desc">
+                        呂晏瑜撰寫並更新活動企劃書文件，黃品淳規劃宣傳用品，吳佩蓉藉由 Gemini AI 輔助優化活動時程，翁于晴依時間流程修正場次數量、預算與評審評分機制。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：文宣設計、進度控管與迭代 (10/16 - 10/20)</div>
+                    <div class="timeline-title">評審邀請函設計、場地流程編排與企劃第三版</div>
+                    <div class="timeline-desc">
+                        黃品淳設計評審實體與電子邀請函，陳昱庭追蹤各組專題進度並撰寫會議紀錄，楊詩語規劃休息室與接待流程，呂晏瑜完成「活動企劃書第三版」歸檔。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">全組 6 人專業營運分工</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">翁于晴</div>
+                    <div class="member-role">活動總幹事 / 時程、預算與評審機制</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導展覽人員配置與權責劃分</li>
+                            <li>編列動態預算與控管場次數量</li>
+                            <li>設計評審評分機制與評分表單</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">呂晏瑜</div>
+                    <div class="member-role">企劃主筆 / 文案撰寫與文件版本控管</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主筆編撰「成果展活動企劃書」</li>
+                            <li>建立企劃書雲端資料庫與進行第三版迭代</li>
+                            <li>彙整行政流程與官方提案文件</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">陳昱庭</div>
+                    <div class="member-role">專案 PM / 各組進度管考與會議記錄</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>追蹤全班各組專題進行狀況與瓶頸</li>
+                            <li>主持專案會議並產出結構化會議記錄</li>
+                            <li>協調組間行政運作與訊息傳遞</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">黃品淳</div>
+                    <div class="member-role">視覺傳達 / 宣傳用品與邀請函設計</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>規劃成果展宣傳用品與視覺文宣</li>
+                            <li>設計評審委員實體卡片與電子郵件邀請函</li>
+                            <li>維護活動視覺印象與對外形象</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">吳佩蓉</div>
+                    <div class="member-role">流程管考 / AI 輔助排程與細節調度</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>運用 Gemini AI 輔助評估活動流程</li>
+                            <li>精確編排時間節點與各階段控留</li>
+                            <li>協助場控與活動細節執行調度</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">楊詩語</div>
+                    <div class="member-role">接待與場控 / 來賓與評審動線規劃</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>規劃評審、來賓休息室與接待規範</li>
+                            <li>梳理當日評審評分與動線指引流程</li>
+                            <li>確保典禮與展覽現場順暢運作</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 03 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、從「行政執行」跨越至「數據驅動的專案管理 (Data-Driven PM)」</h4>
+            <ul>
+                <li><strong>進度管考之量化指標 (KPI/Dashboard)</strong>：目前陳昱庭負責追蹤各組進度，是否能運用 Python / Notion / Google Sheets 建立「全班各組專題推進儀表板」，量化各組之資料庫下載率、Colab 程式碼產出進度與文字撰寫完成度？</li>
+                <li><strong>問卷與滿意度分析設計</strong>：展覽活動結束後，小組打算如何評估成果展效益？能否設計發放給評審、參展學生與觀展師生的滿意度問卷，並在展後利用 Python 進行敘述統計與交叉分析報告？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、活動企劃與經濟學/產業分析之理論結合</h4>
+            <ul>
+                <li><strong>評分機制之權重與不對稱資訊 (Asymmetric Information)</strong>：翁于晴設計的評分表，如何透過指標權重（如實證嚴謹度、AI 應用創新性、簡報表達）引導評審客觀打分？是否有設計機制防止評審間標準差異（偏差校正）？</li>
+                <li><strong>資源配置與邊際效益 optimization</strong>：預算與時間有限下，宣傳資源（電子 vs 實體）與場地空間應如何配置才能創造最大的觀展流量與學術傳播效果？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽轉化與包裝策略（專案管理與商業企劃）</h4>
+            <ul>
+                <li><strong>中原智慧運算與量子資訊競賽 (創意構想組)</strong>：小組具備強大的活動企劃與專案管考經驗，能否將「展覽專案營運管考」包裝為「基於 AI 協作與智慧運算之大型學術展覽管理平台構想」報名參賽？</li>
+                <li><strong>學習歷程與作品集成果</strong>：這份完整的活動企劃書（第一版至第三版）、評審邀請函與預算表，如何轉化為組員未來推甄研究所或求職時，極具說服力的「專案管理與活動營運 Portfolio」？</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 03 組專案深度輔導報告</p>
+    </footer>
+</div>
+
+</body>
+</html>

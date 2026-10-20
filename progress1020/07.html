@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 07 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #c05621;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .alert-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            color: #9b2c2c;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9 demonstration;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.9em;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 07 組專案研討 - 專案啟動與教學輔導報告</h1>
+        <p>主題：專案團隊重整與資料庫對接輔導 ｜ 產業分析實作 課程教學團隊</p>
+    </header>
+
+    <div class="alert-box">
+        <strong>⚠️ 數據填報提醒：</strong> 經查核「小組專案個人工作與貢獻紀錄表」，第 07 組目前尚無正式提交之貢獻紀錄。本份報告旨在提供導師輔導指引，協助第 07 組迅速啟動專案、確立主題與完成成員任務分工。
+    </div>
+
+    <div class="grid-2">
+        <!-- 建議之議題演進路線 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 建議之議題收斂與啟動路線圖</h2>
+                <span class="badge">三階段快速啟動</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">第一階段：主題定位與資料庫選擇 (當前任務)</div>
+                    <div class="timeline-title">鎖定核心主題與專業資料庫</div>
+                    <div class="timeline-desc">
+                        建議小組從「AREMOS 總體經濟資料庫」、「政府 Open Data」或「SRDA 學術調查資料庫」中選擇一項具代表性之資料源，確立研究主軸（如：產業消費、ESG評等、房價負擔或通膨薪資）。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">第二階段：資料清理與 Colab 繪圖模組建置</div>
+                    <div class="timeline-title">撰寫 Python 程式進行 EDA 可視化</div>
+                    <div class="timeline-desc">
+                        利用 Google Colab 進行資料清洗、缺失值處理，並使用 Python (Pandas/Seaborn) 繪製雙 Y 軸時間序列圖或迴歸散佈圖，解決中文字型顯示問題。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">第三階段：實證模型搭建與報告撰寫</div>
+                    <div class="timeline-title">搭建迴歸模型與經濟邏輯解釋</div>
+                    <div class="timeline-desc">
+                        建構實證迴歸模型，驗證核心假設，並著手編撰專案報告企劃書，為競賽投遞與期末成果展做準備。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 建議之專長與任務分配範本 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 建議之團隊專長與角色分配構架</h2>
+                <span class="badge">四核心功能模組</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">專案 PM / 營運組</div>
+                    <div class="member-role">進度追蹤與會議主持</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主持小組討論與會議記錄撰寫</li>
+                            <li>追蹤各組員任務進度與時程管考</li>
+                            <li>定期填報個人與團隊工作貢獻表</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">資料採集組</div>
+                    <div class="member-role">Open Data / SRDA / TEJ 抓取</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>申請並登入 SRDA、AREMOS 或 TEJ 資料庫</li>
+                            <li>下載 CSV/Excel/Stata (.dta) 原始數據</li>
+                            <li>進行欄位中文化與基礎格式整理</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">資料分析組</div>
+                    <div class="member-role">Python / Colab / 迴歸搭建</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>撰寫 Colab 數據清洗與 EDA 程式</li>
+                            <li>建立雙 Y 軸圖、散佈圖與迴歸模型</li>
+                            <li>編寫 Prompt 協同 AI 輔助寫 Code</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">報告撰寫組</div>
+                    <div class="member-role">文獻回顧與經濟邏輯解讀</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>搜尋並研讀學術文獻與相關研究</li>
+                            <li>撰寫實證結果之經濟邏輯與政策意涵</li>
+                            <li>製作排版精美之簡報與報告文件</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 07 組突破與啟動的關鍵引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、專案啟動與主題確立（克服首波瓶頸）</h4>
+            <ul>
+                <li><strong>研究方向選擇</strong>：小組目前是否已在組內討論過感興趣的經濟/產業主題？例如：個體面的「房價與少子化」、總體面的「CPI 通膨與薪資」、或是企業面的「空汙與 ESG 評等」？</li>
+                <li><strong>資料可得性驗證 (Data Feasibility)</strong>：預計使用的資料庫（如政府 Open Data、AREMOS、SRDA 或 TEJ）是否已完成帳號申請並確認可以下載所需欄位？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、團隊合作與進度紀錄管理</h4>
+            <ul>
+                <li><strong>貢獻紀錄填報與時程控管</strong>：小組成員是否已知悉並了解如何定期填報「個人工作與貢獻紀錄表」？是否已建立固定每週開會的時間點？</li>
+                <li><strong>AI 工具輔助實作</strong>：小組是否嘗試過使用 Gemini 或 ChatGPT 編寫 Prompt 輔助撰寫 Python 繪圖程式，以加速專案初期運作？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽目標與產出對接策略</h4>
+            <ul>
+                <li><strong>成果發表與競賽目標對接</strong>：小組期望將本學期的專題成果投遞至哪一個競賽？（如《政治大學 臺灣經驗實證調查資料論文獎》、《金融研訓院 前瞻金融研究競賽》或《中原智慧運算與量子資訊競賽》）？</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 07 組專案輔導與啟動指南</p>
+    </footer>
+</div>
+
+</body>
+</html>

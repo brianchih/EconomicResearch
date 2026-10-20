@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第 08 組專案研討 - 研究議題演進、團隊專長分工與進階引導指南</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #dd6b20;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --tag-bg: #feebc8;
+            --tag-text: #7b341e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .badge {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-date {
+            font-size: 0.85em;
+            color: #718096;
+            font-weight: bold;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin: 4px 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.93em;
+            color: #4a5568;
+        }
+
+        /* Member Grid Styles */
+        .member-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            font-size: 0.9em;
+            color: #2d3748;
+        }
+
+        .member-skills ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* Questions Section */
+        .question-box {
+            background: #fffaf0;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #718096;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第 08 組專案研討 - 研究議題演進與教學引導報告</h1>
+        <p>成員：蔡沛吟、傅琬恬 ｜ 主題：總體經濟 CPI 物價指數與受僱薪資之實證分析</p>
+    </header>
+
+    <div class="grid-2">
+        <!-- 議題演進過程 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📌 研究議題演進脈絡</h2>
+                <span class="badge">三階段收斂過程</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">階段一：資料抓取與雲端儲存 (09/29)</div>
+                    <div class="timeline-title">基礎數據下載與環境建立</div>
+                    <div class="timeline-desc">
+                        蔡沛吟建立 Google Drive 資料儲存區，嘗試從政府資料庫或 AREMOS 下載巨觀經濟相關變數，準備數據分析環境。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段二：主題聚焦與雙 Y 軸繪製 (10/06 - 10/08)</div>
+                    <div class="timeline-title">確定「CPI 物價指數 vs. 受僱薪資」分析主軸</div>
+                    <div class="timeline-desc">
+                        蔡沛吟利用 Colab 撰寫 Python 程式，成功將 AREMOS 總經資料繪製為雙 Y 軸時間序列圖，並上傳資料轉置檔，嘗試觀察物價與實質薪資之消長。
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">階段三：多源資料檢視與全套流程 (10/13 - 10/14)</div>
+                    <div class="timeline-title">資料清理、編碼轉置與 EDA 綜合繪圖</div>
+                    <div class="timeline-desc">
+                        傅琬恬接續進行主題資料搜尋，並於 Colab 建立完整流程，包含資料清理、變數編碼合併與 EDA 圖表繪製。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成員專長與分工 -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">👥 成員專長與任務分工</h2>
+                <span class="badge">精簡團隊高效合作</span>
+            </div>
+            <div class="member-list">
+                <div class="member-card">
+                    <div class="member-name">蔡沛吟</div>
+                    <div class="member-role">數據架構 / 時間序列與 EDA 分析</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>主導 AREMOS 總經資料庫擷取與整理</li>
+                            <li>建立 Colab 雙 Y 軸時間序列可視化程式</li>
+                            <li>負責資料清理、轉置與雲端檔案管理</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">傅琬恬</div>
+                    <div class="member-role">資料檢閱 / EDA 繪圖與計量搭建</div>
+                    <div class="member-skills">
+                        <ul>
+                            <li>檢視主題相關文獻與公開數據來源</li>
+                            <li>進行資料合併、變數編碼與格式轉換</li>
+                            <li>建構 Colab EDA 繪圖與迴歸分析程式</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 深層引導問題 -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💡 協助第 08 組突破與進步的深層引導問題</h2>
+            <span class="badge">導師教學指引</span>
+        </div>
+
+        <div class="question-box">
+            <h4>一、名目金額平減與經濟學邏輯（名目薪資 vs. 實質薪資）</h4>
+            <ul>
+                <li><strong>實質薪資 (Real Wages) 平減計算</strong>：目前圖表中比較的是「名目薪資」還是「實質薪資」？如果薪資成長率低於 CPI 通膨率，代表購買力下降。小組是否已經使用 CPI 對名目薪資進行平減？</li>
+                <li><strong>購買力剝蝕與滯後效應 (Lag Effect)</strong>：物價上漲對薪資調升的衝擊通常具備滯後性（如企業年度薪資檢討），小組能否在 Colab 增加計算落後 1~4 期的相關係數？</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>二、議題收斂與精緻化（針對「基本工資/中小企業」衝擊）</h4>
+            <ul>
+                <li><strong>產業別/企業規模差異</strong>：受僱薪資是全產業平均，但高科技業與住宿餐飲業的調薪幅度差異極大。小組是否考慮加入不同產業或中小企業的薪資數據進行對比？</li>
+                <li><strong>指標界定與敘述行銷</strong>：目前題目「CPI 物價指數 vs. 受僱薪資」較像課堂練習，若精緻化為「通膨衝擊下的實質薪資停滯與產業衝擊：以台灣受僱員工為例」，報告將大幅提升吸引力。</li>
+            </ul>
+        </div>
+
+        <div class="question-box">
+            <h4>三、競賽落地與團隊擴充策略</h4>
+            <ul>
+                <li><strong>競賽投遞定位</strong>：該組目前產出扎實（有 Colab 程式與雲端數據），非常適合將結果美化後投遞「政治大學 臺灣經驗實證調查資料論文獎（大學生組）」或「金融研訓院 前瞻金融研究競賽」。</li>
+                <li><strong>團隊分工與補強</strong>：僅有 2 位成員需要同時負擔資料清理與報告撰寫。建議小組成員建立固定討論節奏，並善用 AI（如 Gemini/ChatGPT）輔助撰寫報告引言與經濟邏輯解讀。</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊製作 ｜ 針對第 08 組專案深度輔導報告</p>
+    </footer>
+</div>
+
+</body>
+</html>

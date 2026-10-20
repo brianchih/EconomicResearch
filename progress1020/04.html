@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第04组專案分析與教學引導報告</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #2563eb;
+            --accent-color: #0284c7;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --highlight-bg: #f0f9ff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.35em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Timeline / Process styling */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary-color);
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            border: 2px solid white;
+        }
+
+        .timeline-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        .timeline-item p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #475569;
+        }
+
+        /* Member Grid */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+        }
+
+        .member-card {
+            background: var(--highlight-bg);
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .member-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary-color);
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .role-tag {
+            font-size: 0.75em;
+            background: var(--secondary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: normal;
+        }
+
+        .member-card ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.9em;
+            color: #334155;
+        }
+
+        .member-card li {
+            margin-bottom: 6px;
+        }
+
+        /* Questions Box */
+        .question-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .question-box h4 {
+            margin: 0 0 8px 0;
+            color: #15803d;
+            font-size: 1.05em;
+        }
+
+        .question-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+
+        .question-box li {
+            margin-bottom: 8px;
+        }
+
+        .question-box li:last-child {
+            margin-bottom: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 0.88em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>第04組專案分析與教學引導報告</h1>
+        <p>成員：黃子宸、朱珮瑄、何之喬 | 產業分析實作 課程專題評估</p>
+    </header>
+
+    <!-- 1. 研究議題形成過程 -->
+    <div class="section-card">
+        <h2 class="section-title">🌱 一、研究議題演進過程分析（基於 18 筆填報紀錄）</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>階段一：基礎 AI/Colab 測試與工具摸索</h4>
+                <p>專案初期專註於學習 Python/Colab 雲端開發環境建置，練習 Prompt 工程，利用 AI 生成簡易程式碼處理數據與基本圖表繪製，奠定自動化分析基礎。</p>
+            </div>
+            <div class="timeline-item">
+                <h4>階段二：鎖定核心主題「空氣污染與企業 ESG 評等」</h4>
+                <p>確立明確的研究主軸：「空氣污染指標對企業 ESG 評等之影響分析」，將環境永續（E）與企業治理及市場評價相連結，尋找具備現實政策意涵的變數組合。</p>
+            </div>
+            <div class="timeline-item">
+                <h4>階段三：多源跨資料庫 (Multi-source DB) 串接實踐</h4>
+                <p>積極展開跨領域資料庫申請與介接，成功對接政府環境 Open Data（AQI、PM2.5）、TEJ 台灣經濟新報（企業公司治理評鑑與 ESG 指標）、SRDA 學術調查資料庫以及家庭收支調查數據。</p>
+            </div>
+            <div class="timeline-item">
+                <h4>階段四：國際文獻對齊與專業研究架構對接</h4>
+                <p>查閱 ScienceDirect、PLOS ONE 等國際知名期刊之學術文獻，對標國際環境經濟學與永續金融研究方法，確立量化模型中的控制變數與理論邏輯架構。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 成員專長與任務分配 -->
+    <div class="section-card">
+        <h2 class="section-title">👥 二、成員專長與任務分工分析</h2>
+        <p style="margin-bottom: 20px; font-size: 0.95em;">第 04 組展現了極高的執行力與極強的跨資料庫串接技術，成員間分工精確且高度互補：</p>
+        
+        <div class="member-grid">
+            <!-- 朱珮瑄 -->
+            <div class="member-card">
+                <h4>朱珮瑄 <span class="role-tag">數據架構 / 文獻對接</span></h4>
+                <ul>
+                    <li><strong>專長</strong>：Colab 分析環境建置、國際學術文獻檢索（ScienceDirect / PLOS ONE）。</li>
+                    <li><strong>主要貢獻</strong>：搭建 Colab 自動化清理架構，串接 TEJ 與政府 Open Data，並從國際文獻中萃取模型變數架構。</li>
+                </ul>
+            </div>
+            <!-- 何之喬 -->
+            <div class="member-card">
+                <h4>何之喬 <span class="role-tag">資料清理 / 學術調研</span></h4>
+                <ul>
+                    <li><strong>專長</strong>：SRDA / 家庭收支調查資料申請、TEJ 企業個體數據抓取。</li>
+                    <li><strong>主要貢獻</strong>：主導 SRDA 與政府調查資料庫之清理轉置，統整研讀學習單並提煉實證變數與理論架構。</li>
+                </ul>
+            </div>
+            <!-- 黃子宸 -->
+            <div class="member-card">
+                <h4>黃子宸 <span class="role-tag">Prompt工程 / 專案營運</span></h4>
+                <ul>
+                    <li><strong>專長</strong>：SRDA 帳號與權限管理、Data 空汙資料庫對接、AI 協作（Prompt 驗證）。</li>
+                    <li><strong>主要貢獻</strong>：負責跨資料庫對接測試，運用 Prompt 工程進行 Colab Code 錯驗證與專案進度追蹤。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 深度導師引導問題 -->
+    <div class="section-card">
+        <h2 class="section-title">🚀 三、幫助小組更進一步的深度導師引導問題</h2>
+        <p style="margin-bottom: 20px; font-size: 0.95em;">第 04 組在資料蒐集與跨資料庫串接上表現卓越，若要提升至「競賽得獎」或「頂級論文」水準，需要克服以下關鍵研究瓶頸：</p>
+
+        <!-- 構面一 -->
+        <div class="question-box">
+            <h4>💡 1. 議題收斂與個體/總體變數對齊問題（空間與級配對齊）</h4>
+            <ul>
+                <li>「政府 Open Data 空汙指標（如各縣市/測站之 AQI、PM2.5）是<strong>區域總體/空間數據</strong>，而 TEJ 企業 ESG 評等是<strong>個體企業數據</strong>。我們該如何精準地將縣市空汙數據匹配 (Match) 到上市櫃企業？是以『企業總部登記地址』、『主要生產廠區地理位置』，還是以『產業別平均受曝程度』來進行對齊？」</li>
+                <li>「若企業在全國甚至海外擁有多個廠區，單一總部地址的空汙指標是否會產生測量誤差 (Measurement Error)？我們該如何處理或在論文中說明這個限制？」</li>
+            </ul>
+        </div>
+
+        <!-- 構面二 -->
+        <div class="question-box">
+            <h4>💡 2. 因果推論與內生性問題 (Endogeneity & Reverse Causality)</h4>
+            <ul>
+                <li>「『ESG 評等較高的企業，其周邊或生產造成的空汙較低』，這究竟是因為<strong>高 ESG 企業自主投入綠色轉型（因果）</strong>，還是因為<strong>原本就處於低污染區域的企業更容易取得高 ESG 評級（選擇偏差）</strong>？」</li>
+                <li>「我們該如何處理潛在的反向因果關係與遺漏變數？是否考慮引入時間滯後項 (Lagged Variables)、固定效應模型 (Fixed Effects Model)，或是尋找外生衝擊作為工具變數 (Instrumental Variable) 來提升論證的嚴謹度？」</li>
+            </ul>
+        </div>
+
+        <!-- 構面三 -->
+        <div class="question-box">
+            <h4>💡 3. 競賽落地與實務應用價值（轉化為金融與 AI 實務工具）</h4>
+            <ul>
+                <li>「若投稿《中原智慧運算與量子資訊創新應用競賽 - 實作組》，我們能否將現有的 Python/Colab 程式轉化為一個**『基於 AI 機器學習之企業環境風險與 ESG 評估預測模型』**？其模型預測準確率 (Accuracy) 與演算法特色是什麼？」</li>
+                <li>「若投稿《金融研訓院 - 前瞻金融研究競賽》，這個模型如何轉換為銀行或投資機構的實務工具？例如：**『綠色放款審查機制』**或**『氣候轉型實體風險定價模組』**，幫助金融機構評估高空汙暴露企業的放款違約風險？」</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 產業分析實作 課程教學團隊 — 第 04 組專屬指導文件</p>
+    </footer>
+</div>
+
+</body>
+</html>
