@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大四經濟系學術文獻檢索與 AI 導師 (全功能教學網頁)</title>
+    
+    <!-- 引入 MathJax 數學渲染庫 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -250,7 +265,6 @@
             background-color: #f0f7ff;
         }
 
-        /* 指南樣式 */
         .guide-step {
             border-left: 4px solid var(--secondary-color);
             padding-left: 16px;
@@ -273,7 +287,6 @@
 
         .schedule-table th { background-color: #f1f5f9; color: var(--primary-color); }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -317,7 +330,7 @@
         <button class="tab-btn" onclick="switchTab('tab3')">第三頁：50-90 分鐘課堂教學腳本</button>
     </div>
 
-    <!-- ==================== PAGE 1 ==================== -->
+    <!-- PAGE 1 -->
     <div id="tab1" class="tab-content active">
         <div class="grid-layout">
             <div>
@@ -391,7 +404,7 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 2 ==================== -->
+    <!-- PAGE 2 -->
     <div id="tab2" class="tab-content">
         <div class="card">
             <div class="card-title">🔑 Gemini API Key 申辦與資安指南 (課堂發放講義)</div>
@@ -423,7 +436,7 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 3 ==================== -->
+    <!-- PAGE 3 -->
     <div id="tab3" class="tab-content">
         <div class="card">
             <div class="card-title">📋 50-90 分鐘「經濟學論文檢索」互動課堂腳本</div>
@@ -497,6 +510,9 @@
 
     window.onload = function() {
         updateApiStatus();
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
     };
 
     function switchTab(tabId) {
@@ -508,6 +524,11 @@
         if (tabId === 'tab3') document.querySelectorAll('.tab-btn')[2].classList.add('active');
 
         document.getElementById(tabId).classList.add('active');
+        
+        // 切換 Tab 後重新渲染數學符號
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
     }
 
     function updateApiStatus() {
@@ -616,6 +637,11 @@
 
         document.getElementById('cnBooleanBox').innerText = data.cn_boolean;
         document.getElementById('enBooleanBox').innerText = data.en_boolean;
+
+        // 動態生成資料後重新排版數學符號
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
     }
 
     function searchDatabase(type) {
