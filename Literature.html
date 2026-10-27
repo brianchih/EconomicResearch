@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大四經濟系學術文獻檢索與 AI 導師 (全功能教學網頁)</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #2563eb;
+            --accent-color: #d97706;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 6px solid var(--primary-color);
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .header-title p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .api-status-btn {
+            background-color: #f1f5f9;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .api-status-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ef4444;
+        }
+
+        .status-dot.active {
+            background-color: #10b981;
+        }
+
+        /* 三頁式 Tab 導覽列 */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            background-color: #e2e8f0;
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+
+        .input-group { margin-bottom: 16px; }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .quick-topics {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .chip {
+            background-color: #eff6ff;
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: 1px solid #bfdbfe;
+        }
+
+        .chip:hover { background-color: #dbeafe; }
+
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover { background-color: #1d4ed8; }
+        .btn-accent { background-color: var(--accent-color); }
+        .btn-accent:hover { background-color: #b45309; }
+
+        .kw-section { margin-bottom: 16px; }
+        .kw-section h4 { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 8px; }
+        .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { background-color: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; }
+        .tag.en { background-color: #fef3c7; color: #92400e; }
+
+        .boolean-box {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .db-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .db-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .db-btn:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        /* 指南樣式 */
+        .guide-step {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 16px;
+            margin-bottom: 20px;
+        }
+
+        .guide-step h3 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 6px; }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .schedule-table th { background-color: #f1f5f9; color: var(--primary-color); }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white; padding: 28px; border-radius: 12px; max-width: 500px; width: 90%;
+        }
+
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+        .loading-spinner {
+            display: none; border: 3px solid #f3f3f3; border-top: 3px solid var(--secondary-color);
+            border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-title">
+            <h1>🎓 大四經濟系學術文獻檢索與 AI 導師</h1>
+            <p>全功能互動教學平台：API 申辦指南、AI 發想實作與 50-90 分鐘教學腳本</p>
+        </div>
+        <button class="api-status-btn" onclick="openApiModal()">
+            <div class="status-dot" id="apiStatusDot"></div>
+            <span id="apiStatusText">未設定 API Key</span>
+        </button>
+    </header>
+
+    <!-- 三頁導覽選單 -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('tab1')">第一頁：AI 關鍵字發想與檢索實作</button>
+        <button class="tab-btn" onclick="switchTab('tab2')">第二頁：學生 API 申辦與資安指南</button>
+        <button class="tab-btn" onclick="switchTab('tab3')">第三頁：50-90 分鐘課堂教學腳本</button>
+    </div>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div id="tab1" class="tab-content active">
+        <div class="grid-layout">
+            <div>
+                <div class="card">
+                    <div class="card-title">第一步：定義研究主題與變數 ($X \rightarrow Y$)</div>
+                    <div class="input-group">
+                        <label for="researchTopic">輸入您的研究主題或題目：</label>
+                        <input type="text" id="researchTopic" placeholder="例如：最低工資提高對青年失業率的影響">
+                        <div class="quick-topics">
+                            <span class="chip" onclick="setTopic('最低工資對青年失業率之影響 (DID實證)')">勞動：最低工資與失業率</span>
+                            <span class="chip" onclick="setTopic('央行升息對房價與通膨之影響')">總體：升息、房價與通膨</span>
+                            <span class="chip" onclick="setTopic('ESG評等對企業融資成本之影響')">金融：ESG 與融資成本</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-accent" onclick="generateKeywords()">
+                        <span id="btnText">✨ AI 智囊發想關鍵字與布林邏輯</span>
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">第二步：AI 聯想與計量專用術語</div>
+                    <div id="aiOutputPlaceholder" style="color: var(--text-muted); text-align: center; padding: 20px;">
+                        請輸入主題並點擊上方按鈕，AI 將自動拆解變數與生成中英文關鍵字。
+                    </div>
+                    <div id="aiOutput" style="display: none;">
+                        <div class="kw-section">
+                            <h4>獨立變數 ($X$) / 相依變數 ($Y$) 拆解</h4>
+                            <div class="kw-tags" id="varTags"></div>
+                        </div>
+                        <div class="kw-section">
+                            <h4>中文同義詞與延伸詞</h4>
+                            <div class="kw-tags" id="cnTags"></div>
+                        </div>
+                        <div class="kw-section">
+                            <h4>英文專業術語 (Academic English)</h4>
+                            <div class="kw-tags" id="enTags"></div>
+                        </div>
+                        <div class="kw-section">
+                            <h4>推薦實證 / 計量模型關鍵詞 (Empirical Method)</h4>
+                            <div class="kw-tags" id="methodTags"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <div class="card-title">第三步：建構布林邏輯 (Boolean Search String)</div>
+                    <label>中文布林檢索字串：</label>
+                    <div class="boolean-box" id="cnBooleanBox">"研究主題" AND ("變數X" OR "變數Y")</div>
+                    
+                    <label>英文布林檢索字串 (推薦用於外文頂刊)：</label>
+                    <div class="boolean-box" id="enBooleanBox">("Variable X" OR "Synonym") AND ("Variable Y")</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">第四步：一鍵帶入真實學術資料庫檢索</div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                        點擊下方按鈕，系統將自動帶入上方的布林邏輯字串進行跨平台檢索：
+                    </p>
+                    <div class="db-links">
+                        <a href="#" class="db-btn" onclick="searchDatabase('scholar')">🎓 Google Scholar</a>
+                        <a href="#" class="db-btn" onclick="searchDatabase('ssrn')">📄 SSRN (Econ)</a>
+                        <a href="#" class="db-btn" onclick="searchDatabase('nber')">🏛️ NBER Working Papers</a>
+                        <a href="#" class="db-btn" onclick="searchDatabase('airiti')">📚 華藝線上圖書館</a>
+                        <a href="#" class="db-btn" onclick="searchDatabase('ndltd')">🎓 臺灣博碩士論文網</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <div id="tab2" class="tab-content">
+        <div class="card">
+            <div class="card-title">🔑 Gemini API Key 申辦與資安指南 (課堂發放講義)</div>
+            
+            <div class="guide-step">
+                <h3>一、 為什麼我們需要 API Key？</h3>
+                <p>本課程利用 Google Gemini API 來協助拆解研究題目中的 <strong>個體/總體變數 ($X \rightarrow Y$)</strong>，並發想頂刊（如 AER, QJE, NBER）常用的 <strong>英文經濟學專業術語</strong> 與 <strong>計量模型關鍵詞（DID, IV, RDD 等）</strong>。金鑰僅會儲存於您的個人瀏覽器端，安全性高。</p>
+            </div>
+
+            <div class="guide-step">
+                <h3>二、 3 分鐘快速申辦步驟 (免費版 Free Tier)</h3>
+                <ol style="margin-left: 20px;">
+                    <li>前往 <a href="https://aistudio.google.com/" target="_blank">Google AI Studio 官網</a>。</li>
+                    <li>登入您的 Google 帳號並同意條款。</li>
+                    <li>點擊左上角的 <strong><code>Get API key</code></strong> 按鈕。</li>
+                    <li>點擊 <strong><code>Create API key</code></strong>，選取新的專案生成金鑰。</li>
+                    <li>複製以 <code>AIzaSy...</code> 開頭的字串，並貼入本網頁右上角的 API 設定按鈕中。</li>
+                </ol>
+            </div>
+
+            <div class="guide-step">
+                <h3>三、 資安與費用規範</h3>
+                <ul>
+                    <li><strong>完全免費</strong>：Google Free Tier 提供每分鐘最多 15 次請求，課堂演練完全不收費也不需綁定信用卡。</li>
+                    <li><strong>金鑰安全</strong>：API Key 等同於您的個人密碼，請勿公開傳給他人或上傳至公開 GitHub 專案。</li>
+                    <li><strong>本機儲存</strong>：本工具採用 <code>localStorage</code> 技術，金鑰絕不會上傳至任何第三方伺服器。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div id="tab3" class="tab-content">
+        <div class="card">
+            <div class="card-title">📋 50-90 分鐘「經濟學論文檢索」互動課堂腳本</div>
+            <p style="color: var(--text-muted); margin-bottom: 16px;">
+                專為大四經濟系設計的檢索實務課程腳本，結合因果推論觀念、AI 發想實作與學術期刊評估：
+            </p>
+
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">時間</th>
+                        <th style="width: 25%;">教學環節</th>
+                        <th>詳細活動與配合方式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>00 - 15 分</td>
+                        <td><strong>觀念建立</strong><br>經濟學研究與變數拆解</td>
+                        <td>講解如何將描述性問題（如「台灣房價」）轉化為因果推論問題（如「央行升息 $X$ 對房價 $Y$ 之影響」）。引導學生拆解 $X, Y$ 與中介變數。</td>
+                    </tr>
+                    <tr>
+                        <td>15 - 30 分</td>
+                        <td><strong>API 申辦實作</strong><br>環境建置與資安宣導</td>
+                        <td>學生切換至「第二頁」，按照指引登入 Google AI Studio 申請 API Key 並貼入網頁，確認右上角顯示綠色已設定燈號。宣導 API 資安觀念。</td>
+                    </tr>
+                    <tr>
+                        <td>30 - 60 分</td>
+                        <td><strong>現場檢索演練</strong><br>AI 發想與跨資料庫實測</td>
+                        <td>學生切換至「第一頁」，輸入畢業專題或有興趣的經濟議題。利用 AI 產出中英文關鍵字與計量模型（DID/IV），並一鍵帶入 SSRN/NBER/Google Scholar。</td>
+                    </tr>
+                    <tr>
+                        <td>60 - 80 分</td>
+                        <td><strong>高階技巧與評估</strong><br>期刊品質與識別策略</td>
+                        <td>講解如何根據 Working Paper（SSRN/NBER）與頂刊（AER/QJE）評估文獻品質。重點審視論文的「識別策略 (Identification Strategy)」與「資料來源」。</td>
+                    </tr>
+                    <tr>
+                        <td>80 - 90 分</td>
+                        <td><strong>Q&A 與作業指定</strong><br>初步文獻清單撰寫</td>
+                        <td>指定課後作業：利用本網頁生成的檢索字串，找出 3 篇高度相關之英文實證論文，並摘要其 $X, Y$ 變數、計量方法與核心實證結果。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- API Key 設定 Modal -->
+<div class="modal" id="apiModal">
+    <div class="modal-content">
+        <h3 style="margin-bottom: 12px;">🔑 設定 Gemini API Key</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            您的 API Key 只會儲存在個人瀏覽器（localStorage）中，絕不會傳送或儲存在伺服器端，請安心使用。
+        </p>
+        <div class="input-group">
+            <label for="apiKeyInput">Gemini API Key：</label>
+            <input type="text" id="apiKeyInput" placeholder="AIzaSy...">
+        </div>
+        <p style="font-size: 0.8rem; color: var(--secondary-color);">
+            👉 還沒有 API Key？請至本網頁「第二頁」查看申辦指南，或造訪：<a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a>
+        </p>
+        <div class="modal-footer">
+            <button class="btn" style="background-color: #64748b;" onclick="closeApiModal()">取消</button>
+            <button class="btn" onclick="saveApiKey()">儲存設定</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
+
+    window.onload = function() {
+        updateApiStatus();
+    };
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        if (tabId === 'tab1') document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        if (tabId === 'tab2') document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        if (tabId === 'tab3') document.querySelectorAll('.tab-btn')[2].classList.add('active');
+
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    function updateApiStatus() {
+        const dot = document.getElementById('apiStatusDot');
+        const text = document.getElementById('apiStatusText');
+        if (geminiApiKey) {
+            dot.classList.add('active');
+            text.innerText = 'API Key 已設定';
+        } else {
+            dot.classList.remove('active');
+            text.innerText = '未設定 API Key';
+        }
+    }
+
+    function openApiModal() {
+        document.getElementById('apiKeyInput').value = geminiApiKey;
+        document.getElementById('apiModal').style.display = 'flex';
+    }
+
+    function closeApiModal() {
+        document.getElementById('apiModal').style.display = 'none';
+    }
+
+    function saveApiKey() {
+        const key = document.getElementById('apiKeyInput').value.trim();
+        if (key) {
+            geminiApiKey = key;
+            localStorage.setItem('gemini_api_key', key);
+            updateApiStatus();
+            closeApiModal();
+            alert('API Key 儲存成功！');
+        } else {
+            alert('請輸入有效的 API Key');
+        }
+    }
+
+    function setTopic(text) {
+        document.getElementById('researchTopic').value = text;
+    }
+
+    async function generateKeywords() {
+        const topic = document.getElementById('researchTopic').value.trim();
+        if (!topic) {
+            alert('請先輸入研究主題！');
+            return;
+        }
+
+        if (!geminiApiKey) {
+            alert('請先點擊右上角「未設定 API Key」填入您的 Gemini API Key！');
+            openApiModal();
+            return;
+        }
+
+        const btnText = document.getElementById('btnText');
+        const spinner = document.getElementById('loadingSpinner');
+        btnText.style.display = 'none';
+        spinner.style.display = 'block';
+
+        const prompt = `
+你是一位經濟學學術文獻檢索專家。請針對以下研究題目，進行變數拆解與關鍵字聯想。
+題目：${topic}
+
+請以 JSON 格式回傳（切勿加入 Markdown 以外的開頭與結尾文字），格式如下：
+{
+  "variables": ["X變數", "Y變數"],
+  "chinese_keywords": ["關鍵字1", "關鍵字2", "關鍵字3"],
+  "english_keywords": ["Keyword1", "Keyword2", "Keyword3"],
+  "empirical_methods": ["Difference-in-Differences", "Instrumental Variables"],
+  "cn_boolean": "\\"關鍵字1\\" AND (\\"關鍵字2\\" OR \\"關鍵字3\\")",
+  "en_boolean": "(\\"Keyword1\\" OR \\"Synonym\\") AND (\\"Keyword2\\")"
+}
+`;
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+
+            const data = await response.json();
+            const rawText = data.candidates[0].content.parts[0].text;
+            const cleanedText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+            const result = JSON.parse(cleanedText);
+
+            renderOutput(result);
+        } catch (error) {
+            alert('呼叫 API 發生錯誤，請檢查 API Key 是否正確或額度是否足夠。');
+            console.error(error);
+        } finally {
+            btnText.style.display = 'inline';
+            spinner.style.display = 'none';
+        }
+    }
+
+    function renderOutput(data) {
+        document.getElementById('aiOutputPlaceholder').style.display = 'none';
+        document.getElementById('aiOutput').style.display = 'block';
+
+        document.getElementById('varTags').innerHTML = data.variables.map(v => `<span class="tag">${v}</span>`).join('');
+        document.getElementById('cnTags').innerHTML = data.chinese_keywords.map(k => `<span class="tag">${k}</span>`).join('');
+        document.getElementById('enTags').innerHTML = data.english_keywords.map(k => `<span class="tag en">${k}</span>`).join('');
+        document.getElementById('methodTags').innerHTML = data.empirical_methods.map(m => `<span class="tag en">${m}</span>`).join('');
+
+        document.getElementById('cnBooleanBox').innerText = data.cn_boolean;
+        document.getElementById('enBooleanBox').innerText = data.en_boolean;
+    }
+
+    function searchDatabase(type) {
+        const enQuery = document.getElementById('enBooleanBox').innerText;
+        const cnQuery = document.getElementById('cnBooleanBox').innerText;
+        
+        let url = '';
+        if (type === 'scholar') {
+            url = `https://scholar.google.com/scholar?q=${encodeURIComponent(enQuery)}`;
+        } else if (type === 'ssrn') {
+            url = `https://www.ssrn.com/index.cfm/en/search/?txtKeyWords=${encodeURIComponent(enQuery)}`;
+        } else if (type === 'nber') {
+            url = `https://www.nber.org/search?q=${encodeURIComponent(enQuery)}`;
+        } else if (type === 'airiti') {
+            url = `https://www.airitilibrary.com/Search/Index?SearchTerms=${encodeURIComponent(cnQuery)}`;
+        } else if (type === 'ndltd') {
+            url = `https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=${encodeURIComponent(cnQuery)}`;
+        }
+
+        if (url) {
+            window.open(url, '_blank');
+        }
+    }
+</script>
+</body>
+</html>
