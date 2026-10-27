@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大四經濟系：實證文獻檢索與因果推論導論</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Noto Serif TC & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- MathJax 3 嚴格與穩定配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #030712;
+            color: #f9fafb;
+            overflow-x: hidden;
+        }
+
+        .serif-title {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 16:9 簡報容器 */
+        .slide-aspect-ratio {
+            width: 100%;
+            max-width: 1400px;
+            aspect-ratio: 16 / 9;
+        }
+
+        /* 動態切換淡入效果 */
+        .slide-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 滾動條美化 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(51, 65, 85, 0.8);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 bg-slate-950 text-slate-100">
+
+    <!-- 頂部導覽列 -->
+    <header class="w-full max-w-[1400px] flex justify-between items-center mb-3 text-sm text-slate-400 border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-3">
+            <span class="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-lg border border-blue-500/30 font-bold flex items-center gap-2 text-xs sm:text-sm">
+                <i class="fa-solid fa-graduation-cap text-amber-400"></i> 大四經濟系本科專題 / 畢業論文工作坊
+            </span>
+            <span class="hidden md:inline text-slate-700">|</span>
+            <span class="hidden md:inline text-slate-300 font-medium">實證文獻檢索與因果推論導論</span>
+        </div>
+        
+        <!-- 下拉跳轉與全螢幕按鈕 -->
+        <div class="flex items-center space-x-3">
+            <select id="slide-select" onchange="goToSlide(parseInt(this.value))" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-lg px-3 py-1.5 outline-none focus:border-blue-500 transition cursor-pointer">
+                <!-- JS 動態填入 -->
+            </select>
+            <button onclick="toggleFullScreen()" class="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 rounded-lg transition" title="全螢幕切換">
+                <i class="fa-solid fa-expand text-sm"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 16:9 主簡報視窗 -->
+    <main class="w-full flex-grow flex items-center justify-center my-auto">
+        <div class="slide-aspect-ratio bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden relative flex flex-col justify-between p-6 sm:p-10 md:p-12 bg-gradient-to-br from-slate-900 via-[#0a1228] to-slate-950">
+            
+            <!-- Slide 動態渲染區 -->
+            <div id="slide-container" class="w-full h-full flex flex-col justify-between overflow-y-auto pr-1 tex2jax_process">
+                <!-- JS Render -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 底部導覽列 -->
+    <footer class="w-full max-w-[1400px] flex flex-col sm:flex-row justify-between items-center mt-3 pt-3 border-t border-slate-800 gap-3 text-sm">
+        
+        <!-- 頁碼標記 -->
+        <div class="flex items-center space-x-4">
+            <span class="font-mono text-amber-400 font-bold text-lg" id="page-indicator">1 / 7</span>
+            <span class="text-xs sm:text-sm text-slate-400 font-medium hidden sm:inline" id="slide-title-preview">Slide Title</span>
+        </div>
+
+        <!-- 圓點按鈕 -->
+        <div class="flex items-center space-x-2" id="dots-container">
+            <!-- JS Render -->
+        </div>
+
+        <!-- 切換按鈕 -->
+        <div class="flex items-center space-x-3">
+            <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 font-semibold text-xs sm:text-sm">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>上一頁</span>
+            </button>
+            <button onclick="nextSlide()" id="next-btn" class="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-lg transition disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 font-semibold text-xs sm:text-sm">
+                <span>下一頁</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- JavaScript 簡報邏輯 -->
+    <script>
+        // 投影片內容資料庫 (所有斜線已雙重轉義，避免 Math Input Error)
+        const slidesData = [
+            // Slide 1: 封面
+            {
+                title: "1. 封面與工作坊概述",
+                html: `
+                    <div class="h-full flex flex-col justify-center items-center text-center space-y-8 my-auto slide-fade-in">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-semibold">
+                            <i class="fa-solid fa-microscope text-base"></i> 大四經濟系畢業專題 / 實證計量論文檢索實務
+                        </div>
+                        
+                        <h1 class="serif-title text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-tight max-w-5xl">
+                            實證文獻檢索與因果推論導論
+                        </h1>
+                        
+                        <p class="text-slate-300 text-base sm:text-lg md:text-xl font-light max-w-4xl leading-relaxed">
+                            從研究問題變數拆解、內生性分析、四大計量識別策略到 AI 關鍵字檢索與 Top 5 頂刊導讀
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl pt-6 border-t border-slate-800 text-sm">
+                            <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/80 text-left">
+                                <div class="text-amber-400 font-bold text-base mb-1"><i class="fa-solid fa-diagram-project me-2"></i>因果推論觀念</div>
+                                <p class="text-slate-400 text-xs leading-relaxed">釐清 $X \\rightarrow Y$ 因果關係、潛在結果架構與三大內生性偏誤</p>
+                            </div>
+                            <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/80 text-left">
+                                <div class="text-blue-400 font-bold text-base mb-1"><i class="fa-solid fa-filter me-2"></i>四大計量識別策略</div>
+                                <p class="text-slate-400 text-xs leading-relaxed">精通 DID, IV, RDD 與 Panel FE 的假設條件與關鍵術語</p>
+                            </div>
+                            <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/80 text-left">
+                                <div class="text-emerald-400 font-bold text-base mb-1"><i class="fa-solid fa-magnifying-glass me-2"></i>AI 檢索與頂刊評讀</div>
+                                <p class="text-slate-400 text-xs leading-relaxed">布林邏輯建構，一鍵帶入 Google Scholar, NBER 與 SSRN</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 2: 相關性 vs 因果關係 & 內生性
+            {
+                title: "2. 為什麼不能只看相關性？(內生性分析)",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded border border-blue-500/20 uppercase tracking-widest">Core Economics</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">為什麼不能只看相關性？ — 內生性問題 (Endogeneity)</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+                            <!-- OVB -->
+                            <div class="bg-slate-800/70 p-5 rounded-xl border border-red-500/30 space-y-3">
+                                <h3 class="font-bold text-red-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-eye-slash"></i> 1. 遺漏變數偏誤 (OVB)
+                                </h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    模型遺漏了同時影響 $X$ 與 $Y$ 的第三變數 $Z$（混淆因子 Confounder），導致 $\\hat{\beta}_1$ 估計產生嚴重偏誤。
+                                </p>
+                                <div class="bg-slate-900/90 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">典範範例：</strong>
+                                    教育年數 ($X$) 對薪資 ($Y$) 的影響中，個人的「未觀察能力」或「家庭背景」($Z$) 常被遺漏。
+                                </div>
+                            </div>
+
+                            <!-- 雙向因果 -->
+                            <div class="bg-slate-800/70 p-5 rounded-xl border border-red-500/30 space-y-3">
+                                <h3 class="font-bold text-red-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-arrows-rotate"></i> 2. 雙向因果 (Simultaneity)
+                                </h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    在 $X$ 影響 $Y$ 的同時，$Y$ 也反過來決定 $X$，導致迴歸殘差項與解釋變數相關 ($E[X \\varepsilon] \\neq 0$)。
+                                </p>
+                                <div class="bg-slate-900/90 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">典範範例：</strong>
+                                    警力規模 ($X$) 與犯罪率 ($Y$)。犯罪率高導致政府派駐更多警力，估計出「警察越多犯罪率越高」的謬誤。
+                                </div>
+                            </div>
+
+                            <!-- 選擇偏誤 -->
+                            <div class="bg-slate-800/70 p-5 rounded-xl border border-red-500/30 space-y-3">
+                                <h3 class="font-bold text-red-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-filter"></i> 3. 選擇偏誤 (Selection Bias)
+                                </h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    個體是否接受處置 ($D_i=1$) 並非隨機分派，而是出於自我選擇 (Self-Selection)。
+                                </p>
+                                <div class="bg-slate-900/90 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">典範範例：</strong>
+                                    參加職業培訓 ($X$) 對就業率 ($Y$) 的影響。積極度高的人更願意參訓，高估培訓真實效果。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-amber-500/30 text-sm flex items-center justify-between text-slate-300">
+                            <span><i class="fa-solid fa-triangle-exclamation text-amber-400 me-2 text-base"></i><strong>檢索警語：</strong> 在寫經濟學論文時，絕不能只用簡單 OLS 迴歸！必須在文獻中搜尋作者採用的<strong>「識別策略 (Identification Strategy)」</strong>。</span>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 3: 潛在結果模型
+            {
+                title: "3. 因果推論核心模型 (Potential Outcomes)",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20 uppercase tracking-widest">Causal Inference</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">因果推論核心模型 — Rubin 潛在結果架構</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto">
+                            <!-- 潛在結果說明 -->
+                            <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 space-y-4 text-slate-200">
+                                <h3 class="font-bold text-amber-400 text-xl flex items-center gap-2">
+                                    <i class="fa-solid fa-route"></i> 潛在結果 (Potential Outcomes)
+                                </h3>
+                                <p class="text-base leading-relaxed">
+                                    對任一個體 $i$，在給定處置狀態 $D_i \\in \\{0, 1\\}$ 下，存在兩種理論上的潛在結果：
+                                </p>
+                                <ul class="space-y-2 text-sm list-disc list-inside text-slate-300">
+                                    <li><strong class="text-white">$Y_i(1)$：</strong> 個體 $i$ 接受處置（如：獲得科技津貼）時的結果。</li>
+                                    <li><strong class="text-white">$Y_i(0)$：</strong> 個體 $i$ 未接受處置（如：未獲得津貼）時的結果。</li>
+                                </ul>
+                                <div class="bg-slate-900/90 p-3 rounded-lg border border-blue-500/40 text-blue-300 font-mono text-center text-base">
+                                    個體因果效應：$\\tau_i = Y_i(1) - Y_i(0)$
+                                </div>
+                            </div>
+
+                            <!-- 反事實與基本難題 -->
+                            <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 space-y-4 text-slate-200">
+                                <h3 class="font-bold text-blue-400 text-xl flex items-center gap-2">
+                                    <i class="fa-solid fa-ghost"></i> 反事實 (Counterfactual) 與基本難題
+                                </h3>
+                                <p class="text-base leading-relaxed">
+                                    <strong class="text-rose-400">因果推論的基本難題：</strong> 在現實世界中，對同一個體 $i$，我們只能觀察到其中一種狀態，未發生的另一種狀態即為「反事實」。
+                                </p>
+                                <div class="bg-slate-900/90 p-4 rounded-lg border border-slate-700 text-sm text-slate-300 space-y-2">
+                                    <div class="font-bold text-white">真實觀察到的結果算式：</div>
+                                    <div class="font-mono text-amber-300 text-base">$Y_i = D_i \\cdot Y_i(1) + (1 - D_i) \\cdot Y_i(0)$</div>
+                                    <p class="text-xs text-slate-400 mt-1">實證經濟學的核心目標，就是尋找完美的對照組來構建「反事實」！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 4: 四大識別策略
+            {
+                title: "4. 計量經濟學四大識別策略 (Identification)",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-purple-400 bg-purple-500/10 px-3 py-1 rounded border border-purple-500/20 uppercase tracking-widest">Empirical Methods</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">現代實證經濟學四大識別策略 (Identification Strategies)</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-auto text-sm">
+                            <!-- DID -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold text-blue-400 text-lg">1. 雙重差分法 (DID)</h3>
+                                    <span class="text-xs bg-blue-500/20 text-blue-300 px-2.5 py-1 rounded">自然實驗 / 政策評估</span>
+                                </div>
+                                <p class="text-slate-300 text-xs sm:text-sm">
+                                    比較處置組與對照組在政策衝擊前後的雙重差異。
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">關鍵假設：平行趨勢假設 (Parallel Trends)</strong>
+                                    在無政策介入下，兩組的變動趨勢應平行一致。
+                                </div>
+                            </div>
+
+                            <!-- IV -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold text-emerald-400 text-lg">2. 工具變數法 (IV / 2SLS)</h3>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded">外生外力衝擊</span>
+                                </div>
+                                <p class="text-slate-300 text-xs sm:text-sm">
+                                    尋找工具變數 $Z$，僅透過影響內生變數 $X$ 來影響結果 $Y$。
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">關鍵條件：相關性與排他性限制 (Exclusion Restriction)</strong>
+                                    $Z$ 與殘差項無關 ($Cov(Z, \\varepsilon) = 0$)。
+                                </div>
+                            </div>
+
+                            <!-- RDD -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold text-amber-400 text-lg">3. 斷點迴歸設計 (RDD)</h3>
+                                    <span class="text-xs bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded">準隨機微觀實驗</span>
+                                </div>
+                                <p class="text-slate-300 text-xs sm:text-sm">
+                                    利用連續變數到達關鍵門檻 (Cutoff) 時的規則強制分派處置。
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">核心邏輯：臨界值兩側個體隨機化</strong>
+                                    門檻左右極小範圍內的個體特質無顯著差異。
+                                </div>
+                            </div>
+
+                            <!-- FE -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-bold text-purple-400 text-lg">4. 面板固定效果 (Panel FE)</h3>
+                                    <span class="text-xs bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded">追蹤資料控制</span>
+                                </div>
+                                <p class="text-slate-300 text-xs sm:text-sm">
+                                    控制不隨時間改變的個體異質性 $\\alpha_i$ 與時間趨勢 $\\gamma_t$。
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded border border-slate-700 text-xs text-slate-300">
+                                    <strong class="text-amber-300 block mb-1">常見語法：雙向固定效果 (Two-Way Fixed Effects, TWFE)</strong>
+                                    同時納入個體固定效果與時間固定效果。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 5: 布林邏輯檢索
+            {
+                title: "5. 研究題目轉化為 AI 布林檢索字串",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded border border-amber-500/20 uppercase tracking-widest">Search Strategy</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">研究題目轉化為 AI 布林邏輯 (Boolean Logic)</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto text-sm">
+                            <!-- 三維度構建策略 -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-3 col-span-2">
+                                <h3 class="font-bold text-emerald-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-cubes"></i> 經濟學專用三維度檢索式構建法
+                                </h3>
+                                <p class="text-slate-300 leading-relaxed text-sm">
+                                    搜尋經濟學文獻時，建議將研究問題拆解為三層交集：<br>
+                                    <strong class="text-white">[處置變數 X] AND [結果變數 Y] AND [計量識別策略 Method]</strong>
+                                </p>
+                                
+                                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2 font-mono text-xs">
+                                    <div class="text-amber-300 font-bold">// 實例：研究「最低工資對青年就業之影響」英文頂刊檢索式</div>
+                                    <div class="text-slate-200 break-all leading-relaxed text-sm">
+                                        (<span class="text-blue-300">"minimum wage"</span> OR <span class="text-blue-300">"wage floor"</span>) <span class="text-amber-400 font-bold">AND</span> (<span class="text-emerald-300">"youth unemployment"</span> OR <span class="text-emerald-300">"employment rate"</span>) <span class="text-amber-400 font-bold">AND</span> (<span class="text-purple-300">"difference-in-differences"</span> OR <span class="text-purple-300">"DID"</span> OR <span class="text-purple-300">"natural experiment"</span>)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 常用語法提示 -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-3">
+                                <h3 class="font-bold text-blue-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-code"></i> 核心搜尋符號
+                                </h3>
+                                <ul class="space-y-2 text-xs text-slate-300">
+                                    <li><code class="text-amber-300 font-bold">""</code> (雙引號)：精確片語匹配 (例: <code class="text-slate-400">"minimum wage"</code>)</li>
+                                    <li><code class="text-blue-300 font-bold">AND</code>：同時包含兩組關鍵字 (交集)</li>
+                                    <li><code class="text-emerald-300 font-bold">OR</code>：包含任一同義詞 (聯集)</li>
+                                    <li><code class="text-purple-300 font-bold">*</code> (星號)：萬用字元截斷 (例: <code class="text-slate-400">econometr*</code>)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-blue-500/30 text-xs sm:text-sm text-slate-300 flex items-center justify-between">
+                            <span><i class="fa-solid fa-wand-magic-sparkles text-blue-400 me-2 text-base"></i><strong>AI 輔助提示：</strong> 我們的教學網頁已內建 Gemini API 模組，學生輸入中文題目後，系統會自動生成標準的英文三維度檢索字串！</span>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 6: 資料庫與 Top 5
+            {
+                title: "6. 頂刊文獻等級與 Working Papers (NBER/SSRN)",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20 uppercase tracking-widest">Top Journals & Drafts</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">頂刊文獻等級與 Working Papers (NBER / SSRN)</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto text-sm">
+                            <!-- NBER & SSRN -->
+                            <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 space-y-3">
+                                <h3 class="font-bold text-amber-400 text-xl flex items-center gap-2">
+                                    <i class="fa-solid fa-file-pdf"></i> Working Papers (工作論文/預印本)
+                                </h3>
+                                <p class="text-slate-300 leading-relaxed text-sm">
+                                    經濟學期刊審稿週期長達 2~4 年，因此最新研討成果皆發表於 Working Paper 平台：
+                                </p>
+                                <ul class="space-y-2 text-xs sm:text-sm">
+                                    <li class="bg-slate-900 p-3 rounded border border-slate-700">
+                                        <strong class="text-white block">NBER Working Papers (美國經濟研究局)</strong>
+                                        <span class="text-slate-400">集結全球頂尖經濟學家最新實證草稿，為學術界政策討論指標。</span>
+                                    </li>
+                                    <li class="bg-slate-900 p-3 rounded border border-slate-700">
+                                        <strong class="text-white block">SSRN (Social Science Research Network)</strong>
+                                        <span class="text-slate-400">金融經濟學與社會科學領域最大預印本資料庫。</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Top 5 期刊 -->
+                            <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 space-y-3">
+                                <h3 class="font-bold text-blue-400 text-xl flex items-center gap-2">
+                                    <i class="fa-solid fa-crown text-amber-400"></i> 經濟學五大頂級期刊 (The Top 5)
+                                </h3>
+                                <p class="text-slate-300 text-xs sm:text-sm">
+                                    經濟學高度重視期刊權威度，Top 5 代表最嚴謹的計量識別與理論創新：
+                                </p>
+                                <div class="grid grid-cols-1 gap-2 font-mono text-xs">
+                                    <div class="bg-slate-900 p-2.5 rounded border border-slate-700 text-slate-200">
+                                        <strong class="text-amber-300">AER:</strong> American Economic Review
+                                    </div>
+                                    <div class="bg-slate-900 p-2.5 rounded border border-slate-700 text-slate-200">
+                                        <strong class="text-amber-300">QJE:</strong> Quarterly Journal of Economics
+                                    </div>
+                                    <div class="bg-slate-900 p-2.5 rounded border border-slate-700 text-slate-200">
+                                        <strong class="text-amber-300">JPE:</strong> Journal of Political Economy
+                                    </div>
+                                    <div class="bg-slate-900 p-2.5 rounded border border-slate-700 text-slate-200">
+                                        <strong class="text-amber-300">Econometrica:</strong> 計量經濟學會官方期刊
+                                    </div>
+                                    <div class="bg-slate-900 p-2.5 rounded border border-slate-700 text-slate-200">
+                                        <strong class="text-amber-300">ReStud:</strong> Review of Economic Studies
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 7: 課堂腳本與作業
+            {
+                title: "7. 50-90 分鐘互動課堂腳本與課後實務作業",
+                html: `
+                    <div class="h-full flex flex-col justify-between space-y-4 my-auto slide-fade-in">
+                        <div>
+                            <span class="text-xs font-bold text-rose-400 bg-rose-500/10 px-3 py-1 rounded border border-rose-500/20 uppercase tracking-widest">Syllabus & Homework</span>
+                            <h2 class="serif-title text-3xl sm:text-4xl font-bold text-white mt-1">50-90 分鐘互動課堂腳本與實務作業</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto text-sm">
+                            <!-- 課堂時間分配表 -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700 space-y-3">
+                                <h3 class="font-bold text-amber-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-clock"></i> 課堂教學流程 (90 mins)
+                                </h3>
+                                <div class="space-y-2 text-xs text-slate-300">
+                                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded">
+                                        <span><strong>00-15m:</strong> 因果推論與 $X \\rightarrow Y$ 變數拆解</span>
+                                        <span class="text-amber-300 font-mono">觀念</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded">
+                                        <span><strong>15-30m:</strong> Gemini API 申請與資安設定</span>
+                                        <span class="text-blue-300 font-mono">環境</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded">
+                                        <span><strong>30-60m:</strong> AI 生成布林字串與一鍵帶入檢索</span>
+                                        <span class="text-emerald-300 font-mono">實作</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded">
+                                        <span><strong>60-90m:</strong> Working Paper 與頂刊識別策略導讀</span>
+                                        <span class="text-purple-300 font-mono">評讀</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 課後作業要求 -->
+                            <div class="bg-slate-800/60 p-5 rounded-xl border border-rose-500/30 space-y-3">
+                                <h3 class="font-bold text-rose-400 text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-pen-to-square"></i> 課後實用作業單 (Homework)
+                                </h3>
+                                <p class="text-slate-300 text-xs">
+                                    請利用本日發想之布林邏輯字串，檢索並挑選 <strong>3 篇英文實證論文</strong>（至少 1 篇為 Working Paper），完成以下摘要：
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded-lg border border-slate-700 text-xs text-slate-300 font-mono space-y-1">
+                                    <div>1. 論文完整 Citation (APA 格式)</div>
+                                    <div>2. 核心研究問題與 $X \\rightarrow Y$ 變數拆解</div>
+                                    <div>3. 採用的計量識別策略 (DID, IV, RDD 或 FE)</div>
+                                    <div>4. 主要數據來源 (Data Source & Sample Period)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-600/10 border border-blue-500/30 p-3 rounded-xl text-xs sm:text-sm text-blue-300 text-center font-medium">
+                            🎓 祝同學們專題寫作順利！掌握因果推論與精準檢索，為學術研究打下堅實基礎。
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // 狀態管理
+        let currentSlide = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initSelectOptions();
+            renderDots();
+            showSlide(currentSlide);
+
+            // 鍵盤操控
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    prevSlide();
+                }
+            });
+        });
+
+        function initSelectOptions() {
+            const select = document.getElementById('slide-select');
+            select.innerHTML = '';
+            slidesData.forEach((slide, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.innerText = slide.title;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderDots() {
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.innerHTML = '';
+            slidesData.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlide ? 'bg-blue-500 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+                dot.onclick = () => goToSlide(idx);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function showSlide(index) {
+            if (index < 0 || index >= slidesData.length) return;
+            currentSlide = index;
+
+            const container = document.getElementById('slide-container');
+            container.innerHTML = slidesData[currentSlide].html;
+
+            // UI 狀態更新
+            document.getElementById('page-indicator').innerText = `${currentSlide + 1} / ${slidesData.length}`;
+            document.getElementById('slide-title-preview').innerText = slidesData[currentSlide].title;
+            document.getElementById('slide-select').value = currentSlide;
+
+            document.getElementById('prev-btn').disabled = (currentSlide === 0);
+            document.getElementById('next-btn').disabled = (currentSlide === slidesData.length - 1);
+
+            renderDots();
+
+            // 安全調用 MathJax
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([container]).catch((err) => console.error('MathJax Typeset Error:', err));
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slidesData.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`無法切換全螢幕: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
