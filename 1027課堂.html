@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學術文獻 AI 檢索實務與各組實證進度診斷 | 淡江大學經濟學系</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 數學公式支援 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+
+    <!-- 頁頭 Banner -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white py-8 shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
+                    <span>淡江大學 經濟學系</span>
+                    <span>•</span>
+                    <span>產業分析實作 / 頂石課程專題（10月27日）</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">AI 學術文獻檢索指南與各組實證進度診斷</h1>
+                <p class="text-indigo-200 text-xs md:text-sm mt-1">Google AI Studio API 串接、文獻檢索策略、論文速讀與專題實證進度控管</p>
+            </div>
+            <button onclick="window.print()" class="no-print bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold py-2 px-4 rounded-lg shadow transition flex items-center gap-2 shrink-0">
+                🖨️ 列印 / 另存 PDF
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 space-y-8">
+
+        <!-- 分頁標籤導覽列 (Tabs Header) -->
+        <div class="no-print flex border-b border-slate-200 mb-6 overflow-x-auto bg-white rounded-2xl p-2 shadow-sm border space-x-2">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm">
+                <span>🔑</span> 1. API 串接與 AI Studio
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🔍</span> 2. 關鍵字發想與資料庫
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>📑</span> 3. AI 論文過濾與過濾幻覺
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🩺</span> 4. 各組進度診斷與作業
+            </button>
+        </div>
+
+        <!-- TAB 1: API 串接與 Google AI Studio -->
+        <div id="tab1" class="tab-content space-y-6">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">API 申請</span>
+                    Google AI Studio API Key 申請與講義串接指南
+                </h2>
+                
+                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                    為了調用最新的 Gemini AI 模型幫我們自動擴充與發想學術關鍵字，必須取得個人的 API 通關金鑰（API Key）。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">🔑 API Key 申請四步驟</h3>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                            <li>登入 <b>Google AI Studio</b> 官網並選擇個人的 Google 帳號。</li>
+                            <li>點擊左下角 🔑 <b>Get API key</b>。</li>
+                            <li>點選右上角 <b>Create API key</b>（可填寫用途名稱如：文獻搜尋）。</li>
+                            <li>複製產生的 API Key 字串（注意保密，勿外洩）。</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">⚙️ 講義網頁設定與 AI Studio Build 應用</h3>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>回到講義右上角，點選未設定 API（紅色圖示），貼上金鑰後儲存，燈號變為<b>綠色</b>即可運作。</li>
+                            <li>在 Google AI Studio 點擊 <b>New App / 新增應用程式</b>，可用 Prompt 直接描述需求，AI 將在幾分鐘內自動建構具備 GUI 介面的分析網頁。</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: 關鍵字發想與資料庫 -->
+        <div id="tab2" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">檢索架構</span>
+                    因果關係邏輯 ($X \rightarrow Y$) 與 5 大主流學術資料庫
+                </h2>
+
+                <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 space-y-2 text-xs">
+                    <h3 class="font-bold text-indigo-900 text-sm">🎯 確定研究主題與變數對應</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        確立主題因果對應：<b>$X$（自變數 / 因）$\rightarrow$ $Y$（依變數 / 果）</b>，並加入控制變數（如總體大環境利息、通膨、房價等）。
+                        <br>範例：最低工資提高 ($X$) 對青年失業率 ($Y$) 之影響 — 使用雙重差分法 (DID)。
+                    </p>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <h3 class="font-bold text-slate-800 text-sm">📚 5 大推薦主流學術資料庫</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="border border-slate-200 p-3 rounded-xl bg-slate-50">
+                            <b class="text-indigo-900 block mb-1">1. Google Scholar</b>
+                            <p class="text-slate-600">學術搜尋引擎首選，用於快速檢索國內外真實文獻與引用次數。</p>
+                        </div>
+                        <div class="border border-slate-200 p-3 rounded-xl bg-slate-50">
+                            <b class="text-indigo-900 block mb-1">2. SSRN</b>
+                            <p class="text-slate-600">社會科學研究網絡，收錄最新的經濟與金融工作論文 (Working Papers)。</p>
+                        </div>
+                        <div class="border border-slate-200 p-3 rounded-xl bg-slate-50">
+                            <b class="text-indigo-900 block mb-1">3. NBER</b>
+                            <p class="text-slate-600">美國經濟研究所，獲得國際頂級經濟學者最新進行中研究報告。</p>
+                        </div>
+                        <div class="border border-slate-200 p-3 rounded-xl bg-slate-50">
+                            <b class="text-indigo-900 block mb-1">4. 華藝線上圖書館</b>
+                            <p class="text-slate-600">國內學術期刊與會議論文最齊全之中文文獻資料庫。</p>
+                        </div>
+                        <div class="border border-slate-200 p-3 rounded-xl bg-slate-50">
+                            <b class="text-indigo-900 block mb-1">5. 臺灣博碩士論文</b>
+                            <p class="text-slate-600">國家圖書館維護，提供精準與模糊檢索國內碩博士學位論文。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 3: AI 論文過濾與過濾幻覺 -->
+        <div id="tab3" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">文獻閱讀</span>
+                    AI PDF 速讀篩選與「AI 幻覺」避坑指引
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- AI 速讀 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">💡 使用 AI (Gemini/Claude) 快速剖析 PDF</h3>
+                        <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                            <li>將從資料庫下載之真實 PDF 論文直接上傳至 AI。</li>
+                            <li>提示 AI 提煉：<b>研究動機、使用資料庫/樣本期間、計量模型、核心研究結論與對本研究的啟示</b>。</li>
+                            <li>彙整各篇發現，製作文獻綜述總表。</li>
+                        </ol>
+                    </div>
+
+                    <!-- AI 幻覺提醒 -->
+                    <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl text-rose-900 space-y-2">
+                        <h3 class="font-bold text-rose-950 text-sm">⚠️ 嚴防「AI 幻覺（Hallucination）」捏造論文</h3>
+                        <p class="text-xs leading-relaxed">
+                            AI 自動生成的文獻清單常出現<b>虛構的作者、期刊或不存在的年份</b>（如虛構鄭秀玲 2015 論文）。
+                            <br><b>鐵律：</b>AI 僅能用於發想「關鍵字與變數」，搜尋到的論文必須親自到 Google Scholar 或臺灣博碩士論文網驗證真偽並下載原文。
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 4: 各組進度診斷與作業 -->
+        <div id="tab4" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">小組診斷</span>
+                    今日各組實證進度點名與關鍵卡關問題
+                </h2>
+
+                <div class="space-y-4 text-xs">
+                    
+                    <!-- 第九組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第九組：房價與生育率關聯性分析</span>
+                        <p><b>現況與卡關：</b>目前僅有家庭收支調查與總體房價/生育率，資料維度不足。</p>
+                        <p><b>老師指導：</b>僅看總體資料不夠，需加入 SRDA「家庭動態調查」或「社會變遷基本調查」等個體微觀資料。</p>
+                    </div>
+
+                    <!-- 第十一組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第十一組：國際原油價格對台灣油品產業（中油/台塑）影響</span>
+                        <p><b>現況與卡關：</b>Arimos 找不到原油數據，改自 Yahoo 財經抓取原油價格。</p>
+                        <p><b>老師指導：</b>光有原油價格 (因) 不夠，必須抓齊台塑與中油的個體/產業數據 (果)，若資料始終無法串齊應果斷換題目。</p>
+                    </div>
+
+                    <!-- 第四組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第四組：油價波動與民生物價關聯</span>
+                        <p><b>現況與卡關：</b>題目調整為油價對物價影響，卡在物價指數資料頻率與期間長短。</p>
+                        <p><b>老師指導：</b>資料品質至少需達到「月資料」，季資料或年資料過於粗糙無法進行有效實證檢定。</p>
+                    </div>
+
+                    <!-- 第八組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第八組：便利商店產業市場結構、競爭策略與經營績效</span>
+                        <p><b>現況與卡關：</b>研究主題較廣，不易直接找到對應資料。</p>
+                        <p><b>老師指導：</b>拆解依變數 $Y$（經營績效：效率、市占率、獲利）與自變數 $X$（市場結構、進入障礙、定價策略），至 Google Scholar 篩選同業個案文獻。</p>
+                    </div>
+
+                    <!-- 第六組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第六組：經濟與社會因素對薪資變動之影響</span>
+                        <p><b>現況與卡關：</b>擬採用線性迴歸，但樣本僅有 2 年月資料（約 24 筆），解釋變數過多。</p>
+                        <p><b>老師指導：</b><b>自由度不足危機！</b>估計 24 個變數不可能僅用 24 筆樣本，必須將時間軸拉長，抓取更多年份之月資料。</p>
+                    </div>
+
+                    <!-- 第五組與第一組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-1 text-slate-600">
+                        <span class="font-bold text-indigo-900 text-sm block">第五組（美台利差與資本市場）& 第一組（題目未定）</span>
+                        <p><b>第五組指導：</b>美台利差涉及聯準會政策與匯率，須串接月資料或日資料之資本市場數據，不可僅停留在理論描述。</p>
+                        <p><b>第一組與未定題目小組：</b>時間僅剩 3 週！請立即至「金融雙豐前瞻研究競賽」專區挑選現成主題與聯徵中心開放資料並儘快報名。</p>
+                    </div>
+
+                </div>
+
+                <!-- 課後作業要求 -->
+                <div class="bg-rose-900 text-white p-5 rounded-2xl space-y-2 mt-4 text-xs">
+                    <h3 class="text-amber-300 font-bold text-sm">🚨 課後強制作業要求（三週後即將交報告）：</h3>
+                    <p class="leading-relaxed">
+                        請各小組加速進度，下次課堂須提出<b>「整理完成的資料集檔案」</b>，明確標示：
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-rose-100">
+                        <li>變數清單（標明 $X, Y$ 及控制變數）。</li>
+                        <li>資料頻率（日 / 月 / 季）與時間區間（例如：2010–2025 年）。</li>
+                        <li>資料型態（個體 Microdata 或總體 Macrodata）與原始資料庫來源。</li>
+                        <li>已蒐集之關鍵學術文獻清單及目前初步發現之實證現象與創新突破點。</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto px-4 mt-12 text-center text-xs text-slate-400">
+        <p>© 2026 淡江大學 經濟學系 課程教學團隊 | 本網頁紀錄 10月27日 課堂討論重點與執行計畫</p>
+    </footer>
+
+    <script>
+        // 分頁切換邏輯 (Tab Switcher)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100";
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm";
+        }
+    </script>
+
+</body>
+</html>
