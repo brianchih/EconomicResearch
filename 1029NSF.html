@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國科會研究計畫：美妃進度報告與家庭結構變遷討論彙整</title>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #2b6cb0;
+      --accent-color: #319795;
+      --bg-color: #f7fafc;
+      --card-bg: #ffffff;
+      --text-color: #2d3748;
+      --border-color: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 { margin: 0 0 0.5rem 0; font-size: 1.6rem; }
+    header p { margin: 0; font-size: 0.95rem; opacity: 0.85; }
+    
+    /* 頁籤導覽列 */
+    .nav-tabs {
+      display: flex;
+      background-color: #edf2f7;
+      border-bottom: 2px solid var(--border-color);
+      padding: 0 2rem;
+    }
+    .tab-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover { color: var(--secondary-color); }
+    .tab-button.active {
+      color: var(--secondary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      background-color: var(--card-bg);
+    }
+    
+    .content-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .tab-content {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+    .tab-content.active { display: block; }
+
+    h2 {
+      color: var(--primary-color);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
+    h3 { color: var(--secondary-color); margin-top: 1.5rem; }
+    
+    .highlight-box {
+      background-color: #ebf8ff;
+      border-left: 4px solid var(--secondary-color);
+      padding: 1rem 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 0.8rem;
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: center; }
+    th { background-color: #f7fafc; color: var(--primary-color); font-weight: 600; }
+    tr:nth-child(even) { background-color: #fcfcfc; }
+
+    /* 純原生 CSS 離線圖表 */
+    .chart-container {
+      margin: 1.5rem 0;
+      padding: 1.2rem;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      font-size: 0.85rem;
+    }
+    .bar-label { width: 55px; font-weight: bold; }
+    .bar-stack {
+      flex: 1;
+      display: flex;
+      height: 26px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+    .bar-segment { height: 100%; }
+    .legend {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-color { width: 14px; height: 14px; border-radius: 3px; }
+    
+    .code-block {
+      background-color: #2d3748;
+      color: #f7fafc;
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.88rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>國科會研究計畫：美妃研究進度與家庭結構變遷討論總彙整</h1>
+    <p>結合《家庭收支調查》(FiES) 與《台灣家庭動態資料庫》(PSFD) 微觀資料分析</p>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="switchTab('tab1')">分頁一：美妃進度報告與對話摘要</button>
+    <button class="tab-button" onclick="switchTab('tab2')">分頁二：家庭結構五大實證發現 (1995–2024)</button>
+    <button class="tab-button" onclick="switchTab('tab3')">分頁三：資料庫架構與離線視覺化</button>
+  </div>
+
+  <div class="content-container">
+
+    <!-- 分頁一：美妃進度報告與討論彙整 -->
+    <div id="tab1" class="tab-content active">
+      <h2>美妃專案進度與會議討論重點記錄</h2>
+      
+      <div class="highlight-box">
+        <strong>進度核心摘要：</strong> 團隊已成功運用 FiES 追蹤家庭「學生身份」與「教育支出」佔比；同時完成 PSFD <code>CI2000</code>（子代追蹤樣本）編碼簿的摸底，下一步將建立「單一受訪者最長生命歷程追蹤」與 ABM 模型代理人（Agent）設定。
+      </div>
+
+      <h3>一、 家庭收支調查 (FiES) 數據觀察</h3>
+      <ul>
+        <li><strong>核心家庭學生比例下滑</strong>：核心家庭中「有學生身份成員」的比例逐年降低，主要反映出子女成長畢業進入職場，以及「無子女夫婦二人戶」佔比上升。</li>
+        <li><strong>三代同堂托育支持強韌</strong>：三代同堂家戶中，長年穩定有高達約 <strong>60%</strong> 的家庭含有在學學生，驗證了台灣祖父母提供後勤托育支持的普遍性。</li>
+        <li><strong>教育支出佔比低於預期</strong>：全台平均教育支出佔家庭收入比例多落在 10% 以下，主因是台灣公立學校（國中小至高中）學費極低，拉低了整體平均；但若就讀私立學校（一學期達 15 萬元），對個別家庭負擔極沉重。</li>
+        <li><strong>收支結構穩定性</strong>：家庭消費最大宗為「住宅服務/水電瓦斯（約 25%）」與「食品餐飲（約 18%）」，兩者即佔去可支配所得的近半數。</li>
+      </ul>
+
+      <h3>二、 台灣家庭動態資料庫 (PSFD) 資料庫摸底進度</h3>
+      <ul>
+        <li><strong>CI2000 子代樣本解析</strong>：<code>CI2000</code> 為 1999 年首批主樣本（`RI1999`）長大滿 18/20 歲的子女世代，2000 年基期共 <strong>1,379 人</strong>（約 1980 年/69 年次出生）。</li>
+        <li><strong>貫時性問卷覆蓋</strong>：包含公私立求學、才藝補習、家教、課外留學、家庭與同儕關係（約 1/4 回答常與父母吵架）及婚育意願等變數。</li>
+      </ul>
+
+      <h3>三、 後續任務規劃 (Next Steps)</h3>
+      <ol>
+        <li><strong>最長生命歷程追蹤</strong>：從 1999 年的原始 ID 中，找出被追蹤波次最多、歷程最完整的個體，還原 20 多年來的家戶演變故事。</li>
+        <li><strong>計算 ABM 轉移機率</strong>：運用 `CI2000` 連續波次，計算代理人求學結束後的「分家、結婚、獨居、與父母同住」條件機率。</li>
+      </ol>
+    </div>
+
+    <!-- 分頁二：家庭結構五大實證發現 -->
+    <div id="tab2" class="tab-content">
+      <h2>台灣家庭結構 30 年實證發現 (1995–2024)</h2>
+      <p>基於主計總處家庭收支調查（FiES）全台微觀加權推估之真實數據：</p>
+
+      <h3>1. 核心家庭（Nuclear）加速萎縮</h3>
+      <p>由父母與未婚子女組成的標準核心家庭，占比從 1995 年的 <strong>53.31%</strong> 降至 2024 年的 <strong>31.82%</strong>，不再佔全台家戶的絕對多數。</p>
+
+      <h3>2. 夫婦二人戶（Couple）翻倍爆發</h3>
+      <p>無子女同住之夫婦二人戶（含頂客族 DINK 與空巢期中老年夫婦）由 1995 年的 <strong>10.48%</strong> 翻倍成長至 2024 年的 <strong>21.84%</strong>。</p>
+
+      <h3>3. 女戶長單人戶（Single-F）顯著成長</h3>
+      <p>女戶長單人戶從 1999 年約 32 萬戶一路爆發至 2024 年超過 <strong>84 萬戶</strong>，顯著超越男戶長（約 60 萬戶），反映女性平均餘命較長（高齡喪偶獨居）與高學歷女性經濟獨立單身趨勢。</p>
+
+      <h3>4. 單親家庭高度集中於女性戶長</h3>
+      <p>女性戶長單親家庭長期維持在 25–30 萬戶，為男性單親戶（8–13 萬戶）的 <strong>2.5 至 3 倍</strong>，顯示離異或喪偶後未成年子女照顧責任依然高度傾斜於母親。</p>
+
+      <h3>5. 「其他複合家庭」成為新型態緩衝墊</h3>
+      <p>包含未婚手足共居、旁系親屬同住與非婚夥伴合租的「其他複合家庭」，總戶數爆發至近 <strong>90 萬戶</strong>，成為高房價下的彈性居住策略。</p>
+    </div>
+
+    <!-- 分頁三：資料庫架構與離線視覺化 -->
+    <div id="tab3" class="tab-content">
+      <h2>實證動態視覺化圖表 (離線比例堆疊圖)</h2>
+      
+      <div class="legend">
+        <div class="legend-item"><div class="legend-color" style="background:#319795;"></div>核心家庭 (Nuclear)</div>
+        <div class="legend-item"><div class="legend-color" style="background:#805ad5;"></div>三代/複合 (Three-Gen/Other)</div>
+        <div class="legend-item"><div class="legend-color" style="background:#3182ce;"></div>夫婦二人 (Couple)</div>
+        <div class="legend-item"><div class="legend-color" style="background:#e53e3e;"></div>單人家庭 (Single)</div>
+        <div class="legend-item"><div class="legend-color" style="background:#dd6b20;"></div>單親家庭 (Single-Parent)</div>
+      </div>
+
+      <div class="chart-container" id="chartBox"></div>
+
+      <h2>家庭收支調查 (FiES) 實證推估數據明細表 (1995–2024)</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>西元年</th>
+              <th>推估總戶數</th>
+              <th>核心家庭 (%)</th>
+              <th>三代/複合 (%)</th>
+              <th>夫婦二人 (%)</th>
+              <th>單人家庭 (%)</th>
+              <th>單親家庭 (%)</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <h3>PSFD 最長歷程追蹤程式邏輯示範 (Python)</h3>
+      <div class="code-block">
+<pre>import pandas as pd
+
+def track_longest_individual_history(psfd_years_dict, target_id):
+    """
+    從 PSFD 歷年資料庫中串接單一受訪者 (target_id) 的貫時性家庭與婚育歷程
+    """
+    history = []
+    for year, df in psfd_years_dict.items():
+        if target_id in df['id'].values:
+            person = df[df['id'] == target_id].iloc[0]
+            history.append({
+                'year': year,
+                'age': person.get('age'),
+                'marital_status': person.get('marriage'),
+                'household_type': person.get('h_type'),
+                'num_children': person.get('n_child')
+            })
+    return pd.DataFrame(history)</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const data = [
+      { year: 1995, total: 5331157, nuclear: 53.31, threeGen: 21.24, couple: 10.48, single: 7.81, singleParent: 7.15 },
+      { year: 1996, total: 5302145, nuclear: 53.02, threeGen: 21.61, couple: 10.14, single: 7.99, singleParent: 7.24 },
+      { year: 1997, total: 5134661, nuclear: 51.35, threeGen: 21.12, couple: 10.94, single: 8.90, singleParent: 7.70 },
+      { year: 2000, total: 6708575, nuclear: 50.80, threeGen: 19.97, couple: 11.86, single: 9.67, singleParent: 7.70 },
+      { year: 2005, total: 7206883, nuclear: 44.99, threeGen: 19.68, couple: 15.98, single: 9.92, singleParent: 9.43 },
+      { year: 2010, total: 7840923, nuclear: 42.17, threeGen: 19.04, couple: 15.97, single: 11.21, singleParent: 11.61 },
+      { year: 2015, total: 8386495, nuclear: 36.22, threeGen: 20.47, couple: 19.06, single: 11.82, singleParent: 12.42 },
+      { year: 2020, total: 8829466, nuclear: 33.64, threeGen: 18.98, couple: 20.25, single: 14.37, singleParent: 12.75 },
+      { year: 2024, total: 9262020, nuclear: 31.82, threeGen: 17.36, couple: 21.84, single: 15.62, singleParent: 13.37 }
+    ];
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    const chartBox = document.getElementById('chartBox');
+    const tableBody = document.getElementById('tableBody');
+
+    data.forEach(row => {
+      // 繪製離線長條圖
+      const barRow = document.createElement('div');
+      barRow.className = 'bar-row';
+      barRow.innerHTML = `
+        <div class="bar-label">${row.year}</div>
+        <div class="bar-stack">
+          <div class="bar-segment" style="width:${row.nuclear}%; background:#319795;" title="核心:${row.nuclear}%"></div>
+          <div class="bar-segment" style="width:${row.threeGen}%; background:#805ad5;" title="三代:${row.threeGen}%"></div>
+          <div class="bar-segment" style="width:${row.couple}%; background:#3182ce;" title="夫婦:${row.couple}%"></div>
+          <div class="bar-segment" style="width:${row.single}%; background:#e53e3e;" title="單人:${row.single}%"></div>
+          <div class="bar-segment" style="width:${row.singleParent}%; background:#dd6b20;" title="單親:${row.singleParent}%"></div>
+        </div>
+      `;
+      chartBox.appendChild(barRow);
+
+      // 填寫表格
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${row.year}</strong></td>
+        <td>${row.total.toLocaleString()}</td>
+        <td>${row.nuclear.toFixed(2)}%</td>
+        <td>${row.threeGen.toFixed(2)}%</td>
+        <td>${row.couple.toFixed(2)}%</td>
+        <td>${row.single.toFixed(2)}%</td>
+        <td>${row.singleParent.toFixed(2)}%</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
