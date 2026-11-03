@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淡江大學經濟學系頂石課程 — 各組專題重點與進度檢視表</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        academic: {
+                            blue: '#1e3a8a',
+                            light: '#f0f4f8',
+                            gold: '#d97706'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+        }
+        .table-container {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .link-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .link-btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen pb-12">
+
+    <!-- Header Navigation -->
+    <header class="bg-navy-900 text-white border-b-4 border-amber-500 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-amber-400 font-semibold text-sm tracking-wider uppercase mb-1">
+                        <i class="fa-solid fa-graduation-cap"></i> 淡江大學經濟學系
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                        頂石課程 — 各組專題重點與進度檢視表
+                    </h1>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="copyTableHTML()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-medium px-4 py-2.5 rounded-lg shadow-sm transition text-sm">
+                        <i class="fa-solid fa-code"></i> 複製 HTML 表格碼
+                    </button>
+                    <button onclick="window.print()" class="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white font-medium px-4 py-2.5 rounded-lg shadow-sm transition text-sm">
+                        <i class="fa-solid fa-print"></i> 列印 / PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+
+        <!-- Notification Banner -->
+        <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-lg shadow-xl border border-slate-700 items-center gap-3">
+            <i class="fa-solid fa-circle-check text-green-400"></i>
+            <span id="toast-message">表格代碼已成功複製到剪貼簿！</span>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-6">
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                <!-- Search Box -->
+                <div class="relative w-full md:w-96">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="搜尋組別、關鍵字、學生姓名或主題..." 
+                           class="block w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-academic-blue focus:border-academic-blue transition">
+                </div>
+                <!-- Category Filters -->
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <span class="text-xs font-semibold text-slate-500 uppercase mr-1">組別分類：</span>
+                    <button onclick="filterStatus('all')" class="status-btn active px-3 py-1.5 text-xs font-medium rounded-lg bg-navy-900 text-white">全部組別</button>
+                    <button onclick="filterStatus('confirmed')" class="status-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">主題已確定</button>
+                    <button onclick="filterStatus('pending')" class="status-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">調整中/未定</button>
+                    <button onclick="filterStatus('admin')" class="status-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">成果展行政</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+                <div class="p-3 bg-blue-50 text-academic-blue rounded-lg text-xl">
+                    <i class="fa-solid fa-users text-blue-700"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-medium">總研究組別</div>
+                    <div class="text-2xl font-bold text-slate-900">12 組</div>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg text-xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-medium">主題已確立率</div>
+                    <div class="text-2xl font-bold text-slate-900">83.3%</div>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+                <div class="p-3 bg-purple-50 text-purple-600 rounded-lg text-xl">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-medium">核心資料庫</div>
+                    <div class="text-sm font-semibold text-slate-800">SRDA / AREMOS / OpenData</div>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+                <div class="p-3 bg-amber-50 text-amber-600 rounded-lg text-xl">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-medium">主要 AI 運算平台</div>
+                    <div class="text-sm font-semibold text-slate-800">Colab + Gemini AI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table Wrapper -->
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden table-container">
+            <div class="overflow-x-auto">
+                <table id="projectTable" class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-navy-900 text-white text-xs uppercase font-semibold tracking-wider border-b border-slate-700">
+                            <th scope="col" class="py-4 px-4 w-20 text-center">組別</th>
+                            <th scope="col" class="py-4 px-5 w-64">專題題目</th>
+                            <th scope="col" class="py-4 px-6">研究核心重點與計量成果</th>
+                            <th scope="col" class="py-4 px-5 w-56">數據庫與 AI 工具</th>
+                            <th scope="col" class="py-4 px-5 w-48 text-center">實證連結與成果展示</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-sm">
+
+                        <!-- 第 01 組 -->
+                        <tr class="hover:bg-slate-50 transition status-pending">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 01 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">未定 (嘗試方向)</span>
+                                <span class="badge bg-amber-100 text-amber-800">主題調整中</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                嘗試調閱台北市指定吸菸區、美國 CPI 預估與調查等數據。目前已透過 Google Colab 與 Gemini 跑圖、讀取資料庫數據並編輯程式碼，持續嘗試繪製視覺化圖表與網頁。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">AREMOS, OpenData, SRDA</div>
+                                <div class="text-xs text-slate-500 mt-1">Google Colab, Gemini</div>
+                            </td>
+                            <td class="py-4 px-5 text-center">
+                                <a href="https://srda.sinica.edu.tw/" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> SRDA 檢索
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 02 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 02 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">外送專法對外送員的影響</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                先前曾利用 AREMOS 進行資料清理與 RStudio 圖表繪製。最新進展確定主題為外送專法對外送員影響，已申辦 SRDA 帳號調閱學術數據，並成功串接 Google AI Studio API Key 打造專題展示網站。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">SRDA, Government Data</div>
+                                <div class="text-xs text-slate-500 mt-1">RStudio, Google AI Studio</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://share.gemini.google/60ubj1qgGhRY" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-robot"></i> Gemini 分析紀錄
+                                </a>
+                                <a href="https://drive.google.com/drive/folders/1BZqtshiEdDSeLGxJIFvttJBNnY8M4M8r" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-folder"></i> 雲端資料夾
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 03 組 -->
+                        <tr class="hover:bg-slate-50 transition status-admin">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 03 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">淡江經濟學系頂石課程成果展</span>
+                                <span class="badge bg-purple-100 text-purple-800">行政籌備組</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                統籌負責頂石課程成果展全盤規劃。完成活動企劃書修訂（第三版）、甘特圖製作與時間流程表編排；處理評審邀請函設計、評分標準機制設定、現場人員配置、宣傳用品準備與預算控管。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">行政企劃表單/文件</div>
+                                <div class="text-xs text-slate-500 mt-1">Gemini, Google Docs, 甘特圖</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://docs.google.com/document/d/11U6al3dehx0DvF0aFZFCCiO29LEunUguvi6UBqJN0r8/edit?usp=sharing" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-file-word"></i> 活動企劃書
+                                </a>
+                                <a href="https://drive.google.com/drive/folders/1YPXdyxX2dJaixDPGW0G3I5XMErHMKmiy?usp=drive_link" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-folder"></i> 企劃資源夾
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 04 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 04 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">多重負債與個人信用風險：不同授信組合下的財務脆弱性分析</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                先前曾探索空汙與 ESG 及生成式 AI 投資偏誤議題，現確立轉向研究「金融市場信用風險管理」。至金融聯合徵信中心（JCIC）抓取多重負債微觀數據，透過 Prompt 輔助搭建 Python 迴歸模型。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">聯徵中心 (JCIC), TEJ</div>
+                                <div class="text-xs text-slate-500 mt-1">Google Colab, ChatGPT</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://colab.research.google.com/drive/1NJVT2rIc_J0c_rKrVLvCqaYbfbOBd6Ml?hl=zh-tw" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-code"></i> Colab 程式碼
+                                </a>
+                                <a href="https://chatgpt.com/share/6ae75b6e-38e8-83ee-8838-e2105a3e13a3" target="_blank" class="link-blank link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-comment-dots"></i> ChatGPT 討論
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 05 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 05 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">美台利差與資金傳導機制</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                已完成數據庫資料備妥。建立標準化 Python 繪圖腳本（包含雙 Y 軸時間序列圖、散佈圖與趨勢線相關性檢定），並完整解決 Matplotlib 中文字型顯示亂碼問題，進行美台利差之資金傳導模型搭建。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">美台金融總體資料庫</div>
+                                <div class="text-xs text-slate-500 mt-1">Google Colab, Python</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://colab.research.google.com/drive/1nOF4ZgMf8W5I5wc6EjBfDiozhkuxJ8LL" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-code"></i> Colab 分析模板
+                                </a>
+                                <a href="https://drive.google.com/file/d/1_cMFT3dDpauNEu1khdSKBV_oY2HItR-W/view" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-file-pdf"></i> 計畫資料
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 06 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 06 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">影響薪資變動的經濟與社會因素</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                彙整台灣近 5 年薪資、失業率、通膨率及教育經費數據。利用 Google Scholar 搜尋學術文獻奠定理論基礎，運用 DeepSeek 與 Gemini 輔助進行 Excel 及 Colab 迴歸模型分析，檢定薪資波動影響因素。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">台灣教育統計資料庫, OpenData</div>
+                                <div class="text-xs text-slate-500 mt-1">DeepSeek, Gemini, Colab</div>
+                            </td>
+                            <td class="py-4 px-5 text-center">
+                                <a href="https://net.tedc.org.tw/search/display.php" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md">
+                                    <i class="fa-solid fa-database"></i> 國民消費數據
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 08 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 08 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">國內住宿價格變動對國人出國旅遊人次之影響：交叉價格彈性分析</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                (亦包含超商雙雄競爭策略子項目) 抓取 2015–2025 年出國旅遊人次與 CPI 旅館住宿費指數。透過 Gemini 檢索文獻與發想 Prompt，分析國內住宿費調漲對出國旅遊之交叉價格彈性與替換效應。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">經濟部統計處, CPI 物價資料庫</div>
+                                <div class="text-xs text-slate-500 mt-1">Google Colab, Gemini</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://colab.research.google.com/drive/1XC3I7iJ2WaHddXUjItdqTid81gEX-TQJ" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-code"></i> Colab 分析碼
+                                </a>
+                                <a href="https://drive.google.com/file/d/1bqvcS8926rhGsvWgVhfM2s6hGJFyPNye/view" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-file"></i> 數據雲端檔
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 09 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 09 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">「房價真的讓人不敢生小孩嗎？」台灣住宅負擔與生育率之關聯</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                下載 104–114 年國內 GDP、CPI、房價負擔能力與出生率時間序列數據。利用 Python (Colab) 進行數據轉置清理與迴歸模型搭建，並使用 Google AI Studio 構建動態驗證網頁與產出實證簡報。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">主計總處 GDP/CPI, 房價數據</div>
+                                <div class="text-xs text-slate-500 mt-1">Google Colab, AI Studio</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://colab.research.google.com/drive/1venZWtcMmFH22komPpej3pnH9faDaYNr" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-code"></i> Colab 模型碼
+                                </a>
+                                <a href="https://ai.studio/apps/f7d7a428-a482-402b-a917-d706252325f9" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Studio App
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 10 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 10 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">台灣汽油價格波動與民生物價之關聯性分析——以 2021 年至 2025 年為例</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                (由循環經濟平台優化轉型) 搜集中油汽油價格與核心 CPI 資料。團隊撰寫 Python/RStudio 腳本，透過 VS Code、Supabase 與 GitHub Pages 自行開發專題網頁與 AI 學術文獻檢索系統。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">中油油價庫, 物價統計, NBER</div>
+                                <div class="text-xs text-slate-500 mt-1">RStudio, GitHub Pages, Supabase</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://nini931214.github.io/Industry-Analysis/" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-globe"></i> 專題網頁成果
+                                </a>
+                                <a href="https://docs.google.com/document/d/1xnag_mwFKd1EoN79NqkQMGRsFPNP3sz6dSjQIHvt9w4/edit" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-file-lines"></i> 論文草稿
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 11 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 11 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">國際原油價格對台灣油品產業的影響 / 各國油品定價策略比較</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                具備高階計量實證：串接 yfinance API 抓取近 10 年油價與匯率，進行 <span class="font-semibold text-slate-800">ADF 單根檢定</span> 與一階差分防範「假性迴歸」，並計算交叉相關圖 (Cross-Correlation)。同時證實中油與台塑 95 汽油相關係數達 <span class="font-semibold text-amber-700">0.9999</span>（顯著價格平行行為）。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">能源署, SRDA (inc113.dta), Yahoo API</div>
+                                <div class="text-xs text-slate-500 mt-1">Colab, Python (statsmodels)</div>
+                            </td>
+                            <td class="py-4 px-5 text-center space-y-1.5">
+                                <a href="https://colab.research.google.com/drive/1CQhEjF7JJRIZYvQKJJJp4y098wDKmNFF" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-chart-line"></i> 油價計量 Colab
+                                </a>
+                                <a href="https://colab.research.google.com/drive/1Xk971cK-9mQDqoExL6h5Z6M2d1dBBUF0" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-emerald-50 text-emerald-800 hover:bg-emerald-100 rounded-md w-full justify-center">
+                                    <i class="fa-solid fa-house-user"></i> 收支微觀 Colab
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- 第 12 組 -->
+                        <tr class="hover:bg-slate-50 transition status-confirmed">
+                            <td class="py-4 px-4 font-bold text-center text-slate-700 bg-slate-50">第 12 組</td>
+                            <td class="py-4 px-5">
+                                <span class="font-semibold text-slate-900 block mb-1">臺灣數位世代青少年的成長歷程追蹤研究 (TIGPS)</span>
+                                <span class="badge bg-emerald-100 text-emerald-800">主題已確立</span>
+                            </td>
+                            <td class="py-4 px-6 text-slate-600 leading-relaxed">
+                                透過中研院 SRDA 資料庫申請 TIGPS 微觀追蹤數據。使用 Claude 協作撰寫《臺灣數位學習產業分析》報告，內容包含 PEST 分析、五力分析、描述性統計圖表與 SWOT 策略建議。
+                            </td>
+                            <td class="py-4 px-5">
+                                <div class="text-xs font-medium text-slate-700">SRDA (TIGPS 微觀資料庫)</div>
+                                <div class="text-xs text-slate-500 mt-1">Claude, Google Colab</div>
+                            </td>
+                            <td class="py-4 px-5 text-center">
+                                <a href="https://claude.ai/artifact/BridcHMcm5jGE9m8dnSdH6#91168ebe-03d7.m665ycnfscq.1851" target="_blank" class="link-btn inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-md">
+                                    <i class="fa-solid fa-sparkles"></i> Claude 報告成果
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Table Footer -->
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
+                <div>資料更新時間：2026 年 11 月 3 日 (最後檢視)</div>
+                <div>淡江大學經濟學系 頂石課程教研小組 製作</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Filter Table by Keyword
+        function filterTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("projectTable");
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let show = false;
+                const tds = tr[i].getElementsByTagName("td");
+                for (let j = 0; j < tds.length; j++) {
+                    if (tds[j]) {
+                        const txtValue = tds[j].textContent || tds[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            show = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = show ? "" : "none";
+            }
+        }
+
+        // Filter Table by Status Category
+        function filterStatus(status) {
+            // Update Active Button Style
+            const buttons = document.querySelectorAll('.status-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-navy-900', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            event.target.classList.remove('bg-slate-100', 'text-slate-600');
+            event.target.classList.add('bg-navy-900', 'text-white');
+
+            const rows = document.querySelectorAll('#projectTable tbody tr');
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else if (status === 'confirmed' && row.classList.contains('status-confirmed')) {
+                    row.style.display = '';
+                } else if (status === 'pending' && row.classList.contains('status-pending')) {
+                    row.style.display = '';
+                } else if (status === 'admin' && row.classList.contains('status-admin')) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Copy Table Clean HTML Code to Clipboard
+        function copyTableHTML() {
+            const tableElement = document.getElementById("projectTable").cloneNode(true);
+            
+            // Clean inline style adjustments if needed
+            const htmlString = tableElement.outerHTML;
+
+            // Use fallback copy method
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = htmlString;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast("表格 HTML 程式碼已成功複製到剪貼簿！");
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-message");
+            toastMsg.innerText = message;
+            toast.classList.remove("hidden");
+            toast.classList.add("flex");
+            setTimeout(() => {
+                toast.classList.add("hidden");
+                toast.classList.remove("flex");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
