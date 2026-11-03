@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產業分析實作課程 - 各組進度與成員名單彙整表</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            --reporter-bg: #e0f2fe;
+            --reporter-text: #0369a1;
+            --warning-bg: #fef2f2;
+            --warning-border: #fca5a5;
+            --warning-text: #991b1b;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0 0 12px 0;
+            font-size: 28px;
+        }
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 15px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .stat-card .label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .group-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+        .topic-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-light);
+        }
+        .members-box {
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .member-tag {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin: 3px 4px 3px 0;
+            font-size: 13px;
+        }
+        .member-tag.reporter {
+            background: var(--reporter-bg);
+            color: var(--reporter-text);
+            font-weight: 700;
+            border: 1px solid #bae6fd;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .warning-card {
+            background-color: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+        }
+        .warning-card .group-title {
+            color: var(--warning-text);
+        }
+        .guidance-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+        .guidance-box h2 {
+            margin-top: 0;
+            color: #1e40af;
+            font-size: 18px;
+        }
+        .var-name {
+            font-weight: bold;
+            color: #0369a1;
+            font-family: monospace, sans-serif;
+            background: #e0f2fe;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+        @media print {
+            body { padding: 0; background: white; }
+            .card { break-inside: avoid; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>產業分析實作課程 - 各組進度與成員名單彙整表</h1>
+            <p>彙整時間：2026 年最新進度 | 報告模式：建議加強計量經濟與數據實證導向</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">全班組數</div>
+                <div class="value">12 組</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">填報學生總人數</div>
+                <div class="value">50 人</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">書面報告截止管制點</div>
+                <div class="value">12 月第 1 週</div>
+            </div>
+        </div>
+
+        <div class="guidance-box">
+            <h2>📌 課堂共同指導與規範事項</h2>
+            <ul>
+                <li><strong>研究方法指導與轉型建議</strong>：建議調整分析導向，除了企管類的分析框架（如 SWOT、五力分析）外，宜加強計量經濟與數據實證之比重，盡量用數據說話。</li>
+                <li><strong>疫情變數控制</strong>：凡資料時間跨越 2020–2022 年之主題（如物價、觀光、房價），必須加入 COVID-19 疫情虛擬變數（Dummy）。</li>
+                <li><strong>相對價格與匯率</strong>：分析跨國或替代效應（如國內外旅遊）時，務必納入國外相對價格與「匯率」變數。</li>
+                <li><strong>微觀數據資料庫善用</strong>：建議尋找個體/家庭資料的組別，積極申請並善用 SRDA（社會調查研究資料庫）之「家庭收支調查」或「人力資源調查」微觀資料。</li>
+            </ul>
+        </div>
+
+        <!-- 各組卡片 01-12 -->
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 01 組</h2>
+            </div>
+            <div class="topic-title">題目：台灣家庭線上消費（電商/3C電子產品）與各類支出規模之所得彈性分析</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 劉家碩 (412540097) [報告者]</span>
+                <span class="member-tag">陳建勳 (412540329)</span>
+                <span class="member-tag">張瑋哲 (412540154)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>核心議題</strong>：分析電商市場供給與家庭需求結構，探討家庭所得對電子產品與線上消費支出之影響（所得彈性）。</li>
+                <li><strong>被解釋變數 (<span class="var-name">Y</span>)</strong>：電子商務 / 3C電子產品與線上消費支出金額。</li>
+                <li><strong>解釋變數 (<span class="var-name">X</span>)</strong>：家庭所得。</li>
+                <li><strong>現有資料</strong>：政府開放平台之家庭收支統計（目前僅為年資料）。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>目前使用之政府開放平台加總年資料較為粗糙。<strong>建議至 SRDA 申請下載個體層級之「家庭收支調查」原始微觀數據</strong>，以進行更精細的模型設定。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 02 組</h2>
+            </div>
+            <div class="topic-title">題目：外送專法實施前後外送員薪資與工時之統計分析</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 魏子翔 (412540485) [報告者]</span>
+                <span class="member-tag">謝佳恩 (413547059)</span>
+                <span class="member-tag">陳奇揚 (412540295)</span>
+                <span class="member-tag">林韋廷 (412540089)</span>
+                <span class="member-tag">楊皓棠 (412540204)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>被解釋變數 (<span class="var-name">Y</span>)</strong>：平均時薪、每週工作時數、每週總收入。</li>
+                <li><strong>解釋變數 (<span class="var-name">X</span>)</strong>：外送專法實施前後之二元虛擬變數（Dummy）。</li>
+                <li><strong>現有資料</strong>：組員親自跑外送取得之第一手個體實證數據（含每日/每週工時與收入記錄）。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>肯定使用第一手實證資料。須補強控制變數（如天氣狀況、期末考週、寒暑假等個人生活作息與情境變數），避免估計偏誤。</li>
+            </ul>
+        </div>
+
+        <div class="card" style="background-color: #f8fafc; border-color: #cbd5e1;">
+            <div class="card-header">
+                <h2 class="group-title" style="color: #0f172a;">第 03 組（成果展行政籌備組）</h2>
+            </div>
+            <div class="topic-title" style="background: #e2e8f0;">任務：全班成果展發表會行政籌備、進度追蹤與評審邀請</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag">陳昱庭 (412540287)</span>
+                <span class="member-tag">翁于晴 (412540048)</span>
+                <span class="member-tag">黃品淳 (412540337)</span>
+                <span class="member-tag">呂晏瑜 (412540345)</span>
+                <span class="member-tag">吳佩蓉 (412540311)</span>
+                <span class="member-tag">楊詩語 (412540212)</span>
+            </div>
+            <div class="section-subtitle">📋 目前行政執行進度</div>
+            <ul>
+                <li>11 月第一週執行中：海報與邀請函設計、追蹤評審名單、製作全班進度看板、擬定設備清單與風險管理表。</li>
+                <li>發表會時間分配：每組總計 13 分鐘（9 分鐘簡報 + 4 分鐘評審 Q&A）。</li>
+                <li>已發放發表會午餐訂購調查表（專題預算全額補助）。</li>
+            </ul>
+            <div class="section-subtitle">⚠️ 行政管制事項</div>
+            <ul>
+                <li><strong>12 月第一週</strong>為全班書面專題報告繳交截止日，未按時繳交者當天將無法上台簡報。第 3 組需全力督促落後組別（特別是第 7 組）。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 04 組</h2>
+            </div>
+            <div class="topic-title">題目：多重負債與個人信用風險：不同授信組合下的財務脆弱性分析</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 朱珮瑄 (413540120) [報告者]</span>
+                <span class="member-tag">黃子宸 (413540021)</span>
+                <span class="member-tag">何之喬 (413540054)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>授信組合</strong>：涵蓋房貸+信貸、房貸+車貸、信貸+車貸。</li>
+                <li><strong>現有資料</strong>：聯徵中心（JCIC）表 1-2、1-3、1-4、1-6 及 56/57/58 交叉統計月資料（更新至 2026/08）。</li>
+                <li><strong>研究假設</strong>：<span class="var-name">H₁</span>：多重負債信用風險顯著高於單一授信；<span class="var-name">H₂</span>：景氣惡化下多重負債違約率上升幅度更大。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>釐清資料層級：聯徵資料為「加總型總體資料」而非個體資料。須精確定義違約率（<span class="var-name">Y</span>），若能結合家庭收支個體資料研究效益更佳。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 05 組</h2>
+            </div>
+            <div class="topic-title">題目：美台利差與資金傳導機制之實證研究</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 陳柏霖 (412540105) [報告者]</span>
+                <span class="member-tag">邱聖傑 (412540378)</span>
+                <span class="member-tag">朱昱丞 (412540394)</span>
+                <span class="member-tag">黃冠峻 (412540063)</span>
+                <span class="member-tag">洪承緯 (412540188)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>現有數據</strong>：三大法人買賣超金額、央行政策利率調整記錄、外匯存款總額、M1A/M1B/M2（月資料至 2026/08）、美台匯率日資料、S&P 500、台股指數與融資維持率。</li>
+                <li><strong>核心模型</strong>：參考央行季刊 VAR（向量自迴歸）模型與脈衝回應分析。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>目前參考文獻（2004/2012 年）過於陳舊，<strong>務必補強近 3-5 年內之新文獻</strong>。須進一步驗證外資賣超與台幣貶值間的傳導時間與長短期動態機制。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 06 組</h2>
+            </div>
+            <div class="topic-title">題目：影響薪資變動之社會經濟因素分析</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 方煒捷 (411540510) [報告者 / 音譯高爾傑]</span>
+                <span class="member-tag">翁羽辰 (412090192)</span>
+                <span class="member-tag">邱倢妤 (412540519)</span>
+                <span class="member-tag">陳鎮中 (411540593)</span>
+                <span class="member-tag">徐立宸 (412090465)</span>
+                <span class="member-tag">陳明佑 (411540346)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>核心議題</strong>：探討薪資成長趕不上物價上漲的原因，以及台灣與國際（如澳洲）薪資與物價結構差異。</li>
+                <li><strong>變數</strong>：近 5 年薪資總數、失業率、CPI、經濟成長率、利率及教育經費數據。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>若欲進行國際對比，需明確補齊國外數據。建議前往 SRDA 申請<strong>「人力資源調查」或「人力運用調查」</strong>個體微觀資料進行分析。</li>
+            </ul>
+        </div>
+
+        <div class="card warning-card">
+            <div class="card-header">
+                <h2 class="group-title">第 07 組 ⚠️ (進度落後)</h2>
+            </div>
+            <div class="topic-title">題目：尚未確定 / 尚未填報</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong> 目前暫無填報記錄
+            </div>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>目前完全無進度，請第 3 組（行政組）專人去催促並協助第 7 組儘快確定研究題目與資料來源。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 08 組</h2>
+            </div>
+            <div class="topic-title">題目：國內住宿價格變動對國人出國旅遊人次之影響：交叉價格彈性分析</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 戴瑾嫻 (412540113) [報告者]</span>
+                <span class="member-tag">蔡沛吟 (412540055)</span>
+                <span class="member-tag">傅琬恬 (413547075)</span>
+                <span class="member-tag">梁詠淳 (412540451)</span>
+                <span class="member-tag">翁婉翎 (412540493)</span>
+                <span class="member-tag">陳湄潔 (412540550)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>被解釋變數 (<span class="var-name">Y</span>)</strong>：出國旅遊人次（2016–2026 月資料）。</li>
+                <li><strong>解釋變數 (<span class="var-name">X</span>)</strong>：國內旅館住宿費指數、經常性薪資、新台幣名目/實質有效匯率指數、連假虛擬變數。</li>
+                <li><strong>參考文獻</strong>：2009 年與 2021 年兩篇關於國內外旅遊替代效應之實證文獻。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li><strong>務必加入 COVID-19 疫情虛擬變數（Dummy）</strong>，否則 2020–2022 年間旅遊人次暴跌至個位數將造成嚴重模型偏差。引用財經 M 平方數據須載明原始公式與來源。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 09 組</h2>
+            </div>
+            <div class="topic-title">題目：台灣住宅負擔與生育率之關聯（房價真的讓人不敢生小孩嗎？）</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 陳鈺縈 (412540014) [報告者]</span>
+                <span class="member-tag">周律綺 (412540030)</span>
+                <span class="member-tag">林岑恣 (412540402)</span>
+                <span class="member-tag">謝琬瑩 (412540576)</span>
+                <span class="member-tag">陳盈琪 (412540022)</span>
+                <span class="member-tag">邱歆喬 (412540568)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>現有資料</strong>：2015–2025 年（民國 104–114 年）GDP、CPI、房價負擔能力指數、住宅價格指數及出生率時間數列。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>出生人數與生育率官方有發布<strong>「月資料」</strong>，建議自行將資料彙整為月資料進行研究，避免退回年資料導致自由度與樣本數不足。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 10 組</h2>
+            </div>
+            <div class="topic-title">題目：台灣汽油價格波動與民生物價關聯分析：以 2021–2025 年為例</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 田育妮 (412540584) [報告者]</span>
+                <span class="member-tag">朱育麟 (412540071)</span>
+                <span class="member-tag">陳韋辰 (412540477)</span>
+                <span class="member-tag">褚彥蓉 (412540543)</span>
+                <span class="member-tag">賴民訓 (412540501)</span>
+                <span class="member-tag">柯毓晟 (412540162)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>變數</strong>：<span class="var-name">Y</span> 為台灣重要民生物資 CPI 年增率；<span class="var-name">X</span> 為 95 無鉛汽油價格年增率（月資料至 2026/08，以 Python 分析）。</li>
+                <li><strong>文獻整理</strong>：已找尋 4 篇論文，包含向量誤差修正模型（VECM）、Threshold 門檻模型與產業關聯分析法。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>仔細閱讀這 4 篇文獻對資料之處理細節與變數篩選標準，確保自身模型設定貼近學術標準。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 11 組</h2>
+            </div>
+            <div class="topic-title">題目：國際原油價格對台灣油品產業之影響：中油與台塑定價策略比較</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 張以辰 (412547308) [報告者]</span>
+                <span class="member-tag reporter">🎤 施姵辰 (411860769) [報告者]</span>
+                <span class="member-tag">徐筱涵 (412200189)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>實證發現</strong>：串接 Yahoo Finance API 抓取近 10 年油價與匯率，經 ADF 單根檢定與一階差分後，證實中油與台塑 95 無鉛汽油相關係數極高（近乎 1）。</li>
+                <li><strong>目前困境</strong>：由於兩者價格高度共線，須解決迴歸模型的多元共線性問題。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>與第 10 組主題接近，須做出明確區隔。參考文獻（民國 101 年）過於陳舊，須補強最新文獻，進度略顯落後請加速。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="group-title">第 12 組</h2>
+            </div>
+            <div class="topic-title">題目：台灣青少年數位學習與家庭成長追蹤研究</div>
+            <div class="members-box">
+                <strong>👥 組員名單：</strong>
+                <span class="member-tag reporter">🎤 陳韋翰 (412547126) [報告者]</span>
+                <span class="member-tag">孫靖淳 (412540444)</span>
+                <span class="member-tag">陳璟辰 (413547091)</span>
+                <span class="member-tag">陳柏諺 (412540303)</span>
+                <span class="member-tag">秦國禎 (412647191/412547191)</span>
+            </div>
+            <div class="section-subtitle">📊 資料與變數狀況</div>
+            <ul>
+                <li><strong>資料來源</strong>：成功下載 SRDA 之 TIGPS（台灣青少年成長歷程追蹤研究）問卷個體數據，有效樣本達 8,000+ 筆。</li>
+                <li><strong>變數設定</strong>：<span class="var-name">Y</span> 為數位素養（9 題自我評估量表平均分）；<span class="var-name">X</span> 為家庭社經地位（1-10分）；控制變數包含性別、學校類型、區域發展程度。</li>
+            </ul>
+            <div class="section-subtitle">💡 老師現場指導建議</div>
+            <ul>
+                <li>先前之 SWOT/五力分析僅為初步方向。<strong>建議調整分析導向，除了企管類的分析框架外，宜加強計量經濟與數據實證之比重</strong>，充分發揮 8,000 多筆貴重個體微觀資料之價值。</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
