@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>頂石課程各組專題進度迴饋與成果展展演指導指南</title>
+    <style>
+        :root {
+            --primary: #1A365D;
+            --primary-light: #2B6CB0;
+            --accent: #D69E2E;
+            --bg-light: #F7FAFC;
+            --border-color: #E2E8F0;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --success: #2F855A;
+            --danger: #C53030;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            background-color: #EDF2F7;
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1A365D 0%, #2B6CB0 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .motivation-banner {
+            background: linear-gradient(135deg, #FFFAF0 0%, #FEFCBF 100%);
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(214, 158, 46, 0.15);
+        }
+
+        .motivation-banner h2 {
+            color: #744210;
+            margin-top: 0;
+            font-size: 19px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .motivation-banner p {
+            color: #553C9A;
+            margin: 8px 0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .action-box {
+            background-color: #EBF8FF;
+            border-left: 5px solid var(--primary-light);
+            padding: 18px 22px;
+            border-radius: 6px;
+            margin-bottom: 28px;
+        }
+
+        .action-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 17px;
+        }
+
+        .action-box ol {
+            margin: 8px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .action-box li {
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .search-box {
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 24px;
+            background-color: #FFFFFF;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: var(--primary-light);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #EDF2F7;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .badge-reporter {
+            background-color: #FEFCBF;
+            color: #744210;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .badge-danger {
+            background-color: #FED7D7;
+            color: var(--danger);
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .speech-box {
+            background-color: #F7FAFC;
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin: 12px 0;
+            color: #2D3748;
+            font-size: 14px;
+        }
+
+        .deepen-direction {
+            background-color: #F0FFF4;
+            border-left: 4px solid var(--success);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .deepen-direction strong {
+            color: var(--success);
+        }
+
+        .lit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .lit-table th, .lit-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .lit-table th {
+            background-color: #EBF8FF;
+            color: var(--primary);
+        }
+
+        ul {
+            margin: 6px 0;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🎓 淡江大學經濟學系頂石課程：專題講評與成果展進度迴饋指南</h1>
+        <p>「展現四年所學，尋找深度破口，打造讓評審耳目一新的實證成果」</p>
+    </div>
+
+    <!-- 課堂精神與成果展期許 -->
+    <div class="motivation-banner">
+        <h2>🏆 老師的叮嚀與成果展期許（12月15日成果展發表）</h2>
+        <p>「這不只是一個成果報告而已，我希望大家能展現出來你們四年所學，在 <strong>12 月 15 日</strong> 好好表現，讓評審看到我們的成果與驕傲！」</p>
+        <p>「我們不僅要告訴大家我們學到的是知識，我們更要讓他覺得是有驚喜的！所以希望能從各位目前提出的題目中，找到一個深度的破口。」</p>
+    </div>
+
+    <!-- 下週必須完成事項 -->
+    <div class="action-box">
+        <h3>📌 各組下週課堂必備進度（交辦事項）：</h3>
+        <ol>
+            <li>完整的資料整理完成（上傳雲端連結並確認權限開放）。</li>
+            <li>從文獻中提煉出來的研究方法（嘗試思考如何運用 AI 輔助跑 VECM、VAR、衝擊反應函數或迴歸模型）。</li>
+        </ol>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="🔍 輸入組別、題目或關鍵字快速過濾內容...">
+    </div>
+
+    <div class="grid-container" id="cardsContainer">
+
+        <!-- 第 01 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 01 組：家庭線上消費與所得彈性分析</span>
+                <span class="badge-reporter">資料來源：SRDA 家庭收支調查</span>
+            </div>
+            <p><strong>題目盲點：</strong>收入越多消費越多是常識，缺乏學術深度。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「收入越高花費越多是常識，但根據我們學過的所得彈性，商品有分為『奢侈品』與『必需品』。從小組收集的 SRDA 資料能不能看出這些商品到底屬於哪一種？去分析所得彈性以及商品之間的替代效果會更有意義。建議看不同所得的分位數（前 10%、20%... 到十分位數），分析不同分位數的所得彈性與替代效果。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>運用 SRDA 微觀個體數據，劃分十分位數，計算奢侈品 vs. 必需品之所得彈性與替代效應。
+            </div>
+        </div>
+
+        <!-- 第 02 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 02 組：外送專法對外送員薪資與工時之影響</span>
+                <span class="badge-reporter">第一手實證數據 (親身跑外送)</span>
+            </div>
+            <p><strong>優勢與挑戰：</strong>第一手資料極具故事性，但若只看平均薪資十分可惜。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「這是一件會讓評審為之一亮的調查，因為是用自己親身經歷來講故事。但如果最後只看到平均薪資就很可惜。專法是否引發了外送員在平台間的『跨平台套利』與『防禦性彈性工時調整』？加入控制變數後得到的會是更乾淨的效果，朝這個方向去努力！」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>控制外在變數後，分析跨平台套利行為、邊際工時調整與專法之淨政策效果。
+            </div>
+        </div>
+
+        <!-- 第 03 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 03 組：成果展行政籌備組</span>
+                <span class="badge-reporter">行政與進度控管團隊</span>
+            </div>
+            <p><strong>核心任務：</strong>撰寫評審邀請函、活動流程規劃、各組進度追蹤與檔案收繳。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「第三組要幫忙撰寫給評審的邀請函、擬定活動流程，並盯緊各組資料與成果的繳交情況。請特別叮嚀與協調各組進度。」
+            </div>
+        </div>
+
+        <!-- 第 04 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 04 組：多重負債與個人信用風險分析</span>
+                <span class="badge-reporter">聯徵中心 (JCIC) 月資料</span>
+            </div>
+            <p><strong>題目盲點：</strong>欠多筆債易違約是直覺，需找到非線性衝擊與矩陣分析。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「欠越多債易違約很直覺。你們有聯徵中心月資料，要問的是哪種授信組合（如房貸+信貸、房貸+車貸）爆發力比較強？在升息與景氣轉折時，負債比率是否有『門檻值』，超過後違約率急速上升？建立不同授信組合的風險矩陣，找出槓桿率與違約率的門檻衝擊。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>建立授信組合風險矩陣，尋找負債比率爆發性違約之非線性門檻值（Threshold）。
+            </div>
+        </div>
+
+        <!-- 第 05 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 05 組：美台利差與資金傳導機制</span>
+                <span class="badge-reporter">VAR 向量自我迴歸模型</span>
+            </div>
+            <p><strong>題目盲點：</strong>利差引發資金流動是課本理論，需展現動態時間滯後。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「要讓研究耳目一新，跑 VAR 模型非常好，可以看動態傳導效果與時間滯後期（Lag 幾期）。美聯儲升息到外資賣超台股及台幣貶值，中間是否有『過度反應』現象？也可納入美國中選觀望等非金融因素。請補強 2026 最新相關文獻。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>運用 VAR 模型評估 Lag 傳導滯後期、衝擊反應函數，並補強 2026 年最新文獻與非金融因素。
+            </div>
+        </div>
+
+        <!-- 第 06 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 06 組：影響薪資變動之社會經濟因素</span>
+                <span class="badge-reporter">SRDA 人力資源/人力運用調查</span>
+            </div>
+            <p><strong>題目盲點：</strong>薪資追不上物價是大眾感受，需拆解產業與個體特徵。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「薪資追不上物價大家很有共鳴。但從計量角度，這是勞動生產力與薪資脫鉤，還是特定產業（如服務業 vs. 製造業）薪資具備僵固性？請用 SRDA 人力資源/運用調查，找出哪些族群薪資最僵固、被通膨吃掉最多。拆解產業、教育與社經特徵更有意義。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>運用 SRDA 微觀個體數據，拆解特定產業、學歷與社經特徵族群之實質薪資僵固性。
+            </div>
+        </div>
+
+        <!-- 第 07 組 -->
+        <div class="card" style="border-color: #FEB2B2; background-color: #FFF5F5;">
+            <div class="card-header">
+                <span class="card-title" style="color: var(--danger);">第 07 組：進度落後輔導</span>
+                <span class="badge-danger">重點催促組別</span>
+            </div>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「第七組目前完全沒有進度，請第三組行政組專人去催促並協助第七組儘快確定研究題目與資料來源。」
+            </div>
+        </div>
+
+        <!-- 第 08 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 08 組：國內住宿價格對出國旅遊人次之影響</span>
+                <span class="badge-reporter">時效性熱門議題</span>
+            </div>
+            <p><strong>題目盲點：</strong>國旅貴轉而出國是新聞焦點，需計算精準彈性與控制變數。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「題目很有時效性。但我們要用數據讓評審看到兩者的『交叉價格彈性』是多少？國旅房價每漲 1%，帶動出國人次增加百分之幾？加入疫情與匯率變數後，房價衝擊是否被稀釋？要驗證衝擊來自房價本身還是疫情與匯率。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>計算精準交叉價格彈性，並控制疫情 Dummy 與匯率變動，驗證淨價格衝擊。
+            </div>
+        </div>
+
+        <!-- 第 09 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 09 組：台灣住宅負擔與生育率之關聯</span>
+                <span class="badge-reporter">10 年時間數列 (建議轉月資料 / SRDA)</span>
+            </div>
+            <p><strong>題目盲點：</strong>年資料樣本數不足且過於粗糙，應尋求月資料或微觀問卷。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「年資料效果有限且自由度不足，建議盡量彙整為『月資料』。要進一步看房價衝擊是隔了幾年/幾個月發生？當房價負擔能力指數超過多少門檻值後，對生育率產生爆發性打擊？若用年資料亦可申請 SRDA 的『家庭動態調查』或『社會變遷調查』微觀問卷。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>克服資料週期改用月資料，尋找房價負擔指數衝擊生育率之爆發性轉折點（Threshold）。
+            </div>
+        </div>
+
+        <!-- 第 10 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 10 組：台灣汽油價格波動與民生物價關聯</span>
+                <span class="badge-reporter">文獻回顧十分優良 (VECM / 門檻模型)</span>
+            </div>
+            <p><strong>優勢與挑戰：</strong>已建置 AI 檢索與良好文獻框架，重點在於非對稱性傳導。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「第十組文獻回顧做得很好！油價帶動物價是常識，重點在於油價傳導是否存在『非對稱性』？（對哪些商品影響快、哪些不受影響）請擴充月資料，不僅看 95 無鉛，亦可納入柴油與 CPI 類別分類做交叉分析。」
+            </div>
+            <div style="margin-top:10px;">
+                <strong>📚 第十組整理之四大關鍵文獻對照：</strong>
+                <table class="lit-table">
+                    <thead>
+                        <tr>
+                            <th>作者與年份</th>
+                            <th>研究主題與範圍</th>
+                            <th>研究方法</th>
+                            <th>核心發現與結論</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>陳建宏 (2021)</td>
+                            <td>國際大宗物價變動對國內 CPI 影響 (2004-2021)</td>
+                            <td>ADF 單根檢定、Johansen 共整合、VECM 向量誤差修正、衝擊反應函數</td>
+                            <td>油價顯著影響交通與通訊物價；黃豆影響有限，小麥玉米不顯著。</td>
+                        </tr>
+                        <tr>
+                            <td>楊達新 (2013)</td>
+                            <td>國內油價機制調整對經濟之影響 (2006/2013)</td>
+                            <td>產業關聯分析法 (Input-Output Model)、情境模擬分析</td>
+                            <td>油價調漲 10%，GDP 減少 0.1~0.195%，CPI 上升 0.61~0.98%；批發零售、運輸倉儲及煉油業受衝擊最大。</td>
+                        </tr>
+                        <tr>
+                            <td>Blanchard & Gali (2007)</td>
+                            <td>石油價格衝擊的總體經濟影響跨年代比較 (1960-2005)</td>
+                            <td>結構向量自我迴歸 (SVAR)、滾動迴歸、新凱因斯模型</td>
+                            <td>1984 年後油價對通膨/GDP 衝擊減弱，源於勞動市場彈性提升、貨幣政策可信度增加及對石油依賴下降。</td>
+                        </tr>
+                        <tr>
+                            <td>張成輝等 (2011)</td>
+                            <td>國際油價對 CPI 之影響與浮動油價機制實施前後比較 (1991-2011)</td>
+                            <td>ADF 檢定、門檻向量誤差修正 (TVECM)、SupLM 門檻檢定</td>
+                            <td>油價變動領先整體 CPI 與交通醫療類物價；浮動油價機制實施前後不具顯著非對稱性差異。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 第 11 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 11 組：中油與台塑油價定價策略比較</span>
+                <span class="badge-reporter">Python API 算得相關係數 0.9999</span>
+            </div>
+            <p><strong>題目盲點：</strong>價格平行已知且共線，需檢定誰是真正的價格領導者。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「算出相關係數 0.9999 證明價格平行行為非常棒！但要進一步問：這是『價格領導』還是『成本趨同』？哪一家才是真正的價格制定者？建議做 Granger 因果關係檢定，看中油與台塑到底誰是領導者、誰是跟隨者。」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>進行 Granger 因果關係檢定，區分「價格領導者 (Price Leader)」與「跟隨者 (Follower)」。
+            </div>
+        </div>
+
+        <!-- 第 12 組 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">第 12 組：台灣青少年數位學習與家庭追蹤研究</span>
+                <span class="badge-reporter">已掌握 SRDA TIGPS 8,000+ 筆數據</span>
+            </div>
+            <p><strong>優勢與挑戰：</strong>數據量充沛，應從企管 SWOT 轉為計量經濟迴歸實證。</p>
+            <div class="speech-box">
+                🗣️ <strong>老師指導迴饋：</strong><br>
+                「握有 8,000 多筆數據只做企管分析太可惜！請透過控制變數（如學校類型、政府資源投入），證明政策或學校教育是否能彌補家庭社經地位對數位素養的劣勢。做出這個會讓評審耳目一新！」
+            </div>
+            <div class="deepen-direction">
+                🚀 <strong>深度突破方向：</strong>建立計量迴歸模型，驗證學校資源對家庭社經地位劣勢之調節與補償效應。
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function filterCards() {
+        var input, filter, container, cards, i, textValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        container = document.getElementById("cardsContainer");
+        cards = container.getElementsByClassName("card");
+
+        for (i = 0; i < cards.length; i++) {
+            textValue = cards[i].textContent || cards[i].innerText;
+            if (textValue.toUpperCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
