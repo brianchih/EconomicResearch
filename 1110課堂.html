@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11/10 課堂重點：頂石成果展流程與各組實證進度診斷 | 淡江經濟</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax 數學公式支援 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+
+    <!-- 頁頭 Banner -->
+    <header class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white py-8 shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">
+                    <span>淡江大學 經濟學系</span>
+                    <span>•</span>
+                    <span>產業分析實作 / 頂石課程專題（11月10日第8週）</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">頂石成果展流程與小組實證進度診斷</h1>
+                <p class="text-indigo-200 text-xs md:text-sm mt-1">成果展10組兩輪發表規則、評審組合、實證變數與文獻對接要求</p>
+            </div>
+            <button onclick="window.print()" class="no-print bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold py-2 px-4 rounded-lg shadow transition flex items-center gap-2 shrink-0">
+                🖨️ 列印 / 另存 PDF
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 space-y-8">
+
+        <!-- 分頁標籤導覽列 (Tabs Header) -->
+        <div class="no-print flex border-b border-slate-200 mb-6 overflow-x-auto bg-white rounded-2xl p-2 shadow-sm border space-x-2">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm">
+                <span>🏛️</span> 1. 12/15 成果展行政流程
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🤖</span> 2. AI 關鍵字發想與檢索
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🔍</span> 3. 本週小組進度診斷
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                <span>🚨</span> 4. 組員機制與下週要求
+            </button>
+        </div>
+
+        <!-- TAB 1: 12/15 成果展行政流程 -->
+        <div id="tab1" class="tab-content space-y-6">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b pb-4">
+                    <div>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">12/15 頂石成果展</span>
+                        <h2 class="text-xl font-bold text-slate-800 mt-1">10 組兩輪發表流程與評審配置規畫</h2>
+                    </div>
+                    <span class="bg-slate-900 text-white text-xs px-3 py-1.5 rounded-xl font-bold">正式報告：10 組（第 3、7 組扣除）</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    
+                    <!-- 時程安排 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">⏱️ 當天詳細時間流程表</h3>
+                        <ul class="space-y-1.5 text-slate-700">
+                            <li><b>12:00 – 12:35：</b>B507 教室集合、領取餐點、開幕宣導與大合照。</li>
+                            <li><b>12:35 – 12:50：</b>評審共識會議（三樓研討室準備）。</li>
+                            <li><b>12:50 – 13:40：</b><b>上半場發表</b>（5 組在 A 室、5 組在 B 室，每組 10 分鐘）。</li>
+                            <li><b>13:40 – 13:55：</b>中場休息 15 分鐘（活動組側錄採訪心得與研討室對調）。</li>
+                            <li><b>13:55 – 14:45：</b><b>下半場發表</b>（兩研討室組別對調發表，確保評審皆聽過）。</li>
+                            <li><b>14:45 – 15:00：</b>評審總評、閉幕典禮（回到 B507 教室）。</li>
+                        </ul>
+                    </div>
+
+                    <!-- 評審名單與公平性 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">👨‍🏫 6 位評審名單與雙試室配置</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>校內評審（3 位）：</b>池秉聰老師、楊波傑老師、李毅珍老師。<br>
+                            • <b>校外/業界評審（3 位）：</b>劉恆珍董事長/執行長、呂忠怡董事長、廖仁傑老師。<br>
+                            • <b>配置原則：</b>每間研討室均配置業界評審與校內老師。兩輪發表確保<b>所有小組皆會面對全部評審</b>，計算總平均分數，完全消除評審嚴格度差異與不公問題。
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: AI 關鍵字發想與檢索 -->
+        <div id="tab2" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-3 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-full font-bold">文獻工具</span>
+                    AI Studio 關鍵字發想與 5 大學術資料庫
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">💡 研究主題變數拆解與 Prompt 示範</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            • 確定因果邏輯：<b>$X$ (因 / 自變數) $\rightarrow$ $Y$ (果 / 依變數)</b> + 控制變數。<br>
+                            • <b>Google AI Studio Prompt：</b>「請製作一個經濟學實證文獻檢索網站，支援關鍵字發想、國內外主流學術資源檢索、自動匯出引用格式及視覺化分析工具。」
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-indigo-900 text-sm">📚 5 大主流學術資料庫</h3>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li><b>Google Scholar：</b>全球真實學術文獻與被引用次數搜尋。</li>
+                            <li><b>SSRN：</b>社會科學研究網絡，取得最新金融與經濟工作論文。</li>
+                            <li><b>NBER：</b>美國經濟研究所 Working Papers。</li>
+                            <li><b>華藝線上圖書館：</b>國內中文期刊最完整庫。</li>
+                            <li><b>臺灣博碩士論文加值系統：</b>國家圖書館維護，檢索國內碩博士學位論文。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl text-xs text-rose-900">
+                    <b>⚠️ 嚴防「AI 幻覺」捏造論文：</b>AI 生成的文獻可能出現不存在的作者與年份（如虛構論文），務必將 AI 聯想出的關鍵字帶至 Google Scholar 或博碩士論文網驗證下載真實 PDF。
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 3: 本週小組進度診斷 -->
+        <div id="tab3" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="border-b pb-3">
+                    <h2 class="text-xl font-bold text-slate-800">各專題小組實證進度診斷與指導意見</h2>
+                    <p class="text-xs text-slate-500 mt-1">針對本週上台報告之小組進行變數、資料頻率與文獻對接之審視</p>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    
+                    <!-- 第一組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第一組：台灣電商市場結構與家戶線上消費（張偉澤、劉嘉碩等 5 人）</span>
+                            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono font-bold">經濟部與公平會數據</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>參考經濟部 2024 年零售業網絡銷售調查與公平會雙邊市場競爭政策論文，採用 2014–2024 季資料。<br>
+                            • <b>指導意見：</b>目前資料多為經濟部總體季資料，尚未加入「家戶」微觀數據。若要分析「家戶線上消費」，必須結合 SRDA 家庭收支調查之個體消費欄位，並補充至少 5 篇核心實證論文之對應模型。
+                        </p>
+                    </div>
+
+                    <!-- 第十二組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十二組：TIGPS 家庭社經地位與青少年數位學習（韋漢、博業等）</span>
+                            <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-mono font-bold">SRDA 8000+ 筆資料</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>已使用 Python / Colab 匯入 TIGPS 300 多個變數，已進行變數編碼與信度分析。<br>
+                            • <b>指導意見：</b>整理表格與編碼態度優良，但<b>尚未明確鎖定核心 $Y$ 與 $X$ 變數</b>。需從 300 多個變數中篩選出真正關鍵的「數位使用時間/素養」與「家庭社經地位」，並參照至少 5 篇期刊論文的計量架構，不可僅停留在敘述統計。
+                        </p>
+                    </div>
+
+                    <!-- 第十一組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十一組：國際油價對國內油品價格與產業衝擊</span>
+                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-bold">4 篇論文對接</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>已整理 4 篇實證論文（包含投入產出、Granger 因果關係、誤差修正模型 VECM）；發現中油與台塑油價變動高度一致（99% 同步）。<br>
+                            • <b>指導意見：</b>既然兩家國內油價一致，單純分析國內外油價連動意義不大。<b>亮點切入點：</b>研究為何「國營中油虧損，私營台塑卻能獲利」？深入分析外銷比例、訂價政策管製與成本結構轉嫁差異。
+                        </p>
+                    </div>
+
+                    <!-- 第八組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第八組：國內旅館房價變動與國人出國人次（2016–2025 月資料）</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-mono font-bold">交叉價格彈性</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>使用月資料，解釋變數包含國內旅館住宿費、實質有效匯率 (REER)、疫情 Dummy、暑假與連假 Dummy。<br>
+                            • <b>指導意見：</b>連假與暑假變數需精準定義（是否包含常態週末）；$Y$ 為觀光署出國人次（分成 5 個地區），需區分純旅遊與商務；應補強國外目的地之房價/物價水準，才能精確估算「交叉價格彈性」。
+                        </p>
+                    </div>
+
+                    <!-- 第十組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第十組：多重負債與個人信用風險管理（聯徵資料 + Hansen 門檻模型）</span>
+                            <span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-mono font-bold">對接金融競賽</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>已抓取央行利率、CPI、薪資成長，整理房貸、信貸、車貸多重負債組合強度與滲透率；參考 Hansen (1999, 2000) 門檻迴歸模型。<br>
+                            • <b>指導意見：</b>實證架構與變數極為嚴謹！務必釐清 $Y$（違約率或負債餘額成長率）之交集與獨立定義。<b>距離 11/18 競賽截止僅剩 8 天</b>，請儘速將模型結果跑出並完成報名上傳！
+                        </p>
+                    </div>
+
+                    <!-- 第二組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第二組：外送專法上路對外送員薪資與單量影響</span>
+                            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono font-bold">實施前後迴歸</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>收集專法上路前後約 30 餘週資料，回歸顯示專法實施每週薪資顯著增加 42 元，下雨天增加 15.6 元。<br>
+                            • <b>指導意見：</b>樣本數偏少且存在自變數自我選擇偏誤（寒暑假/期末考跑單行為）。<b>包裝亮點：</b>計算外送平台漲價後的「價格彈性」，以及專法增加之營運成本有多少比例成功轉嫁給消費者與店家。
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 4: 組員機制與下週要求 -->
+        <div id="tab4" class="tab-content space-y-6 hidden">
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                
+                <!-- 淘換機制 -->
+                <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-2 text-xs">
+                    <h3 class="text-amber-900 font-bold text-sm flex items-center gap-2">
+                        <span>⚠️</span> 期中組員搭便車與處理機制
+                    </h3>
+                    <p class="text-amber-950 leading-relaxed">
+                        • 本課程設有<b>「小組實務貢獻度問卷（占 20%）」</b>。若組員長期失聯、未到課或無實質貢獻，請小組內部討論後通報老師介入。<br>
+                        • 期中階段將進行名單清理與組員淘汰，未貢獻之組員其個人分數將受到嚴重扣減或予以調整，保障積極投入同學之權益。
+                    </p>
+                </div>
+
+                <!-- 下週強制要求 -->
+                <div class="bg-rose-900 text-white p-6 rounded-2xl space-y-3 text-xs shadow-lg">
+                    <div class="flex items-center justify-between border-b border-rose-800 pb-2">
+                        <h3 class="text-amber-300 font-bold text-base flex items-center gap-2">
+                            <span>🚨</span> 下週課堂強制檢核要求（離成果展剩不到 1 個月）
+                        </h3>
+                        <span class="bg-rose-800 text-rose-200 px-2.5 py-1 rounded font-mono font-bold">必須完成</span>
+                    </div>
+
+                    <p class="text-rose-100 leading-relaxed">
+                        請所有小組（1 至 12 組）於下週課堂前將專題資料與文件統一上傳至雲端資料夾，並於課堂報告：
+                    </p>
+
+                    <ol class="list-decimal list-inside space-y-2 text-rose-100">
+                        <li><b>完成整理之數據資料集（Excel / CSV / Stata）：</b>明確列出自變數 $X$、依變數 $Y$ 及控制變數，並註明資料頻率（日/月/季）與區間。</li>
+                        <li><b>文獻與方法整理表：</b>至少包含 <b>5 篇核心學術論文</b>，明確寫出其採用的計量模型與研究假設。</li>
+                        <li><b>數據描述性統計與初步視覺化圖表：</b>繪製散佈圖 (XY Plot) 與分配圖，確認變數間之線性/非線性關聯。</li>
+                    </ol>
+
+                    <p class="text-xs text-amber-200 font-semibold pt-1">
+                        💡 報名金融競賽與中原競賽之小組，請於 11/18 前完成線上註冊與報告上傳，切勿拖延至最後一天！
+                    </p>
+                </div>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="max-w-6xl mx-auto px-4 mt-12 text-center text-xs text-slate-400">
+        <p>© 2026 淡江大學 經濟學系 課程教學團隊 | 本網頁紀錄 11月10日 課堂討論重點與執行計畫</p>
+    </footer>
+
+    <script>
+        // 分頁切換邏輯 (Tab Switcher)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-600 hover:bg-slate-100";
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-indigo-600 text-white shadow-sm";
+        }
+    </script>
+
+</body>
+</html>
