@@ -92,10 +92,12 @@
                     <!-- 評審名單與公平性 -->
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
                         <h3 class="font-bold text-indigo-900 text-sm">👨‍🏫 6 位評審名單與雙試室配置</h3>
-                        <p class="text-slate-600 leading-relaxed">
-                            • <b>校內評審（3 位）：</b>池秉聰老師、楊波傑老師、李毅珍老師。<br>
-                            • <b>校外/業界評審（3 位）：</b>劉恆珍董事長/執行長、呂忠怡董事長、廖仁傑老師。<br>
-                            • <b>配置原則：</b>每間研討室均配置業界評審與校內老師。兩輪發表確保<b>所有小組皆會面對全部評審</b>，計算總平均分數，完全消除評審嚴格度差異與不公問題。
+                        <p class="text-slate-600 leading-relaxed font-semibold">
+                            • 校內教授評審（3 位）：林亦珍教授、楊博傑教授、池秉聰教授<br>
+                            • 校外/業界評審（3 位）：劉恆禎執行長、廖仁傑教授、呂宗宜董事長
+                        </p>
+                        <p class="text-slate-600 leading-relaxed pt-1 border-t border-slate-200">
+                            • <b>配置原則：</b>兩間研討室均配置業界評審與校內老師。兩輪發表確保<b>所有小組皆會面對全部評審</b>，計算總平均分數，完全消除評審嚴格度差異與不公問題。
                         </p>
                     </div>
 
@@ -163,7 +165,7 @@
                     <!-- 第十二組 -->
                     <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-indigo-900 text-sm">第十二組：TIGPS 家庭社經地位與青少年數位學習（韋漢、博業等）</span>
+                            <span class="font-bold text-indigo-900 text-sm">第十二組：TIGPS 家庭社經地位與青少年數位學習（韋漢、博業、淨存、僅層等）</span>
                             <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-mono font-bold">SRDA 8000+ 筆資料</span>
                         </div>
                         <p class="text-slate-600 leading-relaxed">
@@ -199,12 +201,12 @@
                     <!-- 第十組 -->
                     <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-indigo-900 text-sm">第十組：多重負債與個人信用風險管理（聯徵資料 + Hansen 門檻模型）</span>
-                            <span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-mono font-bold">對接金融競賽</span>
+                            <span class="font-bold text-indigo-900 text-sm">第十組：臺灣汽油價格對國內民生物價關聯性分析（玉晨、玉泥、尾城、燕龍等）</span>
+                            <span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-mono font-bold">2020-2025 月資料 + OLS 迴歸</span>
                         </div>
                         <p class="text-slate-600 leading-relaxed">
-                            • <b>現況：</b>已抓取央行利率、CPI、薪資成長，整理房貸、信貸、車貸多重負債組合強度與滲透率；參考 Hansen (1999, 2000) 門檻迴歸模型。<br>
-                            • <b>指導意見：</b>實證架構與變數極為嚴謹！務必釐清 $Y$（違約率或負債餘額成長率）之交集與獨立定義。<b>距離 11/18 競賽截止僅剩 8 天</b>，請儘速將模型結果跑出並完成報名上傳！
+                            • <b>現況：</b>抓取 92/95/98/柴油月均價（自變數 $X$），對照 CPI 整體及分項（外食、交通、房租、油料等，$Y$ 變數）；採用 OLS 迴歸、Newey-West 標準誤調整、落後期 (Lag Effect) 與類別係數差異檢定。<br>
+                            • <b>指導意見：</b>資料追溯至 2020 年計算傳導效果方向正確！<b>關鍵補強：</b>2020–2022 年間深受 COVID-19 疫情衝擊，交通與加油需求劇烈改變，模型中<b>必須加入疫情虛擬變數 (COVID-19 Dummy)</b>，並精確衡量傳導落後幾個月以及物價彈性。
                         </p>
                     </div>
 
@@ -217,6 +219,18 @@
                         <p class="text-slate-600 leading-relaxed">
                             • <b>現況：</b>收集專法上路前後約 30 餘週資料，回歸顯示專法實施每週薪資顯著增加 42 元，下雨天增加 15.6 元。<br>
                             • <b>指導意見：</b>樣本數偏少且存在自變數自我選擇偏誤（寒暑假/期末考跑單行為）。<b>包裝亮點：</b>計算外送平台漲價後的「價格彈性」，以及專法增加之營運成本有多少比例成功轉嫁給消費者與店家。
+                        </p>
+                    </div>
+
+                    <!-- 第四組 -->
+                    <div class="border border-slate-200 p-4 rounded-xl bg-slate-50 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-indigo-900 text-sm">第四組：ESG 空汙與企業數據對接（佩軒、支橋、子成）</span>
+                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-bold">TEJ + 空汙開放資料</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            • <b>現況：</b>串接 TEJ 公司治理評鑑與 AQI/PM2.5 空汙開放資料，對接 PLOS ONE 期刊。<br>
+                            • <b>指導意見：</b>處理企業總部/廠區坐標與空汙測站之空間配對誤差，解決 ESG 與低空汙地區之內生性問題（加入 Lag 滯後項與工具變數 IV）。
                         </p>
                     </div>
 
