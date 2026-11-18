@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>115學年度淡江大學經濟學系頂石課程專題成果展 — 課程重點與進度整理</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --secondary: #2563eb;
+      --accent: #d97706;
+      --danger: #dc2626;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Microsoft JhengHei", "PingFang TC", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    header .meta {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+    section {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.8rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+    }
+    h2 {
+      color: var(--primary);
+      font-size: 1.4rem;
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h3 {
+      color: var(--secondary);
+      font-size: 1.15rem;
+      margin: 1.2rem 0 0.6rem;
+    }
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    li {
+      margin-bottom: 0.45rem;
+    }
+    .alert {
+      background-color: #fef2f2;
+      border-left: 4px solid var(--danger);
+      padding: 1rem 1.2rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      color: #991b1b;
+    }
+    .tip {
+      background-color: #fffbeb;
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.2rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      color: #92400e;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin: 1rem 0;
+    }
+    .box {
+      background: #f1f5f9;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .box h4 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #eff6ff;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-red { background: #fee2e2; color: #b91c1c; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .formula {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      padding: 0.8rem 1rem;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.05rem;
+      margin: 0.8rem 0;
+      border-radius: 6px;
+    }
+    .quote-box {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 1.2rem;
+      border-radius: 6px;
+      font-style: normal;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>115學年度淡江大學經濟學系頂石課程專題成果展</h1>
+      <div class="meta">上課重點與各組進度紀要 ｜ 課程日期：2026年11月17日 ｜ 指導教授：池秉聰 (Bin-Tzong Chie)</div>
+    </header>
+
+    <!-- 一、重要時程與競賽報名 -->
+    <section>
+      <h2>一、近期重要時程與競賽報名規定</h2>
+      <div class="alert">
+        <strong>緊急提醒（11/18 截止）：</strong>每組至少需參加一項外部競賽。「中原大學競賽」與「臺灣金融研訓院（金融聯徵中心/永豐/兆豐）競賽」皆於 <strong>11月18日（今晚 12:00 前）</strong>截止報名（目前僅需繳交類似提案的計畫書，無需完整報告）。
+      </div>
+      <ul>
+        <li><strong>指導老師名額限制：</strong>金融聯徵中心競賽有指導老師組數上限，目前老師的 Email 僅剩 <strong>2 個名額</strong>，欲報名者請盡速索取老師聯絡資訊。</li>
+        <li><strong>備案選擇：</strong>若未趕上 11/18 截止之兩項競賽，則必須報名<strong>「中研院（SRDA 學術調查研究資料庫）競賽」</strong>，且題目與資料需配合改用 SRDA 資料庫（如家庭收支調查、青少年成長歷程等）。</li>
+        <li><strong>成果展正式日期：2026年12月15日（週二）</strong>，當日需繳交三項成果：
+          <ol>
+            <li><strong>專題影片</strong>（可至 iClass 參考往年範例）。</li>
+            <li><strong>簡報檔案</strong>（PPT / PowerPoint 或其他可展示之簡報格式）。</li>
+            <li><strong>書面報告</strong>（一律轉存為 <strong>PDF</strong> 繳交，避免 Word 跑版）。</li>
+          </ol>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 二、書面報告格式規範 -->
+    <section>
+      <h2>二、書面報告排版與封面規範</h2>
+      <div class="grid-2">
+        <div class="box">
+          <h4>📄 版面與字體規範</h4>
+          <ul>
+            <li><strong>繳交格式：</strong>一律使用 <strong>PDF</strong> 檔。</li>
+            <li><strong>頁數限制：</strong><strong>10 ～ 15 頁</strong>紮實內容（不含封面與參考文獻）。</li>
+            <li><strong>紙張與邊界：</strong>A4 直式，上、下、左、右邊界皆為 <strong>2.5 公分</strong>。</li>
+            <li><strong>字型設定：</strong>中文以「標楷體」或「微軟正黑體」為主；英文使用「Times New Roman」。</li>
+            <li><strong>內文規格：</strong>字體大小 <strong>12 pt</strong>，行距 <strong>1.5 倍行高</strong>。</li>
+            <li><strong>表格規格：</strong>字體大小 <strong>10 pt</strong>，單行間距。</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h4>🎓 封面設計規範（儀式感）</h4>
+          <ul>
+            <li><strong>最上方標題：</strong>115學年度淡江大學經濟學系頂石課程專題成果展</li>
+            <li><strong>A4 約上三分之二處：</strong>專題正式題目</li>
+            <li><strong>題目下方：</strong>組別（第幾組）與全體組員名單</li>
+            <li><strong>最下方資訊：</strong>指導教授姓名、發表日期（<strong>2026年12月15日</strong>）</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三、六大核心章節架構 -->
+    <section>
+      <h2>三、書面報告六大核心章節架構</h2>
+
+      <h3>1. 核心摘要（讓評審在 60 秒內快速掌握全貌）</h3>
+      <ul>
+        <li><strong>研究問題：</strong>明確指出探討的因果關係（自變數 $X$ 如何影響應變數 $Y$）。</li>
+        <li><strong>核心資料與方法：</strong>簡述資料來源（如 SRDA、政府公開資料庫）、樣本期間、資料頻率（日/月/季/年）及採用的計量模型。</li>
+        <li><strong>關鍵實證發現（約 3 點）：</strong>直接寫出<strong>量化數字與經濟意義</strong>（例如：美台利差每擴大 1%，新台幣匯率平均貶值多少%；外送專法上路後週薪顯著增加多少元）。</li>
+        <li><strong>實務或政策建議：</strong>說明研究貢獻，對企業、投資人或政府提出具體可行的建議。</li>
+      </ul>
+
+      <h3>2. 研究動機與問題意識</h3>
+      <ul>
+        <li><strong>痛點與背景：</strong>結合近期時事、產業結構轉變或政策法規變動（如外送專法、高房價、多重負債、央行升息等）凝練出核心問題。</li>
+        <li><strong>突破常識的切入點：</strong>說明為何需要透過資料庫進行實證量化（如估計彈性大小、落後期長短），而非僅停留在新聞表面描述。</li>
+      </ul>
+
+      <h3>3. 文獻回顧與理論假設</h3>
+      <div class="alert">
+        <strong>學術倫理紅線：</strong>每組至少需有 <strong>5 篇</strong>正式學術文獻（期刊論文或碩博士論文）。<strong>嚴禁使用 AI 捏造假文獻，一經發現報告直接零分計算！</strong>
+      </div>
+      <ul>
+        <li><strong>核心文獻彙整表（必備 5 要件）：</strong>(1) 作者（年份）、(2) 研究主題、(3) 資料集與期間、(4) 計量/研究方法、(5) 研究結論。表後需補充說明文獻如何支持本組的因果推理與方法選擇。</li>
+        <li><strong>建立研究假說：</strong>以 $H_1, H_2, \dots$ 依序條列從文獻導出的待驗證假設（例如：多重負債組合強度對信用違約風險存在非線性門檻效應）。</li>
+      </ul>
+
+      <h3>4. 資料來源、變數定義與敘述統計</h3>
+      <ul>
+        <li><strong>資料說明：</strong>交代資料庫來源、資料頻率（日/月/季/年）及有效樣本數。</li>
+        <li><strong>變數定義一覽表：</strong>明確區分應變數 ($Y$)、自變數 ($X$) 與控制變數（如 COVID-19 疫情、寒暑假、連假等虛擬變數），並註明計算公式與單位。</li>
+        <li><strong>敘述性統計與初步視覺化：</strong>列出平均數、標準差、最小值、最大值（類別變數可列中位數）；繪製關鍵圖表（如 $X$ 與 $Y$ 的散佈圖）呈現初步關係。</li>
+      </ul>
+
+      <h3>5. 實證模型與結果分析</h3>
+      <ul>
+        <li><strong>計量模型設定：</strong>盡量使用正式數學方程式呈現迴歸式，並標明下標（個體 $i$、時間 $t$）：
+          <div class="formula">
+            $$Y_t = \beta_0 + \beta_1 \mathbf{X}_t + \sum_{k=1}^{p} \gamma_k \mathbf{X}_{t-k} + \mathbf{Z}_t \boldsymbol{\delta} + \varepsilon_t$$
+          </div>
+          （包含當期自變數 $\mathbf{X}_t$、落後期 $\mathbf{X}_{t-k}$、控制變數 $\mathbf{Z}_t$ 與誤差項 $\varepsilon_t$）
+        </li>
+        <li><strong>模型診斷與 AI 協作原則：</strong>
+          <ul>
+            <li><strong>切勿直接把原始資料丟給 AI 要求生成迴歸結果</strong>（AI 會產生數據幻覺）。</li>
+            <li><strong>正確做法：</strong>描述變數與資料結構，請 AI 撰寫 <strong>Stata / R / Python</strong> 程式碼 $\rightarrow$ 自行在統計軟體執行 $\rightarrow$ 將真實跑出的報表貼回給 AI 協助解讀、診斷與建議修正。</li>
+          </ul>
+        </li>
+        <li><strong>實證結果表格與經濟解讀：</strong>以標準學術表格呈現係數估計值、標準誤、$t$ 統計量、顯著水準星號（<code>* p&lt;0.1</code>、<code>** p&lt;0.05</code>、<code>*** p&lt;0.01</code>）及判定係數 $R^2$。務必將統計數字轉化為<strong>白話經濟意義</strong>（彈性、邊際金額或落後期數）。</li>
+      </ul>
+
+      <h3>6. 結論、政策建議與自我檢核</h3>
+      <ul>
+        <li><strong>研究總結：</strong>逐一回應第三章所提出的研究假設（$H_1, H_2 \dots$）是否獲得實證支持。</li>
+        <li><strong>具體決策建議：</strong>評審關注重點，將研究成果包裝為具體、可落地的政策或商業建議。</li>
+        <li><strong>研究限制與未來展望：</strong>誠實說明資料期間限制、樣本自我選擇偏誤或細部數據取得困難，並提出未來可延伸的方向。</li>
+        <li><strong>參考文獻：</strong>統一採用 <strong>APA 格式</strong>或經濟學期刊標準格式（可利用 AI 協助統一排版格式）。</li>
+        <li><strong>繳交前自我檢核：</strong>確認連結權限皆已開啟（開放存取、無需登入帳號即可檢視）並逐項核對格式規範。</li>
+      </ul>
+    </section>
+
+    <!-- 四、各組進度報告與老師講評 -->
+    <section>
+      <h2>四、各組進度匯報與指導教授講評</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 10%;">組別</th>
+            <th style="width: 38%;">研究主題與目前進度</th>
+            <th style="width: 52%;">老師講評與修正建議</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>第 12 組</strong></td>
+            <td><strong>青少年數位素養與家庭背景分析</strong><br>使用 TIGPS 2020 資料，以 9 題數位能力平均為 $Y$，家庭社經地位、一般參與、父母數位教養為 $X$，並加入 4 項控制變數；已用 Colab 跑出部分迴歸與散佈圖。</td>
+            <td>
+              <ul>
+                <li>雲端與 Colab 檔案務必<strong>開啟公開存取權限</strong>，避免現場登入耗時。</li>
+                <li>進一步比對核心參考文獻（蔡明學等）的方法論與實證結果，強化文獻對話。</li>
+                <li>可報名中研院競賽。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 9 組</strong></td>
+            <td><strong>成年子女與父母同住對主觀幸福感之影響</strong><br>整理 7 篇文獻對應 4 項研究假設；採用 2024 年資料（有效樣本 3,735 筆，嚴格定義與父母雙方同住為同住組），迴歸與圖表已初步完成，待撰寫文字分析。</td>
+            <td>
+              <ul>
+                <li>樣本篩選邏輯清晰（排除單親或喪偶造成之干擾），進度穩定。</li>
+                <li>盡快完成<strong>中研院競賽</strong>報名程序。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 8 組</strong></td>
+            <td><strong>國內住宿價格變動對國人赴亞洲出國旅遊之交叉價格彈性分析</strong><br>鎖定日、韓、泰、越、中五國出國人次為 $Y$，納入國內住宿價格指數、台幣實質有效匯率、實質經常性薪資及疫情權重變數，初步跑出 OLS 彈性約 0.138。</td>
+            <td>
+              <ul>
+                <li><strong>內生性警告：</strong>國外疫情變數若用「2019 年各國出國人數佔比」加權，等於把應變數資訊放進自變數（偷看答案）。</li>
+                <li><strong>經濟定義檢討：</strong>交叉價格彈性需有兩種價格，目前僅有國內房價，缺乏國外住宿或機票價格。</li>
+                <li>所有自建指標的計算公式務必在報告中交代清楚。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 11 組</strong></td>
+            <td><strong>國際原油價格對台灣油品產業獲利與零售價格之影響</strong><br>彙整 4 篇文獻並對比台塑化與中油 2020–2025 年財報（六年營業利益落差達 3,735 億元），設定 95 汽油零售價變動為 $Y$、WTI 油價為 $X$。</td>
+            <td>
+              <ul>
+                <li><strong>資料頻率不一致：</strong>油價為週資料，財報為季/年資料，兩者無法直接合併跑迴歸，需思考如何對齊頻率。</li>
+                <li>中油浮動油價公式參考杜拜（70%）與布蘭特（30%），選用 WTI 需有充分理由，避免直接丟資料給 AI 產生錯誤設定。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 5 組</strong></td>
+            <td><strong>美台利差、外資買賣超對資金停留與新台幣匯率之動態影響</strong><br>採 2000–2026 年月資料，運用 SVAR / VECM 模型、單根檢定與衝擊反應函數（IRF），探討利差擴大與外資動向對匯率的領先落後關係。</td>
+            <td>
+              <ul>
+                <li><strong>圖表解讀需白話化：</strong>衝擊反應圖雖美觀，但報告與簡報時必須清楚說明「正向/負向衝擊」的具體經濟意義，讓評審聽得懂。</li>
+                <li>釐清多個 $Y$ 與多個 $X$（如兩項利差指標）在模型中的處理方式與權重設定。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 2 組</strong></td>
+            <td><strong>外送專法對外送員報酬、工時與社會整體之影響</strong><br>整理 5 篇法律/勞動學術文獻與消費者民調新聞；自行收集約 30 多筆外送員資料，分析專法前後平均時薪（107.9 $\rightarrow$ 239 元）與工時（9.8 $\rightarrow$ 6 小時）變化。</td>
+            <td>
+              <ul>
+                <li><strong>樣本數嚴重不足：</strong>僅 30 多筆自填資料太少，難以支撐文獻級別的假設檢定。</li>
+                <li><strong>替代資料建議：</strong>善用政府公開資料庫（如警政署/交通部<strong>外送員交通事故件數</strong>分平台統計）作為外送員活躍度的代理變數，並可加入國外制度比較。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 4 組</strong></td>
+            <td><strong>多重負債對個人信用風險與財務脆弱性之非線性門檻分析</strong><br>串接聯徵中心與總體資料（175 期追蹤資料），建構多重負債強度、滲透率、財務脆弱性指標（DSR 概念）與負債餘額年增率，擬採用 Hansen 門檻迴歸模型。</td>
+            <td>
+              <ul>
+                <li>資料結構完整（175 期面板/追蹤資料），且具備明確的計量方法（Hansen 門檻模型）與經濟指標設計，方向非常紮實。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 10 組</strong></td>
+            <td><strong>汽柴油價格變動對核心 CPI 及各類物價指數之影響</strong><br>抓主計總處 2021–2025 年月資料（約 72 筆），以 95 汽油與柴油為 $X$，核心 CPI、食物/外食/交通 CPI 為 $Y$，並設定 2021 年三級警戒為疫情對照期。</td>
+            <td>
+              <ul>
+                <li><strong>樣本期間過短：</strong>僅 72 筆月資料偏少，建議資料往後延伸至 <strong>2026 年 10 月</strong>，並往前拉長以涵蓋完整景氣循環。</li>
+                <li><strong>遺漏重大外生衝擊：</strong>分析能源與物價必須納入<strong>俄烏戰爭</strong>對國際能源市場的衝擊。</li>
+                <li>今日（11/18）務必完成競賽報名。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 1 組</strong></td>
+            <td><strong>電商崛起與家戶所得彈性分析（雙邊際模型）</strong><br>以經濟部資料庫呈現近十年網路銷售額成長趨勢；擬用 114 年家庭收支調查，分廣度邊際（線上消費參與率）與深度邊際（消費支出對數）估計所得彈性。</td>
+            <td>
+              <ul>
+                <li><strong>資料層級錯誤：</strong>目前僅抓主計總處網站「已加總好的彙總表」，缺乏個別家戶異質性，無法做個體計量分析。</li>
+                <li><strong>立即行動：</strong>必須至 <strong>SRDA 申請下載原始家戶微觀資料</strong>（每年約 2 萬筆樣本，含戶長學歷、職業、年齡、家庭結構等），才能執行雙邊際迴歸。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>第 6 組</strong></td>
+            <td><strong>台灣與澳洲消費者物價指數（CPI）與實質薪資購買力比較</strong><br>彙整 6 篇台澳文獻，蒐集 2015–2025 年（統一改用西元年）兩國實質經常性薪資、失業率、CPI 與勞動生產力指數，擬先繪製折線圖並用 Colab 跑迴歸。</td>
+            <td>
+              <ul>
+                <li>注意機關名稱正名為「行政院<strong>主計總處</strong>」。</li>
+                <li>年份標示統一使用<strong>西元年（2015–2025）</strong>。</li>
+                <li>善用 Google Colab 解決個人電腦與軟體雲環境限制。</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 五、教授總結與 AI 時代學習心法 -->
+    <section>
+      <h2>五、教授總結：不要害怕大數據，學會駕馭 AI</h2>
+      <div class="quote-box">
+        <p><strong>「不要害怕資料，資料不會咬你；越是複雜的資料與困難的問題，才是真正有挑戰性、能展現價值的舞台。」</strong></p>
+        <ul style="margin-top: 0.8rem; margin-bottom: 0;">
+          <li><strong>告別「二三十筆資料」的幼稚園思維：</strong>政府與學術資料庫（如 SRDA 家庭收支調查每年近 2 萬筆）擁有豐富結構化欄位，請勇敢下載完整微觀資料進行深度分析。</li>
+          <li><strong>人機協作的核心競爭力：</strong>AI 不會累也不會看錯欄位，人類的價值在於<strong>提出好問題、設計研究架構並下達精準提示詞</strong>（正如老師即使非理工背景，也能透過拍照與精準提問，讓 AI 生成動態 HTML 電路模擬器並成功修復感應燈具）。</li>
+          <li><strong>過程重於結果：</strong>本次專題老師刻意不指定題目，讓各組自主探索。請確認你們研究的是「自己真正好奇的問題」，而非僅為應付報告——在探索與解決問題的過程中所學到的能力，遠比單純的成績更重要。</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      整理自 2026年11月17日 頂石課程課堂錄音逐字稿
+    </footer>
+  </div>
+</body>
+</html>
