@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 國科會計畫：PSFD 五大世代樣本比較與價值觀篩選討論彙整</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --secondary: #2b6cb0;
+      --accent: #319795;
+      --warning: #dd6b20;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+      --border: #e2e8f0;
+      --highlight-bg: #ebf8ff;
+      --warn-bg: #fffaf0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.65;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 { margin: 0 0 0.4rem 0; font-size: 1.65rem; }
+    header p { margin: 0; font-size: 0.95rem; opacity: 0.88; }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #edf2f7;
+      border-bottom: 2px solid var(--border);
+      padding: 0 2rem;
+    }
+    .tab-button {
+      padding: 1rem 1.4rem;
+      border: none;
+      background: none;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover { color: var(--secondary); }
+    .tab-button.active {
+      color: var(--secondary);
+      border-bottom: 3px solid var(--secondary);
+      background-color: var(--card);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .tab-content {
+      display: none;
+      background: var(--card);
+      border-radius: 8px;
+      padding: 2.2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+    .tab-content.active { display: block; }
+
+    h2 {
+      color: var(--primary);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      font-size: 1.38rem;
+    }
+    h3 { color: var(--secondary); margin-top: 1.6rem; font-size: 1.12rem; }
+
+    .highlight-box {
+      background-color: var(--highlight-bg);
+      border-left: 4px solid var(--secondary);
+      padding: 1rem 1.2rem;
+      margin: 1.4rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .warning-box {
+      background-color: var(--warn-bg);
+      border-left: 4px solid var(--warning);
+      padding: 1rem 1.2rem;
+      margin: 1.4rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.4rem 0;
+      font-size: 0.92rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+    }
+    th { background-color: #f7fafc; color: var(--primary); font-weight: 600; }
+    tr:nth-child(even) { background-color: #fcfcfc; }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background-color: #e2e8f0;
+      color: #4a5568;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>2026 國科會計畫：PSFD 五大世代無斷點樣本與價值觀篩選討論彙整</h1>
+    <p>會議日期：2026 年 11 月 19 日 ｜ 重點：五大新抽樣本世代演變、資料斷點診斷、價值觀題庫與工具協作流程</p>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="switchTab('tab1')">一、五大世代樣本結構演變</button>
+    <button class="tab-button" onclick="switchTab('tab2')">二、婚育、教育、住宅與經濟發現</button>
+    <button class="tab-button" onclick="switchTab('tab3')">三、資料異常年份與邏輯診斷</button>
+    <button class="tab-button" onclick="switchTab('tab4')">四、價值觀題庫篩選與後續分工</button>
+  </div>
+
+  <div class="container">
+
+    <!-- 分頁一：五大世代樣本結構演變 -->
+    <div id="tab1" class="tab-content active">
+      <h2>五大新抽世代 (RI) 無斷點追蹤至 2024 年樣態對比</h2>
+      
+      <div class="highlight-box">
+        <strong>架構突破：</strong> 美妃將 PSFD 歷年新抽初訪樣本（<code>RI</code>）區分為五大世代群體，各自無斷點追蹤至 2024 年，並建置互動式單頁網頁切換檢視各世代與全體加總趨勢。
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>新抽世代</th>
+            <th>無斷點追蹤戶數</th>
+            <th>世代年齡層與生命階段特徵</th>
+            <th>家庭結構演變趨勢 (追蹤至 2024)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RI 1999</strong></td>
+            <td>247 戶 (原 277 戶篩選)</td>
+            <td>初訪時約 40 歲上下，2024 年已步入 60–70 歲退休高齡期。</td>
+            <td>核心家庭隨子女離家持續縮小，夫妻二人戶與單人戶放大。</td>
+          </tr>
+          <tr>
+            <td><strong>RI 2000</strong></td>
+            <td>376 戶</td>
+            <td><strong>最年長世代</strong>（相當於 RI 1999 的父母輩），2024 年多已 65 歲以上甚至更高齡。</td>
+            <td>高齡獨居與其他非典型居住型態（「無法判定」灰色區塊）比例較高，可能與高齡喪偶或機構/親屬照顧安排有關。</td>
+          </tr>
+          <tr>
+            <td><strong>RI 2003</strong></td>
+            <td>約 200+ 戶</td>
+            <td>初訪時 20–30 多歲，2024 年約 40–50 歲（壯年主力，相當於 1999 樣本之下一輩）。</td>
+            <td>以<strong>核心家庭</strong>（綠色）為絕對主流，其次為三代同堂家庭。</td>
+          </tr>
+          <tr>
+            <td><strong>RI 2009</strong></td>
+            <td>年輕主力世代</td>
+            <td>最大出生年為 1977 年（2009 年時最大 32 歲，2024 年約 47 歲以下）。</td>
+            <td>正處於成家立業期，<strong>核心家庭比例持續上升</strong>；未婚者則多見兄弟姐妹同住等其他型態。</td>
+          </tr>
+          <tr>
+            <td><strong>RI 2016</strong></td>
+            <td>最新青壯世代</td>
+            <td>20–30 歲起步，2024 年仍處青壯年階段。</td>
+            <td>核心家庭占比隨年齡增長逐步攀升。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 分頁二：婚育、教育、住宅與經濟發現 -->
+    <div id="tab2" class="tab-content">
+      <h2>跨世代人口與社經實證觀察</h2>
+
+      <h3>1. 婚姻狀況與初婚年齡趨勢（全樣本 3,000+ 人 / 已婚 882 人）</h3>
+      <ul>
+        <li><strong>晚婚趨勢明顯</strong>：比較出生年與初婚年齡分布，早期世代集中於 22–24 歲完婚；越晚近世代婚齡明顯延後，男性最遲可延伸至 55 歲初婚。</li>
+        <li><strong>單人戶與離婚關聯</strong>：2024 年全樣本單人家庭中，<strong>59.2% 為從未結婚</strong>，另有<strong>10.1% 處於已婚狀態</strong>（推測為工作分居或配偶未同住）；年輕世代單人戶的成因中「離婚」比例顯著高於高齡世代（高齡世代單人戶主因為喪偶）。</li>
+        <li><strong>核心家庭中的「從未結婚者」</strong>：受訪者本人未婚但歸類於核心家庭，主因該受訪者為仍與已婚父母同住之未婚成年子女。</li>
+      </ul>
+
+      <h3>2. 教育同質婚配對（缺失值補齊後）</h3>
+      <ul>
+        <li>針對本人與配偶教育程度缺失波次，優先採用鄰近波次有效學歷補齊。</li>
+        <li>配對熱點高度集中於<strong>「大學配大學」</strong>與<strong>「高中職配高中職」</strong>，其次為<strong>「碩士配碩士 / 大學」</strong>，驗證台灣婚姻市場強烈的教育同質性（Assortative Mating）。</li>
+      </ul>
+
+      <h3>3. 房屋所有權、月收入與子女奉養金</h3>
+      <ul>
+        <li><strong>房屋所有權</strong>：隨年齡增長，本人或配偶擁有住宅所有權的比例穩定上升；最年長世代（RI 2000）自有率最高，年輕世代則隨年資累積逐步提高。</li>
+        <li><strong>歷年平均月收入</strong>：壯年主力世代（如 RI 2003、RI 2009）在 40–50 歲工作黃金期收入最高；最年長世代（RI 2000）因退休退出勞動市場，月收入最低。</li>
+        <li><strong>子女奉養金與單親現象</strong>：
+          <ul>
+            <li>自 2007 年起隨子女長大就業，父母收受奉養金比例與金額逐步顯現，平均月奉養金多落於 <strong>5,000 至 10,000 元</strong>區間。</li>
+            <li><strong>單親家庭奉養率與金額最高</strong>：數據顯示單親家庭長輩獲得子女奉養的比例與平均金額居各類家庭之冠，推測與單親家庭親子依附較深、子女更早承擔家庭經濟責任有關。</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 分頁三：資料異常年份與邏輯診斷 -->
+    <div id="tab3" class="tab-content">
+      <h2>跨年度資料斷點與異常現象診斷清單</h2>
+
+      <div class="warning-box">
+        <strong>資料清洗重點：</strong> 跨波次串接時發現特定年份存在問卷結構簡化或變數定義跳動，後續分析與繪圖時需進行平滑化處理或剔除異常斷點。
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>異常年份 / 項目</th>
+            <th>實際觀察到的數據異常</th>
+            <th>研判原因與後續處理方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2003 年（重大斷點）</strong></td>
+            <td>月收入、房屋所有權等核心經濟變數出現斷層或空白。</td>
+            <td>經查核 2003 年實體問卷僅有 <strong>11 頁</strong>，屬簡化版追蹤問卷，未詢問詳細收入題組，建議統計收入趨勢時跳過該年或標註為結構性缺漏。</td>
+          </tr>
+          <tr>
+            <td><strong>2006 年（年收入換算誤差）</strong></td>
+            <td>平均月收入曲線在 2006 年出現不自然的突兀尖峰。</td>
+            <td>該年度問卷僅詢問「年收入」，直接除以 12 換算月收時因部分樣本跳答或極端值導致拉高，建議進行離群值檢核或平滑化處理。</td>
+          </tr>
+          <tr>
+            <td><strong>2020 年（全體收入異常跳升）</strong></td>
+            <td>2020 年各世代平均月收入由 6–7 萬異常跳升至近 10 萬元。</td>
+            <td>需回頭檢核 2020 年問卷之收入單位定義（是否受疫情補助統計或單位編碼變更影響）。</td>
+          </tr>
+          <tr>
+            <td><strong>租金與「無法判定」戶型</strong></td>
+            <td>租金分布離散（受屋齡、地段影響大）；部分家戶被歸入「無法判定」。</td>
+            <td>租金應結合問卷中的<strong>「居住坪數」</strong>標準化為「每坪單價」；「無法判定」類別需回查成員關係編碼邏輯（如旁系親屬或非親屬合租）。</td>
+          </tr>
+          <tr>
+            <td><strong>實心點 vs. 空心點標記</strong></td>
+            <td>奉養金圖表中出現實心與空心兩種資料點。</td>
+            <td>確認是否因部分波次樣本缺漏或採用插補值所致，需統一有效樣本篩選標準。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 分頁四：價值觀題庫篩選與後續分工 -->
+    <div id="tab4" class="tab-content">
+      <h2>價值觀題庫分類篩選與下一步工作規劃</h2>
+
+      <h3>1. PSFD 價值觀題庫盤點（由美妃整理清單供老師勾選）</h3>
+      <p>PSFD 資料庫涵蓋極為龐雜的態度與價值觀變數，且各題組施測年份與量表尺度（5 點量表 vs. 7 點量表）不一，為避免研究發散，將聚焦與家庭結構變遷高度相關之核心構面：</p>
+      
+      <div>
+        <span class="tag">✅ 優先納入：親代奉養與代際責任</span>
+        <span class="tag">✅ 優先納入：婚姻必要性與離婚觀</span>
+        <span class="tag">✅ 優先納入：同居與非婚生育接受度</span>
+        <span class="tag">✅ 優先納入：性別分工與女性就業平等</span>
+        <span class="tag">✅ 優先納入：生育自主與子女性別偏好</span>
+        <span class="tag">✅ 優先納入：擇偶條件與家庭決策權力</span>
+        <span class="tag">❌ 建議排除：宗教認同、一般鄰里同事信任</span>
+      </div>
+
+      <h3>2. 後續研究與分工行動 (Action Items)</h3>
+      <ol>
+        <li><strong>價值觀題目勾選與尺度標準化</strong>：美妃將整理好的價值觀變數清單（含題號、施測年份、5 分/7 分制說明）傳送給老師勾選核心題組；選定後需進行量表標準化處理，以利跨年度比較。</li>
+        <li><strong>親代與子代資料分流整合</strong>：維持受訪者（<code>RI</code>/<code>RR</code>）與子女（<code>C</code>/<code>RCI</code>）獨立建檔再進行跨代串接，後續補充分析子代最高教育程度與初婚年齡的關聯。</li>
+        <li><strong>圖表維度細化（加入性別區分）</strong>：針對「初婚年齡分布」與「教育同質婚配對」圖表，進一步拆分為<strong>男性 vs. 女性</strong>雙視角呈現，凸顯性別在婚育時程上的結構差異。</li>
+        <li><strong>AI 工具協作優化</strong>：繼續善用 OpenAI Codex 處理本地端大批量微觀資料讀取、變數篩選與單頁互動式 HTML 視覺化產出，加速模型參數校準。</li>
+      </ol>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
