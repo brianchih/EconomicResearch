@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>頂石課程專題｜每週各組最新進度與連結彙整儀表板</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --border: #e2e8f0;
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --accent: #0284c7;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --warn-bg: #fef3c7;
+      --warn-text: #92400e;
+      --danger-bg: #fee2e2;
+      --danger-text: #991b1b;
+      --info-bg: #e0f2fe;
+      --info-text: #075985;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 24px 28px;
+      box-shadow: 0 2px 8px rgba(30, 58, 138, 0.18);
+    }
+
+    .header-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-title h1 {
+      margin: 0 0 6px 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .header-title p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #dbeafe;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-light {
+      background: #ffffff;
+      color: var(--primary);
+    }
+
+    .btn-light:hover {
+      background: #eff6ff;
+    }
+
+    .btn-outline-light {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-outline-light:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 22px auto 48px auto;
+      padding: 0 20px;
+    }
+
+    /* Status Banner */
+    .status-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.88rem;
+      box-shadow: var(--shadow);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+    }
+
+    .dot.loading {
+      background: #f59e0b;
+      animation: pulse 1.2s infinite;
+    }
+
+    .dot.error {
+      background: #ef4444;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Controls Toolbar */
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 160px;
+    }
+
+    .control-group.grow {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .control-group label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    select, input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: #ffffff;
+      outline: none;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .view-tabs {
+      display: flex;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      overflow: hidden;
+      align-self: flex-end;
+    }
+
+    .view-tab {
+      padding: 8px 14px;
+      border: none;
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Group Cards */
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .groups-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .group-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-card-header {
+      padding: 16px 20px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .group-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .group-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .status-pill {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .status-fresh {
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    .status-recent {
+      background: var(--info-bg);
+      color: var(--info-text);
+    }
+
+    .status-stale {
+      background: var(--warn-bg);
+      color: var(--warn-text);
+    }
+
+    .status-empty {
+      background: var(--danger-bg);
+      color: var(--danger-text);
+    }
+
+    .topic-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    .topic-undecided {
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .group-meta-stats {
+      text-align: right;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .group-meta-stats strong {
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .group-card-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .week-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .entry-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .entry-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+    }
+
+    .entry-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .member-name {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .entry-time {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .entry-tasks {
+      color: #334155;
+      font-size: 0.83rem;
+      margin-bottom: 4px;
+    }
+
+    .entry-output {
+      color: #475569;
+      font-size: 0.83rem;
+      word-break: break-word;
+    }
+
+    /* Links Section */
+    .links-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 0.84rem;
+    }
+
+    .link-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .link-item:first-child {
+      padding-top: 0;
+    }
+
+    .link-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .link-type-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #334155;
+      margin-right: 6px;
+    }
+
+    .badge-drive { background: #dcfce7; color: #166534; }
+    .badge-colab { background: #fef3c7; color: #92400e; }
+    .badge-ai { background: #f3e8ff; color: #6b21a8; }
+    .badge-web { background: #e0f2fe; color: #075985; }
+    .badge-doc { background: #fee2e2; color: #991b1b; }
+
+    .link-anchor {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    .link-anchor:hover {
+      text-decoration: underline;
+    }
+
+    .link-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .link-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .empty-text {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* Summary Table View */
+    .table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-alt);
+      font-weight: 700;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Fallback File Input */
+    #fallbackBox {
+      display: none;
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+    }
+
+    @media print {
+      header { background: #1e3a8a !important; -webkit-print-color-adjust: exact; }
+      .toolbar, .header-actions { display: none !important; }
+      .group-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>📊 頂石課程專題｜每週各組最新進度與連結追蹤系統</h1>
+        <p>自動同步 Google 試算表發布資料（CSV Pipeline），即時彙整各組研究主題、最新週次進度與產出雲端連結</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-light" onclick="loadCSVData()">🔄 重新抓取最新資料</button>
+        <a class="btn btn-outline-light" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTHSlUTV8_xDsK4WtfLxbzOj8OJtpn-3v1Re6Tm2KmbQmbrkPOYxAq8xrFQtKh1DAbsc9AiNCLbET_3/pub?gid=1717113032&single=true&output=csv" target="_blank" rel="noopener">📥 開啟原始 CSV</a>
+        <button class="btn btn-outline-light" onclick="window.print()">🖨️ 列印 / 匯出 PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="status-bar">
+      <div class="status-indicator">
+        <span id="statusDot" class="dot loading"></span>
+        <span id="statusText">正在從 Google 試算表載入最新進度資料...</span>
+      </div>
+      <div id="lastUpdated" style="color: var(--text-muted); font-size: 0.82rem;"></div>
+    </div>
+
+    <div id="fallbackBox">
+      <strong>⚠️ 無法直接透過網路連線讀取 Google 試算表（可能處於離線或受限環境）：</strong>
+      <p style="margin: 6px 0 8px 0;">您仍可手動上傳從試算表下載的 <code>.csv</code> 檔案，立即產生完整進度總覽：</p>
+      <input type="file" id="csvFileInput" accept=".csv" />
+    </div>
+
+    <!-- KPI Summary -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">追蹤小組總數</div>
+        <div class="kpi-value" id="kpiTotalGroups">-</div>
+        <div class="kpi-sub" id="kpiActiveGroups">已定題組數：-</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">最新週次有更新組數</div>
+        <div class="kpi-value" id="kpiLatestWeekGroups">-</div>
+        <div class="kpi-sub" id="kpiLatestWeekLabel">最新週次：-</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">全班累計填報筆數</div>
+        <div class="kpi-value" id="kpiTotalEntries">-</div>
+        <div class="kpi-sub" id="kpiTotalHours">累計總投入工時：- 小時</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">已彙整雲端 / 作品連結</div>
+        <div class="kpi-value" id="kpiTotalLinks">-</div>
+        <div class="kpi-sub">含雲端資料夾、Colab、簡報與文獻</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="control-group">
+        <label for="weekSelect">週次檢視模式</label>
+        <select id="weekSelect" onchange="renderDashboard()">
+          <option value="EACH_LATEST">各組最新一週進度（預設）</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="groupSelect">篩選組別</label>
+        <select id="groupSelect" onchange="renderDashboard()">
+          <option value="ALL">全部組別</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="sortSelect">排序方式</label>
+        <select id="sortSelect" onchange="renderDashboard()">
+          <option value="GROUP_ASC">依組別編號（第01組 → 第12組）</option>
+          <option value="TIME_DESC">依最新填報時間（新 → 舊）</option>
+          <option value="TIME_ASC">依最新填報時間（舊 → 新，追蹤落後組）</option>
+          <option value="HOURS_DESC">依累計總工時（高 → 低）</option>
+        </select>
+      </div>
+
+      <div class="control-group grow">
+        <label for="searchInput">關鍵字搜尋（研究主題 / 組員 / 工作內容 / 連結）</label>
+        <input type="text" id="searchInput" placeholder="輸入關鍵字即時篩選..." oninput="renderDashboard()" />
+      </div>
+
+      <div class="view-tabs">
+        <button id="tabCards" class="view-tab active" onclick="switchView('cards')">📇 卡片總覽</button>
+        <button id="tabTable" class="view-tab" onclick="switchView('table')">📋 精簡表格</button>
+      </div>
+    </div>
+
+    <!-- Cards Container -->
+    <div id="cardsView" class="groups-grid"></div>
+
+    <!-- Table Container -->
+    <div id="tableView" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>組別</th>
+            <th>最新研究主題</th>
+            <th>狀態</th>
+            <th>最新填報時間</th>
+            <th>目標週次進度摘要</th>
+            <th>累計工時 / 次數</th>
+            <th>相關連結彙整</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHSlUTV8_xDsK4WtfLxbzOj8OJtpn-3v1Re6Tm2KmbQmbrkPOYxAq8xrFQtKh1DAbsc9AiNCLbET_3/pub?gid=1717113032&single=true&output=csv";
+
+    let allRecords = [];
+    let allWeeks = [];
+    let latestGlobalWeekKey = "";
+    let currentView = "cards";
+
+    // RFC-4180 Compliant CSV Parser (handles quoted multiline cells and escaped quotes)
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (inQuotes) {
+          if (c === '"' && next === '"') {
+            field += '"';
+            i++;
+          } else if (c === '"') {
+            inQuotes = false;
+          } else {
+            field += c;
+          }
+        } else {
+          if (c === '"') {
+            inQuotes = true;
+          } else if (c === ',') {
+            row.push(field);
+            field = "";
+          } else if (c === '' && next === '
+') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = "";
+            i++;
+          } else if (c === '
+' || c === '') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = "";
+          } else {
+            field += c;
+          }
+        }
+      }
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+      return rows;
+    }
+
+    // Parse Taiwanese Timestamp: e.g. "2026/11/24 下午 12:22:27"
+    function parseTaiwanTimestamp(raw) {
+      if (!raw) return null;
+      const str = raw.trim();
+      const m = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})\s*(上午|下午|AM|PM)?\s*(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?/i);
+      if (!m) {
+        const fallback = new Date(str);
+        return isNaN(fallback.getTime()) ? null : fallback;
+      }
+      const year = parseInt(m[1], 10);
+      const month = parseInt(m[2], 10) - 1;
+      const day = parseInt(m[3], 10);
+      const meridiem = m[4] || "";
+      let hour = parseInt(m[5], 10);
+      const minute = parseInt(m[6], 10);
+      const second = m[7] ? parseInt(m[7], 10) : 0;
+
+      if (meridiem === "下午" || meridiem.toUpperCase() === "PM") {
+        if (hour < 12) hour += 12;
+      } else if (meridiem === "上午" || meridiem.toUpperCase() === "AM") {
+        if (hour === 12) hour = 0;
+      }
+      return new Date(year, month, day, hour, minute, second);
+    }
+
+    // Get Monday-to-Sunday Week Key & Label
+    function getWeekInfo(dateObj) {
+      if (!dateObj) return { key: "UNKNOWN", label: "未知週次", startTs: 0 };
+      const d = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+      const dayOfWeek = d.getDay(); // 0 = Sun, 1 = Mon...
+      const diffToMon = (dayOfWeek === 0 ? -6 : 1 - dayOfWeek);
+      const monday = new Date(d);
+      monday.setDate(d.getDate() + diffToMon);
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+
+      const fmt = (dt) => `${dt.getFullYear()}/${String(dt.getMonth() + 1).padStart(2, '0')}/${String(dt.getDate()).padStart(2, '0')}`;
+      const shortFmt = (dt) => `${dt.getMonth() + 1}/${dt.getDate()}`;
+      const key = fmt(monday);
+      const label = `${fmt(monday)} ~ ${shortFmt(sunday)} 週`;
+      return { key, label, startTs: monday.getTime() };
+    }
+
+    // Normalize Group Name: "第1組" / "1" / "第01組" -> "第01組"
+    function normalizeGroup(raw) {
+      if (!raw) return "未分組";
+      const trimmed = raw.trim();
+      const m = trimmed.match(/(\d+)/);
+      if (!m) return trimmed;
+      const num = parseInt(m[1], 10);
+      return `第${String(num).padStart(2, '0')}組`;
+    }
+
+    function getGroupNumber(groupName) {
+      const m = groupName.match(/(\d+)/);
+      return m ? parseInt(m[1], 10) : 999;
+    }
+
+    // Extract URLs and classify link type
+    function extractLinks(text) {
+      if (!text) return [];
+      const urlRegex = /(https?:\/\/[^\s"'<>，。；、）】]+)/g;
+      const matches = text.match(urlRegex) || [];
+      return matches.map(url => {
+        const cleanUrl = url.replace(/[.,;!?]+$/, "");
+        let type = "網頁連結";
+        let badgeClass = "badge-web";
+        if (cleanUrl.includes("drive.google.com") || cleanUrl.includes("docs.google.com") || cleanUrl.includes("sharepoint.com") || cleanUrl.includes("1drv.ms")) {
+          type = "雲端文件/資料夾";
+          badgeClass = "badge-drive";
+        } else if (cleanUrl.includes("colab.research.google.com") || cleanUrl.includes("github.com") || cleanUrl.includes("streamlit.app")) {
+          type = "程式/模型/應用";
+          badgeClass = "badge-colab";
+        } else if (cleanUrl.includes("share.gemini.google") || cleanUrl.includes("chatgpt.com") || cleanUrl.includes("claude.ai")) {
+          type = "AI 協作紀錄";
+          badgeClass = "badge-ai";
+        } else if (cleanUrl.toLowerCase().endsWith(".pdf") || cleanUrl.includes("airitilibrary") || cleanUrl.includes("sciencedirect") || cleanUrl.includes("aeaweb") || cleanUrl.includes("nber.org") || cleanUrl.includes("ndc.gov.tw") || cleanUrl.includes("srda.sinica")) {
+          type = "文獻/資料庫";
+          badgeClass = "badge-doc";
+        }
+        return { url: cleanUrl, type, badgeClass };
+      });
+    }
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatDateShort(dateObj, fallbackStr) {
+      if (!dateObj) return fallbackStr || "-";
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      const hh = String(dateObj.getHours()).padStart(2, '0');
+      const mm = String(dateObj.getMinutes()).padStart(2, '0');
+      return `${y}/${m}/${d} ${hh}:${mm}`;
+    }
+
+    function processRows(rows) {
+      if (!rows || rows.length < 2) return;
+      const headers = rows[0].map(h => h.trim());
+
+      const idxTime = headers.findIndex(h => h.includes("時間"));
+      const idxName = headers.findIndex(h => h.includes("姓名"));
+      const idxId = headers.findIndex(h => h.includes("學號"));
+      const idxGroup = headers.findIndex(h => h.includes("組別"));
+      const idxTask = headers.findIndex(h => h.includes("工作項目"));
+      const idxHours = headers.findIndex(h => h.includes("工時"));
+      const idxOutput = headers.findIndex(h => h.includes("產出說明") || h.includes("連結"));
+      const idxTopic = headers.findIndex(h => h.includes("研究主題"));
+
+      const parsed = [];
+      const weekMap = new Map();
+
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || r.every(cell => !cell || !cell.trim())) continue;
+
+        const rawTime = r[idxTime] || "";
+        const dateObj = parseTaiwanTimestamp(rawTime);
+        const weekInfo = getWeekInfo(dateObj);
+        const group = normalizeGroup(r[idxGroup]);
+        const name = (r[idxName] || "").trim();
+        const studentId = (r[idxId] || "").trim();
+        const tasks = (r[idxTask] || "").trim();
+        const hoursVal = parseFloat((r[idxHours] || "0").replace(/[^\d.]/g, "")) || 0;
+        const output = (r[idxOutput] || "").trim();
+        const topic = (r[idxTopic] || "").trim();
+        const links = extractLinks(output);
+
+        if (weekInfo.key !== "UNKNOWN") {
+          weekMap.set(weekInfo.key, weekInfo);
+        }
+
+        parsed.push({
+          rawTime,
+          dateObj,
+          timestamp: dateObj ? dateObj.getTime() : 0,
+          weekKey: weekInfo.key,
+          weekLabel: weekInfo.label,
+          group,
+          groupNum: getGroupNumber(group),
+          name,
+          studentId,
+          tasks,
+          hours: hoursVal,
+          output,
+          topic,
+          links
+        });
+      }
+
+      parsed.sort((a, b) => b.timestamp - a.timestamp);
+      allRecords = parsed;
+
+      allWeeks = Array.from(weekMap.values()).sort((a, b) => b.startTs - a.startTs);
+      latestGlobalWeekKey = allWeeks.length > 0 ? allWeeks[0].key : "";
+
+      populateFilters();
+      renderDashboard();
+    }
+
+    function populateFilters() {
+      const weekSelect = document.getElementById("weekSelect");
+      const currentWeekVal = weekSelect.value;
+      weekSelect.innerHTML = `<option value="EACH_LATEST">各組最新一週進度（預設）</option>`;
+      allWeeks.forEach((w, idx) => {
+        const tag = idx === 0 ? "【最新週次】" : "";
+        weekSelect.innerHTML += `<option value="${w.key}">${tag}${w.label}</option>`;
+      });
+      if ([...weekSelect.options].some(o => o.value === currentWeekVal)) {
+        weekSelect.value = currentWeekVal;
+      }
+
+      const groupSet = new Set();
+      for (let g = 1; g <= 12; g++) {
+        groupSet.add(`第${String(g).padStart(2, '0')}組`);
+      }
+      allRecords.forEach(r => {
+        if (r.group && r.group !== "未分組") groupSet.add(r.group);
+      });
+
+      const sortedGroups = Array.from(groupSet).sort((a, b) => getGroupNumber(a) - getGroupNumber(b));
+      const groupSelect = document.getElementById("groupSelect");
+      const currentGroupVal = groupSelect.value;
+      groupSelect.innerHTML = `<option value="ALL">全部組別（共 ${sortedGroups.length} 組）</option>`;
+      sortedGroups.forEach(g => {
+        groupSelect.innerHTML += `<option value="${g}">${g}</option>`;
+      });
+      if ([...groupSelect.options].some(o => o.value === currentGroupVal)) {
+        groupSelect.value = currentGroupVal;
+      }
+    }
+
+    function buildGroupSummaries() {
+      const groupSet = new Set();
+      for (let g = 1; g <= 12; g++) {
+        groupSet.add(`第${String(g).padStart(2, '0')}組`);
+      }
+      allRecords.forEach(r => {
+        if (r.group && r.group !== "未分組") groupSet.add(r.group);
+      });
+
+      const invalidTopics = new Set(["", "未定", "無題", "無", "尚未決定", "待定", "none", "null"]);
+      const summaries = [];
+
+      groupSet.forEach(groupName => {
+        const recs = allRecords.filter(r => r.group === groupName).sort((a, b) => b.timestamp - a.timestamp);
+        const totalEntries = recs.length;
+        const totalHours = recs.reduce((sum, r) => sum + r.hours, 0);
+
+        // Latest valid research topic
+        let latestTopic = "";
+        for (const r of recs) {
+          if (r.topic && !invalidTopics.has(r.topic.toLowerCase())) {
+            latestTopic = r.topic;
+            break;
+          }
+        }
+
+        // Latest entry & latest active week for this group
+        const latestRec = recs[0] || null;
+        const groupLatestWeekKey = latestRec ? latestRec.weekKey : "";
+        const groupLatestWeekLabel = latestRec ? latestRec.weekLabel : "尚無紀錄";
+        const groupLatestWeekRecs = recs.filter(r => r.weekKey === groupLatestWeekKey);
+
+        // Deduplicated links across all records of this group (newest first)
+        const seenUrls = new Set();
+        const uniqueLinks = [];
+        recs.forEach(r => {
+          r.links.forEach(lk => {
+            if (!seenUrls.has(lk.url)) {
+              seenUrls.add(lk.url);
+              // Clean note text (remove the raw URL from output text to keep description readable)
+              const noteText = r.output.replace(lk.url, "").replace(/\s+/g, " ").trim();
+              uniqueLinks.push({
+                ...lk,
+                note: noteText,
+                member: r.name,
+                dateStr: formatDateShort(r.dateObj, r.rawTime),
+                weekKey: r.weekKey
+              });
+            }
+          });
+        });
+
+        // Status relative to latest global week
+        let statusType = "empty";
+        let statusLabel = "尚無填報紀錄";
+        if (latestRec) {
+          const latestGlobalWeek = allWeeks[0];
+          const daysDiff = latestGlobalWeek ? Math.floor((latestGlobalWeek.startTs - getWeekInfo(latestRec.dateObj).startTs) / (1000 * 60 * 60 * 24)) : 0;
+          if (groupLatestWeekKey === latestGlobalWeekKey) {
+            statusType = "fresh";
+            statusLabel = "✅ 最新週次已更新";
+          } else if (daysDiff <= 7) {
+            statusType = "recent";
+            statusLabel = "🕒 上週已更新";
+          } else {
+            statusType = "stale";
+            statusLabel = `⚠️ 距最新週已隔 ${Math.max(1, Math.round(daysDiff / 7))} 週`;
+          }
+        }
+
+        summaries.push({
+          groupName,
+          groupNum: getGroupNumber(groupName),
+          recs,
+          totalEntries,
+          totalHours,
+          latestTopic,
+          latestRec,
+          latestTimestamp: latestRec ? latestRec.timestamp : 0,
+          groupLatestWeekKey,
+          groupLatestWeekLabel,
+          groupLatestWeekRecs,
+          uniqueLinks,
+          statusType,
+          statusLabel
+        });
+      });
+
+      return summaries;
+    }
+
+    function renderDashboard() {
+      const summaries = buildGroupSummaries();
+      const weekFilter = document.getElementById("weekSelect").value;
+      const groupFilter = document.getElementById("groupSelect").value;
+      const sortMode = document.getElementById("sortSelect").value;
+      const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      // Update KPIs
+      const activeTopicsCount = summaries.filter(s => s.latestTopic).length;
+      const latestWeekUpdatedCount = summaries.filter(s => s.groupLatestWeekKey === latestGlobalWeekKey && latestGlobalWeekKey !== "").length;
+      const totalHoursAll = summaries.reduce((sum, s) => sum + s.totalHours, 0);
+      const totalLinksAll = summaries.reduce((sum, s) => sum + s.uniqueLinks.length, 0);
+
+      document.getElementById("kpiTotalGroups").textContent = `${summaries.length} 組`;
+      document.getElementById("kpiActiveGroups").textContent = `已確立研究主題：${activeTopicsCount} / ${summaries.length} 組`;
+      document.getElementById("kpiLatestWeekGroups").textContent = `${latestWeekUpdatedCount} / ${summaries.length} 組`;
+      document.getElementById("kpiLatestWeekLabel").textContent = allWeeks.length > 0 ? `最新週次：${allWeeks[0].label}` : "最新週次：-";
+      document.getElementById("kpiTotalEntries").textContent = `${allRecords.length} 筆`;
+      document.getElementById("kpiTotalHours").textContent = `累計總投入工時：${totalHoursAll} 小時`;
+      document.getElementById("kpiTotalLinks").textContent = `${totalLinksAll} 個`;
+
+      // Filter & Sort
+      let filtered = summaries.filter(s => {
+        if (groupFilter !== "ALL" && s.groupName !== groupFilter) return false;
+        if (keyword) {
+          const haystack = [
+            s.groupName,
+            s.latestTopic,
+            ...s.recs.map(r => `${r.name} ${r.tasks} ${r.output} ${r.topic}`)
+          ].join(" ").toLowerCase();
+          if (!haystack.includes(keyword)) return false;
+        }
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        if (sortMode === "GROUP_ASC") return a.groupNum - b.groupNum;
+        if (sortMode === "TIME_DESC") return b.latestTimestamp - a.latestTimestamp;
+        if (sortMode === "TIME_ASC") return a.latestTimestamp - b.latestTimestamp;
+        if (sortMode === "HOURS_DESC") return b.totalHours - a.totalHours;
+        return a.groupNum - b.groupNum;
+      });
+
+      const cardsContainer = document.getElementById("cardsView");
+      const tableBody = document.getElementById("tableBody");
+      cardsContainer.innerHTML = "";
+      tableBody.innerHTML = "";
+
+      filtered.forEach(s => {
+        // Determine which week's entries to display
+        let targetRecs = [];
+        let targetWeekBadge = "";
+        if (weekFilter === "EACH_LATEST") {
+          targetRecs = s.groupLatestWeekRecs;
+          targetWeekBadge = s.groupLatestWeekLabel;
+        } else {
+          targetRecs = s.recs.filter(r => r.weekKey === weekFilter);
+          const wObj = allWeeks.find(w => w.key === weekFilter);
+          targetWeekBadge = wObj ? wObj.label : weekFilter;
+        }
+
+        const weekHours = targetRecs.reduce((sum, r) => sum + r.hours, 0);
+        const statusClass = `status-${s.statusType}`;
+
+        // Render Card
+        const entriesHTML = targetRecs.length > 0
+          ? `<div class="entry-list">
+              ${targetRecs.map(r => `
+                <div class="entry-item">
+                  <div class="entry-top">
+                    <span class="member-name">👤 ${escapeHTML(r.name)} <span style="font-weight:400; color:#64748b;">(${escapeHTML(r.studentId)})</span></span>
+                    <span class="entry-time">${formatDateShort(r.dateObj, r.rawTime)} ・ <strong>${r.hours} hr</strong></span>
+                  </div>
+                  <div class="entry-tasks">📌 ${escapeHTML(r.tasks || "未填寫工作項目")}</div>
+                  ${r.output ? `<div class="entry-output">📝 ${escapeHTML(r.output)}</div>` : ""}
+                </div>
+              `).join("")}
+            </div>`
+          : `<p class="empty-text">${weekFilter === "EACH_LATEST" ? "此組別目前尚無任何填報紀錄。" : "此組別在所選週次無填報紀錄。"}</p>`;
+
+        const linksHTML = s.uniqueLinks.length > 0
+          ? `<div class="links-box">
+              ${s.uniqueLinks.map(lk => `
+                <div class="link-item">
+                  <div class="link-main">
+                    <div>
+                      <span class="link-type-badge ${lk.badgeClass}">${lk.type}</span>
+                      <a class="link-anchor" href="${escapeHTML(lk.url)}" target="_blank" rel="noopener">${escapeHTML(lk.url)}</a>
+                    </div>
+                    ${lk.note ? `<div class="link-note">說明：${escapeHTML(lk.note)}</div>` : ""}
+                  </div>
+                  <div class="link-meta">${escapeHTML(lk.member)}<br/>${lk.dateStr}</div>
+                </div>
+              `).join("")}
+            </div>`
+          : `<p class="empty-text">尚無附帶雲端或外部連結。</p>`;
+
+        const cardHTML = `
+          <article class="group-card">
+            <div class="group-card-header">
+              <div>
+                <div class="group-badge-row">
+                  <span class="group-name">${escapeHTML(s.groupName)}</span>
+                  <span class="status-pill ${statusClass}">${s.statusLabel}</span>
+                </div>
+                <p class="topic-title ${s.latestTopic ? "" : "topic-undecided"}">
+                  ${s.latestTopic ? `🎯 ${escapeHTML(s.latestTopic)}` : "🎯 研究主題尚未定案"}
+                </p>
+              </div>
+              <div class="group-meta-stats">
+                <div>累計工時：<strong>${s.totalHours} hr</strong></div>
+                <div>累計填報：<strong>${s.totalEntries} 筆</strong></div>
+                <div>連結數：<strong>${s.uniqueLinks.length} 個</strong></div>
+              </div>
+            </div>
+            <div class="group-card-body">
+              <div>
+                <div class="section-title">
+                  <span>週次工作進度明細（本週小計 ${weekHours} hr）</span>
+                  <span class="week-tag">${escapeHTML(targetWeekBadge)}</span>
+                </div>
+                ${entriesHTML}
+              </div>
+              <div>
+                <div class="section-title">
+                  <span>相關雲端與產出連結彙整（共 ${s.uniqueLinks.length} 筆）</span>
+                </div>
+                ${linksHTML}
+              </div>
+            </div>
+          </article>
+        `;
+        cardsContainer.insertAdjacentHTML("beforeend", cardHTML);
+
+        // Render Table Row
+        const summaryText = targetRecs.length > 0
+          ? targetRecs.map(r => `• [${r.name}] ${r.tasks}${r.output ? " — " + r.output : ""} (${r.hours}h)`).join("<br/>")
+          : `<span style="color:#94a3b8;">無紀錄</span>`;
+
+        const tableLinksHTML = s.uniqueLinks.length > 0
+          ? s.uniqueLinks.map(lk => `<div style="margin-bottom:4px;"><span class="link-type-badge ${lk.badgeClass}">${lk.type}</span><a class="link-anchor" href="${escapeHTML(lk.url)}" target="_blank" rel="noopener">${escapeHTML(lk.url.length > 48 ? lk.url.slice(0, 48) + "..." : lk.url)}</a></div>`).join("")
+          : `<span style="color:#94a3b8;">-</span>`;
+
+        const rowHTML = `
+          <tr>
+            <td><strong>${escapeHTML(s.groupName)}</strong></td>
+            <td>${s.latestTopic ? escapeHTML(s.latestTopic) : '<span style="color:#94a3b8;">未定</span>'}</td>
+            <td><span class="status-pill ${statusClass}">${s.statusLabel}</span></td>
+            <td style="white-space:nowrap;">${s.latestRec ? formatDateShort(s.latestRec.dateObj, s.latestRec.rawTime) : "-"}</td>
+            <td style="max-width:360px;">${summaryText}</td>
+            <td style="white-space:nowrap;"><strong>${s.totalHours} hr</strong> / ${s.totalEntries} 筆</td>
+            <td style="max-width:320px;">${tableLinksHTML}</td>
+          </tr>
+        `;
+        tableBody.insertAdjacentHTML("beforeend", rowHTML);
+      });
+    }
+
+    function switchView(mode) {
+      currentView = mode;
+      document.getElementById("tabCards").classList.toggle("active", mode === "cards");
+      document.getElementById("tabTable").classList.toggle("active", mode === "table");
+      document.getElementById("cardsView").style.display = mode === "cards" ? "grid" : "none";
+      document.getElementById("tableView").style.display = mode === "table" ? "block" : "none";
+    }
+
+    async function loadCSVData() {
+      const dot = document.getElementById("statusDot");
+      const statusText = document.getElementById("statusText");
+      const fallbackBox = document.getElementById("fallbackBox");
+
+      dot.className = "dot loading";
+      statusText.textContent = "正在從 Google 試算表載入最新進度資料...";
+
+      try {
+        const cacheBusterUrl = `${CSV_URL}&_t=${Date.now()}`;
+        const response = await fetch(cacheBusterUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+        processRows(rows);
+
+        dot.className = "dot";
+        statusText.textContent = `已成功同步 Google 試算表資料（共載入 ${allRecords.length} 筆工作紀錄）`;
+        document.getElementById("lastUpdated").textContent = `最後同步時間：${new Date().toLocaleString("zh-TW")}`;
+        fallbackBox.style.display = "none";
+      } catch (err) {
+        console.error("CSV fetch error:", err);
+        dot.className = "dot error";
+        statusText.textContent = "自動讀取遠端 CSV 失敗（請確認網路連線或使用下方手動匯入 CSV）";
+        fallbackBox.style.display = "block";
+      }
+    }
+
+    document.getElementById("csvFileInput").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        const rows = parseCSV(evt.target.result);
+        processRows(rows);
+        document.getElementById("statusDot").className = "dot";
+        document.getElementById("statusText").textContent = `已從本地檔案載入資料（共 ${allRecords.length} 筆工作紀錄）`;
+        document.getElementById("lastUpdated").textContent = `檔案載入時間：${new Date().toLocaleString("zh-TW")}`;
+      };
+      reader.readAsText(file, "UTF-8");
+    });
+
+    // Auto-load on page open
+    window.addEventListener("DOMContentLoaded", loadCSVData);
+  </script>
+</body>
+</html>
