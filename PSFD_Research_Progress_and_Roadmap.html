@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 國科會計畫：本週進度檢核與國際論文推進藍圖</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --secondary: #2b6cb0;
+      --accent: #319795;
+      --warning: #dd6b20;
+      --success: #2f855a;
+      --purple: #553c9a;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --text: #2d3748;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --highlight-bg: #ebf8ff;
+      --warn-bg: #fffaf0;
+      --success-bg: #f0fff4;
+      --code-bg: #1e293b;
+      --code-text: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+      color: white;
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .header-meta {
+      display: inline-block;
+      background: rgba(255,255,255,0.16);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.03em;
+    }
+    header h1 { margin: 0 0 0.5rem 0; font-size: 1.75rem; letter-spacing: 0.02em; }
+    header p { margin: 0; font-size: 0.98rem; opacity: 0.92; max-width: 900px; }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #ffffff;
+      border-bottom: 2px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .tab-button {
+      padding: 1.05rem 1.4rem;
+      border: none;
+      background: none;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-button:hover { color: var(--secondary); background-color: #f8fafc; }
+    .tab-button.active {
+      color: var(--secondary);
+      border-bottom: 3px solid var(--secondary);
+      background-color: #ebf8ff44;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 3.5rem 1.5rem;
+    }
+    .tab-content {
+      display: none;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: var(--primary);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.65rem;
+      margin-top: 0;
+      font-size: 1.42rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    h3 { color: var(--secondary); margin-top: 1.8rem; font-size: 1.15rem; }
+
+    .callout {
+      padding: 1.15rem 1.4rem;
+      margin: 1.4rem 0;
+      border-radius: 0 8px 8px 0;
+      border-left: 4px solid var(--secondary);
+      background-color: var(--highlight-bg);
+    }
+    .callout.warn {
+      border-left-color: var(--warning);
+      background-color: var(--warn-bg);
+    }
+    .callout.success {
+      border-left-color: var(--success);
+      background-color: var(--success-bg);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.3rem;
+      margin: 1.3rem 0;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin: 1.3rem 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.3rem 1.4rem;
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .card.top-green { border-top: 4px solid var(--success); }
+    .card.top-blue { border-top: 4px solid var(--secondary); }
+    .card.top-orange { border-top: 4px solid var(--warning); }
+    .card.top-purple { border-top: 4px solid var(--purple); }
+
+    .card h4 {
+      margin: 0 0 0.6rem 0;
+      color: var(--primary);
+      font-size: 1.06rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .card p, .card ul { margin: 0.4rem 0 0 0; font-size: 0.94rem; color: #334155; }
+    .card ul { padding-left: 1.25rem; }
+    .card li { margin-bottom: 0.45rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-done { background-color: #c6f6d5; color: #22543d; }
+    .badge-fix { background-color: #feebc8; color: #744210; }
+    .badge-paper1 { background-color: #bee3f8; color: #2a4365; }
+    .badge-paper2 { background-color: #e9d8fd; color: #44337a; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.3rem 0;
+      font-size: 0.93rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.78rem 0.95rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background-color: #f1f5f9; color: var(--primary); font-weight: 600; }
+    tr:nth-child(even) { background-color: #fafbfc; }
+
+    /* 時間軸樣式 */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 1.8rem;
+      border-left: 3px solid var(--secondary);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.6rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -2.35rem;
+      top: 1.3rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--secondary);
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 0 2px var(--secondary);
+    }
+    .timeline-date {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 0.5rem 0;
+    }
+
+    /* 提示詞區塊 */
+    .prompt-container {
+      background-color: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 8px;
+      padding: 1.4rem 1.5rem;
+      margin: 1rem 0 1.6rem 0;
+      position: relative;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.89rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background-color: #2b6cb0; }
+    .copy-btn.copied { background-color: var(--success); }
+
+    code {
+      background: #edf2f7;
+      color: #c53030;
+      padding: 0.1rem 0.38rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+    .check-list input[type="checkbox"] {
+      transform: scale(1.15);
+      margin-right: 0.5rem;
+      cursor: pointer;
+    }
+    .check-list label { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-meta">2026 國科會計畫進度會議紀要與研究路線圖｜2026.11.26</div>
+    <h1>PSFD 實證進展檢核與國際期刊論文推進藍圖</h1>
+    <p>從「探索性資料分析（EDA）」正式切換為「問題導向的論文寫作（Puzzle-Driven Writing）」：聚焦社會風向世代交替與代理人基模型（ABM）反事實模擬</p>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="switchTab(event, 'tab1')">一、本週進度檢核與實證亮點</button>
+    <button class="tab-button" onclick="switchTab(event, 'tab2')">二、論文主軸抉擇與雙篇路線圖</button>
+    <button class="tab-button" onclick="switchTab(event, 'tab3')">三、三段式論文結構與五張核心圖表</button>
+    <button class="tab-button" onclick="switchTab(event, 'tab4')">四、2027 研討會時程與師生分工</button>
+  </div>
+
+  <div class="container">
+
+    <!-- 分頁一：本週進度檢核與實證亮點 -->
+    <div id="tab1" class="tab-content active">
+      <h2>本週美妃進度總評：達成率約 90%，核心方法論問題已攻克 <span class="badge badge-done">階段性達標</span></h2>
+      
+      <div class="callout success">
+        <strong>總體評估：</strong> 美妃本週不僅將上週提醒的性別拆解與世代分層全部落實，更利用 Codex 建置了可公開存取、具備互動篩選與 CSV 匯出功能的網頁儀表板，並初步嘗試產出 Agent 參數。研究團隊已具備從「資料探索」跨入「模型校準與論文寫作」的條件。
+      </div>
+
+      <h3>1. 已成功攻克的上週問題（4 項重大突破）</h3>
+      <div class="grid-2">
+        <div class="card top-green">
+          <h4>① 初婚年齡與教育配對成功拆分性別 <span class="badge badge-done">已解決</span></h4>
+          <ul>
+            <li><strong>初婚年齡分布</strong>：明確拆出男性（藍點）與女性（紅點），呈現「女左男右」常態分布；15–19 歲早婚集中於 1940 年代出生世代，35 歲以上女性初婚樣本急劇減少。</li>
+            <li><strong>教育同質婚配對</strong>：釐清橫軸（受訪者本人，依性別著色）與縱軸（配偶學歷），實證驗證台灣婚姻市場「男高女低（教育梯度婚）」的傳統慣性。</li>
+          </ul>
+        </div>
+        <div class="card top-green">
+          <h4>② 價值觀題庫收斂為 ABM 模組一與二 <span class="badge badge-done">已解決</span></h4>
+          <ul>
+            <li>未迷失在 24 個主題中，精準聚焦<strong>模組一（婚姻必要性、同居、未婚生子、婚後不生）</strong>與<strong>模組二（性別分工、生男偏好、生男壓力、教育期待）</strong>。</li>
+            <li>透過 Codex 建置互動網頁，支援線上切換與 CSV 原始統計下載。</li>
+          </ul>
+        </div>
+        <div class="card top-green">
+          <h4>③ 建立「出生世代 × 性別」分層架構 <span class="badge badge-done">已解決</span></h4>
+          <ul>
+            <li>將樣本依出生年代從 <strong>1949 年以前（現年 80 餘歲）</strong>一路切分至年輕世代，並提供男／女性別切換鍵。</li>
+            <li>有效剝離「年齡效應」與「世代交替效應」，讓跨期文化轉折清晰浮現。</li>
+          </ul>
+        </div>
+        <div class="card top-green">
+          <h4>④ 納入原始問卷標籤核對與參數初探 <span class="badge badge-done">已解決</span></h4>
+          <ul>
+            <li>網頁保留原始題目文字與 1–5 分選項計分說明，便於隨時回頭核對反向題。</li>
+            <li>已嘗試透過 AI 指令產出初步的 Agent 效用與態度分布係數，作為後續建模暖身。</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>2. 本週討論浮現的兩大實證亮點</h3>
+      <div class="callout">
+        <ul>
+          <li><strong>亮點一：「1960 年代世代」的規範拉扯轉折</strong>：在「無結婚打算同居（V03）」與「婚後不一定要有小孩（V05-Q094）」題組中，整體呈現越年輕越開放的趨勢，但 <strong>1960 年代出生群體（約 56–66 歲）</strong>卻出現明顯的向下拉扯轉折，正好夾在傳統家庭規範與現代個人主義之間，是極具故事張力的實證謎題。</li>
+          <li><strong>亮點二：「男主外女主內（Q169）」與「生男偏好」的世代崩解</strong>：這兩項傳統宗族與性別分工規則隨世代更替呈現乾淨、單調的下滑，為計畫書中的「文明規則演化」提供直接微觀證據。</li>
+        </ul>
+      </div>
+
+      <h3>3. 資料封口前仍需微調的 4 個技術細節</h3>
+      <div class="grid-2">
+        <div class="card top-orange">
+          <h4>細節 A：圖表標題過度簡化易致誤判 <span class="badge badge-fix">待修正</span></h4>
+          <p>如「不好的婚姻」、「職業婦女與家庭主婦」等簡稱易使讀者誤會正反向題意。建議在標題旁加註<strong>完整題意副標</strong>，並統一標示「高比例＝同意原敘述」。</p>
+        </div>
+        <div class="card top-orange">
+          <h4>細節 B：「子女性別偏好」與「教育期待」方向校準 <span class="badge badge-fix">待修正</span></h4>
+          <p><code>Q001</code> 原始編碼為 <code>1=男孩</code>、高分代表「男女一樣好」，建議統一轉向為<strong>「堅持生男孩比例（%）」</strong>；教育期待（V06）除 6 級均分外，建議補充「期望念到大學／研究所以上比例（%）」。</p>
+        </div>
+        <div class="card top-orange">
+          <h4>細節 C：2010 年前後「生男壓力」跳答分母核對 <span class="badge badge-fix">待核對</span></h4>
+          <p>2002–2009 年（合併題）與 2010–2024 年（本人／配偶父母聯集）需確認<strong>問卷適用對象（是否僅限已婚且尚未生男者）</strong>是否一致，避免分母變動造成比例假性跳動。</p>
+        </div>
+        <div class="card top-orange">
+          <h4>細節 D：教育配對加時間切片＆收斂 Agent 係數 <span class="badge badge-fix">待彙整</span></h4>
+          <p>教育同質婚散佈圖需加上<strong>「調查年份／世代」篩選器</strong>驗證趨平趨勢；分散在分頁的 Agent 係數須集中匯出為總表並寫明計算公式，經確認後才可輸入 ABM。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分頁二：論文主軸抉擇與雙篇路線圖 -->
+    <div id="tab2" class="tab-content">
+      <h2>國際研討會趨勢對接與「雙篇推進」策略 <span class="badge badge-paper1">聚焦 Paper 1 突圍</span></h2>
+
+      <div class="callout">
+        <strong>核心決策建議：</strong> 面對 2027 年初（1–2 月）的歐洲夏季研討會截稿窗，寫好論文最大的敵人是「資料挖太深、什麼都想放」。建議採取<strong>「主線 A 打頭陣（Paper 1）、主線 B 接力深化（Paper 2）」</strong>的雙篇路線，確保研究品質與投稿速度兼顧。
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 140px;">論文定位</th>
+            <th style="width: 240px;">核心實證謎題（Empirical Puzzle）</th>
+            <th>選用變數與資料成熟度</th>
+            <th>ABM 建模機制與研討會賣點</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-paper1">第一篇論文</span><br><strong>Paper 1（主線 A）</strong><br>文化風向與世代交替</td>
+            <td><strong>「理想生活樣板」的世代斷裂與臨界點</strong><br>台灣婚育觀念轉向究竟是全體同步改變（時代效應），還是年輕世代一出場就帶著新樣板（世代交替）？為何 1960s 世代出現明顯拉扯？</td>
+            <td><strong>資料已高度成熟（可立即封口）</strong>：<br>• 模組一（V02 婚姻觀、V03 同居／非婚生育、V05 婚後不生，2011–2024 連續 5 波）<br>• 輔助背景：C01 生男壓力退場（2002–2024）</td>
+            <td>• <strong>模型精煉</strong>：將「同儕單身／頂客樣板比例」與「偏離規範成本（Stigma Cost）」寫入 Agent 效用函數。<br>• <strong>切中 2027 會議趨勢</strong>：以實證校準文化臨界點（Tipping Point），解釋為何規範翻轉後，單靠育兒津貼會陷入低生育率陷阱。</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-paper2">第二篇論文</span><br><strong>Paper 2（主線 B）</strong><br>文明規則交換與結構擠壓</td>
+            <td><strong>宗族規則退場，為何沒有帶來生育解放？</strong><br>生男孩壓力大幅消退、女性學歷追平甚至超越男性，但生育率卻跌更深——舊宗族束縛是否被「高教育同質婚門檻」與「母職／職場雙重擠壓」取代？</td>
+            <td><strong>需較多清洗時間（2027 春季啟動）</strong>：<br>• 模組二（V04 性別分工與母職衝突、V06 教育期待）<br>• 教育程度同質婚配對（需處理配偶學歷補值與世代切片）</td>
+            <td>• <strong>雙邊配對與家內議價</strong>：在第二代 ABM 引入教育梯度配對市場（Two-sided Matching）與家務分工摩擦。<br>• 適合主攻勞動經濟與人口學期刊（如 <em>Demography</em>, <em>J. Population Economics</em>）。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>對準 2027 夏季歐洲重要國際研討會的投稿定位</h3>
+      <div class="grid-3">
+        <div class="card top-blue">
+          <h4>1. 異質代理人與計算經濟社群</h4>
+          <p><strong>目標會議</strong>：WEHIA 2027、CEF、Tinbergen Institute 工作坊。</p>
+          <p><strong>審稿偏好</strong>：純理論「玩具模型」已難受青睞，評審高度重視 <strong>Empirical Micro-calibration（微觀貫時數據校準）＋ Social Norms（社會規範演化）</strong>。台灣 25 年 PSFD 校準文化臨界點極具吸引力。</p>
+        </div>
+        <div class="card top-blue">
+          <h4>2. 主流經濟與勞動／人口年會</h4>
+          <p><strong>目標會議</strong>：EEA-ESEM、EALE、PEJ 年會。</p>
+          <p><strong>審稿偏好</strong>：看重<strong>反直覺實證謎題</strong>與<strong>反事實政策評估（Counterfactuals）</strong>。台灣作為全球超低生育率前哨站，能以 ABM 回答計量迴歸無法回答的「津貼邊際遞減之謎」。</p>
+        </div>
+        <div class="card top-blue">
+          <h4>3. 社會經濟與制度演化社群</h4>
+          <p><strong>目標會議</strong>：SASE 2027 年會。</p>
+          <p><strong>審稿偏好</strong>：關注<strong>去家庭化（De-familialization）</strong>與<strong>非正式制度（Informal Institutions）變遷</strong>，主線 A 直接探討婚姻去神聖化，能引發跨學科高度共鳴。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分頁三：三段式論文結構與五張核心圖表 -->
+    <div id="tab3" class="tab-content">
+      <h2>Paper 1 三段式寫作架構與「五張核心圖表」骨架</h2>
+
+      <div class="callout warn">
+        <strong>動筆前的黃金法則：</strong> 在開始寫文字之前，先與美妃開一次「圖表定錨會議」，<strong>宣布停止再抓新變數</strong>，將資料凍結成唯一版本 <code>PSFD_Paper1_Master.csv</code>。只要以下 1 表 5 圖定案，整篇論文就會順理成章長出來。
+      </div>
+
+      <h3>Paper 1 三段式論證邏輯</h3>
+      <div class="grid-3">
+        <div class="card top-purple">
+          <h4>第一部：實證典型事實 (Stylized Facts)</h4>
+          <p>利用 PSFD 1999–2024 貫時追蹤資料，建立台灣跨世代婚姻去神聖化、頂客化與 1960 年代世代轉折的實證基準線（Baseline）。</p>
+        </div>
+        <div class="card top-purple">
+          <h4>第二部：資料驅動數位雙生 (ABM Calibration)</h4>
+          <p>將 PSFD 各世代初始異質性、初婚風險率（Hazard Rate）與模組一態度分布轉化為 Agent 效用函數中的「同儕樣板權重」與「規範偏離成本」。</p>
+        </div>
+        <div class="card top-purple">
+          <h4>第三部：反事實政策實驗 (Counterfactuals)</h4>
+          <p>模擬純育兒津貼、早期規範干預與混合政策的動態路徑，精準定位文化風向的「臨界點（Tipping Point）」與政策介入窗口。</p>
+        </div>
+      </div>
+
+      <h3>論文骨架：1 表 + 5 圖配置清單</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 110px;">圖表編號</th>
+            <th style="width: 240px;">圖表名稱</th>
+            <th>呈現內容與論文功能</th>
+            <th style="width: 120px;">負責端</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Table 1</strong></td>
+            <td>PSFD 五大追蹤世代與子代樣本跨期結構表</td>
+            <td>整理 1999–2024 年各出生世代（1949 前至 1990s）與 RCI 子代樣本在婚姻狀態、子女數、教育程度與頂客比例的跨期演變。</td>
+            <td>美妃（實證端）</td>
+          </tr>
+          <tr>
+            <td><strong>Figure 1</strong></td>
+            <td>跨世代「婚姻必要性、同居與生育自主」風向演化圖</td>
+            <td>呈現 2011–2024 年五波追蹤下，各出生世代對「不好婚姻比單身好」、「無結婚打算同居」、「婚後不一定要生」的認同軌跡，凸顯<strong>世代交替與 1960s 拉扯效應</strong>。</td>
+            <td>美妃（實證端）</td>
+          </tr>
+          <tr>
+            <td><strong>Figure 2</strong></td>
+            <td>傳統宗族規範退場與初婚年齡性別分化對照圖</td>
+            <td>結合 2002–2024 年「生男壓力／偏好下滑」與男女初婚年齡分布演變，作為舊制度束縛鬆動的背景脈絡。</td>
+            <td>美妃（實證端）</td>
+          </tr>
+          <tr>
+            <td><strong>Figure 3</strong></td>
+            <td>ABM 理論機制示意與效用函數參數校準圖</td>
+            <td>展示社交網絡中「同儕單身／頂客比例」如何影響個體的規範偏離成本（Stigma Cost），並呈現由 PSFD 擬合出的世代參數分布。</td>
+            <td>老師（模型端）</td>
+          </tr>
+          <tr>
+            <td><strong>Figure 4</strong></td>
+            <td>模型驗證：ABM 基準模擬 vs. 台灣真實婚育軌跡</td>
+            <td>將 Digital Twin 模擬出的 1999–2024 年各世代累積結婚率與總生育率，與真實 PSFD／內政部統計進行擬合度（Goodness-of-Fit）比對。</td>
+            <td>老師（模型端）</td>
+          </tr>
+          <tr>
+            <td><strong>Figure 5</strong></td>
+            <td>反事實實驗：經濟補貼 vs. 社會風向干預之動態模擬</td>
+            <td>比較「情境一：純發放育兒津貼」、「情境二：臨界點前規範支持」、「情境三：雙管齊下」在未來 20 年的生育率反彈幅度與臨界點效應。</td>
+            <td>老師（模型端）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 分頁四：2027 研討會時程與師生分工 -->
+    <div id="tab4" class="tab-content">
+      <h2>2027 夏季研討會投稿時程與師生雙軌分工</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2026 年 12 月上旬 — 實證端修正與資料封口</div>
+          <div class="timeline-title">完成 4 項圖表細節微調，產出 Paper 1 專屬校準參數表</div>
+          <p>美妃修正網頁圖表標題與反向題方向、核對生男壓力跳答分母，並匯出乾淨的 <code>PSFD_Paper1_Calibration.csv</code>（各出生世代 × 性別在核心題組的比例、轉移機率與樣本數）。正式凍結 Paper 1 實證資料範圍。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026 年 12 月下旬 — ABM 核心引擎與基準線驗證</div>
+          <div class="timeline-title">在 Python / Mesa 接上 PSFD 參數，跑通 Baseline Digital Twin</div>
+          <p>老師撰寫 Paper 1 數學效用函數（含社會風向擴散與規範偏離成本），將美妃輸出的 CSV 參數表接入 ABM 模型，完成 Figure 3 與 Figure 4 的模型校準與歷史軌跡驗證。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2027 年 1 月 — 反事實模擬與 Working Paper 初稿</div>
+          <div class="timeline-title">執行政策反事實實驗，完成 6,000–8,000 字英文初稿</div>
+          <p>完成 Figure 5 三組反事實模擬，撰寫 Introduction、Literature Review、Empirical Stylized Facts、ABM Model 與 Counterfactual Results，趕在 <strong>2027 年 1 月底至 2 月中旬</strong> 投出 WEHIA 2027、EEA-ESEM、EALE、SASE 等歐洲夏季研討會。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2027 年 3 月以後 — 啟動 Paper 2（結構擠壓與雙邊婚配）</div>
+          <div class="timeline-title">拓展至教育同質婚時間切片與家務分工議價</div>
+          <p>待 Paper 1 順利投出後，美妃著手處理雙邊教育程度配對的跨期演變與家務／母職衝突變數，推進第二篇結構性少子化論文。</p>
+        </div>
+      </div>
+
+      <h3>下週給美妃的「實證封口與參數匯出」具體任務清單</h3>
+      <div class="card check-list">
+        <p><input type="checkbox" id="c1"><label for="c1"><strong>任務 1（圖表語意與方向校準）</strong>：在網頁圖表加上完整題意副標；將「子女性別偏好（Q001）」轉向為「堅持生男孩比例（%）」；「教育期待（V06）」補充「期望念到大學／研究所以上比例（%）」。</label></p>
+        <p><input type="checkbox" id="c2"><label for="c2"><strong>任務 2（生男壓力分母核對）</strong>：確認 2002–2009 年與 2010–2024 年「生男孩壓力」在原始問卷中的跳答篩選條件（分母群體）是否一致，並註記於說明欄。</label></p>
+        <p><input type="checkbox" id="c3"><label for="c3"><strong>任務 3（教育配對圖加時間切片）</strong>：在教育同質婚散佈圖新增「調查年份（2000–2024）或出生世代」下拉選單，觀察男高女低梯度是否隨時間趨平。</label></p>
+        <p><input type="checkbox" id="c4"><label for="c4"><strong>任務 4（Agent 參數總表匯出）</strong>：將目前分散在各分頁由 Codex 生成的 Agent 參數，集中整理成一份 <code>PSFD_Paper1_Calibration.csv</code>，附上每個欄位的明確數學定義與有效樣本數 N。</label></p>
+      </div>
+
+      <h3>可直接交給美妃的 Codex 收斂提示詞（產出 Paper 1 校準參數總表）</h3>
+      <div class="prompt-container" id="prompt_final"><button class="copy-btn" onclick="copyPrompt('prompt_final', this)">複製提示詞</button>請幫我將目前網頁中分散的統計結果與 Agent 參數，收斂整合成一份專供 Paper 1（文化風向與世代交替 ABM 模型）使用的標準化參數總表 `PSFD_Paper1_Calibration.csv`，並同步更新網頁上的對應圖表：
+
+1. 【修正題意與方向】：
+   - 所有圖表標題請加上簡短的「完整原始題意副標」，避免誤解正反向題。
+   - 「子女性別偏好（Q001）」請統一轉向計算為「堅持生男孩的淨比例（%）」，使其與其他傳統觀念指標方向一致（越高＝越傳統）。
+   - 「子女教育期待（V06）」除平均級分外，請增列「期望子女念到大學及研究所以上的比例（%）」。
+2. 【核對生男壓力跳答分母】：
+   - 請列出 2002–2009 年（合併題）與 2010–2024 年（本人／配偶父母聯集）每年的有效作答分母人數（N）與問卷跳答條件，確認前後期分母定義一致。
+3. 【教育同質婚時間切片】：
+   - 在教育配對散佈圖中，新增「調查年份區間（如 2000–2007、2008–2015、2016–2024）」或「出生世代」篩選器，讓我們觀察男高女低配對是否隨時代趨平。
+4. 【輸出 ABM 參數總表】：
+   - 請產出一份乾淨的 `PSFD_Paper1_Calibration.csv`，維度為「出生世代（1949前、1950s、1960s、1970s、1980s、1990s）× 性別 × 調查年份」，欄位包含：(a) 各核心題組的明確定義與公式、(b) 有效樣本數 N、(c) 同意比例（%）與標準誤，方便直接匯入 Python Mesa 模型進行校準。</div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(evt, tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+
+    function copyPrompt(elementId, btn) {
+      const container = document.getElementById(elementId);
+      const text = container.innerText.replace('複製提示詞', '').replace('已複製！', '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerText = '已複製！';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerText = '複製提示詞';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
