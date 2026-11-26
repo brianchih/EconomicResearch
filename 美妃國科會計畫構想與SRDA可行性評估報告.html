@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國科會計畫構想書與 SRDA 資料庫可行性評估報告｜給美妃的實證藍圖</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 引入 Font Awesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        academic: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        },
+                        emerald: {
+                            50: '#ecfdf5',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        .card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.12);
+        }
+        .progress-bar-fill {
+            transition: width 0.5s ease-out;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #ffffff; }
+            .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; border: 1px solid #cbd5e1; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-100 selection:text-brand-700">
+
+    <!-- 頂部導覽列 -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 no-print">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold shadow-sm">
+                    <i class="fa-solid fa-graduation-cap text-sm"></i>
+                </div>
+                <span class="font-bold text-slate-800 tracking-tight text-sm sm:text-base">國科會計畫實證藍圖 <span class="hidden sm:inline text-slate-400 font-normal">| 美妃專屬研討紀要</span></span>
+            </div>
+            <div class="flex items-center space-x-1 sm:space-x-4 text-xs sm:text-sm font-medium text-slate-600">
+                <a href="#feasibility" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 hover:text-brand-600 transition">SRDA 可行性</a>
+                <a href="#mechanisms" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 hover:text-brand-600 transition">雙重機制</a>
+                <a href="#econometrics" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-100 hover:text-brand-600 transition">因果識別</a>
+                <a href="#checklist" class="px-2.5 py-1.5 rounded-lg bg-brand-50 text-brand-700 hover:bg-brand-100 transition">執行檢核表</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 區塊：計畫核心定位 -->
+    <header class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white py-14 sm:py-20">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#818cf8 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="inline-flex items-center space-x-2 bg-indigo-500/20 border border-indigo-400/30 rounded-full px-3.5 py-1 text-xs sm:text-sm text-indigo-200 mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>家庭經濟學（Family Economics）× 跨代非認知人力資本</span>
+            </div>
+            
+            <h1 class="text-2xl sm:text-4xl lg:text-[2.65rem] font-bold leading-tight tracking-tight mb-5">
+                數位保母抑或注意力排擠？<br class="hidden sm:block">
+                <span class="text-indigo-300">家庭勞動配置、父母數位行為對台灣兒少非認知人力資本之跨代外溢效果</span>
+            </h1>
+            
+            <p class="text-slate-300 text-base sm:text-lg max-w-3xl leading-relaxed mb-8">
+                突破過去將兒少視為「獨立個體」的文獻缺口，從家庭生產函數與時間／注意力稀缺性出發，實證檢驗父母工時擠壓、數位保母替代與父母低頭行為（Parental Phubbing）如何影響下一代專注力、情緒調節與健康不平等。
+            </p>
+
+            <!-- 核心研究亮點摘要卡 -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-4">
+                    <div class="text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-1">理論視角創新</div>
+                    <div class="font-semibold text-white text-sm sm:text-base">家庭內部跨代外溢效應</div>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed">將「注意力」納入家庭時間配置模型，區分實體陪伴減少與品質調整互動下降。</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-4">
+                    <div class="text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-1">台灣本土政策高度</div>
+                    <div class="font-semibold text-white text-sm sm:text-base">高工時與數位教養梯度</div>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed">緊扣台灣雙薪長工時與城鄉數位落差，探討早期數位不平等如何擴大階級固化。</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl p-4">
+                    <div class="text-amber-300 text-xs font-semibold uppercase tracking-wider mb-1">實證可行性評估</div>
+                    <div class="font-semibold text-white text-sm sm:text-base">SRDA 縱貫多源資料串聯</div>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed">TIGPS 具備家長問卷與時間日誌，結合 KIT 學齡前資料，可建立完整生命週期證據。</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- 第一部分：SRDA 資料庫可行性評估矩陣 -->
+        <section id="feasibility" class="scroll-mt-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-brand-600 font-semibold text-sm tracking-wide uppercase">Data Feasibility Assessment</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">SRDA 資料庫可行性評估與選型策略</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">針對討論中對「大人變項缺失」與「年齡層設定」的疑慮，盤點三套已釋出資料庫的實際匹配度：</p>
+                </div>
+                <!-- 互動切換按鈕 -->
+                <div class="inline-flex bg-slate-200/80 p-1 rounded-xl self-start no-print" role="tablist">
+                    <button onclick="switchDatasetTab('all')" id="tab-all" class="dataset-tab px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-brand-700 shadow-sm transition">總覽比較</button>
+                    <button onclick="switchDatasetTab('tigps')" id="tab-tigps" class="dataset-tab px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition">方案 A：TIGPS</button>
+                    <button onclick="switchDatasetTab('kit')" id="tab-kit" class="dataset-tab px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition">方案 B：KIT</button>
+                    <button onclick="switchDatasetTab('psfd')" id="tab-psfd" class="dataset-tab px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition">方案 C：PSFD</button>
+                </div>
+            </div>
+
+            <!-- 關鍵迷思釐清提示框 -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mb-8 flex items-start space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-emerald-900 text-base">研討關鍵突破：2023/2024 TIGPS 其實「有完整家長問卷與手足問卷」！</h3>
+                    <p class="text-emerald-800 text-sm mt-1 leading-relaxed">
+                        討論時擔心 2023/2024 數位世代追蹤調查只有小孩填答、沒有大人資料。實際上，<strong>TIGPS 採「學生＋兩位主要照顧者＋13–19歲手足＋導師」多源追蹤設計</strong>，照顧者問卷回收逾 12,000 份，可直接透過家庭 ID 串聯父母工時、親子互動與家長自身數位行為，無需跨資料庫強行合併！
+                    </p>
+                </div>
+            </div>
+
+            <!-- 三大資料庫可行性卡片網格 -->
+            <div id="dataset-cards-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- 方案 A: TIGPS -->
+                <div data-dataset="tigps" class="dataset-card bg-white rounded-2xl border-2 border-brand-500 shadow-md p-6 flex flex-col justify-between relative card-hover">
+                    <div class="absolute -top-3.5 right-5 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        主力推薦｜極高可行性 ★★★★★
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2 text-brand-600 text-xs font-bold uppercase tracking-wider mb-2">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                            <span>方案 A：青少年縱貫追蹤</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">TIGPS 臺灣數位世代青少年成長歷程追蹤研究</h3>
+                        <p class="text-xs text-slate-500 mt-1">中研院社會所主持｜已釋出 2023 Wave 1 & 2024 Wave 2</p>
+
+                        <!-- 可行性量化指標條 -->
+                        <div class="mt-5 space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">父母工時與照顧者串聯度</span>
+                                    <span class="text-brand-700 font-bold">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-brand-600 h-1.5 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">父母低頭／數位管教變項</span>
+                                    <span class="text-brand-700 font-bold">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-brand-600 h-1.5 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">因果識別潛力 (Panel + 手足FE)</span>
+                                    <span class="text-emerald-600 font-bold">96%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 96%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>超大追蹤樣本：</strong>國七至國八逾 8,900 份學生追蹤，樣本流失率極低。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>精細時間日誌：</strong>含各時段上網、手遊、PS5/Switch 與深夜滑手機紀錄，可精確加總時數。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>完美匹配機制二：</strong>直接檢驗「父母自身低頭行為」對青少年專注力、人際社交與心理健康之外溢。</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
+                        <span>適用年齡：13–15 歲（國中階段）</span>
+                        <span class="text-brand-600 font-semibold">可作國科會第一年核心</span>
+                    </div>
+                </div>
+
+                <!-- 方案 B: KIT -->
+                <div data-dataset="kit" class="dataset-card bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col justify-between relative card-hover">
+                    <div class="absolute -top-3.5 right-5 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        數位保母首選｜高可行性 ★★★★☆
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-2">
+                            <i class="fa-solid fa-child-reaching"></i>
+                            <span>方案 B：學齡前幼兒追蹤</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">KIT 臺灣幼兒發展調查資料庫</h3>
+                        <p class="text-xs text-slate-500 mt-1">臺師大團隊主持｜3月齡組、36月齡組長期追蹤至大班/低年級</p>
+
+                        <!-- 可行性量化指標條 -->
+                        <div class="mt-5 space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">父母工時與「3C安撫」題項</span>
+                                    <span class="text-emerald-700 font-bold">98%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">幼兒非認知標準化發展量表</span>
+                                    <span class="text-emerald-700 font-bold">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">社經地位（SES）梯度識別</span>
+                                    <span class="text-emerald-700 font-bold">92%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>精準捕捉「數位保母」：</strong>問卷直接詢問家長「以手機／平板安撫孩子哭鬧」頻率，排除同儕干擾。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>完整非認知指標：</strong>涵蓋情緒調節、專注力、社會互動與睡眠品質量表。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>階級不平等證據：</strong>明確呈現低社經與高工時家庭幼兒螢幕暴露顯著偏高的早期落差。</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
+                        <span>適用年齡：0–7 歲（學齡前至低年級）</span>
+                        <span class="text-emerald-600 font-semibold">可作跨年齡對照組</span>
+                    </div>
+                </div>
+
+                <!-- 方案 C: PSFD -->
+                <div data-dataset="psfd" class="dataset-card bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col justify-between relative card-hover">
+                    <div class="absolute -top-3.5 right-5 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        輔助補充｜中度可行性 ★★★☆☆
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                            <i class="fa-solid fa-users-between-lines"></i>
+                            <span>方案 C：跨代家庭動態</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">PSFD 華人家庭動態資料庫</h3>
+                        <p class="text-xs text-slate-500 mt-1">中研院調查中心｜主樣本（RR）＋子女追蹤樣本（C / CI）</p>
+
+                        <!-- 可行性量化指標條 -->
+                        <div class="mt-5 space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">父母勞動工時與跨代串聯</span>
+                                    <span class="text-slate-700 font-bold">90%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-slate-600 h-1.5 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">兒少細部手機時間日誌</span>
+                                    <span class="text-amber-600 font-bold">45%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-amber-500 h-1.5 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-medium mb-1">
+                                    <span class="text-slate-600">長期教育／就業結果追蹤</span>
+                                    <span class="text-slate-700 font-bold">88%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-slate-600 h-1.5 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="mt-5 space-y-2.5 text-sm text-slate-700">
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-info text-amber-500 mt-1 shrink-0"></i>
+                                <span><strong>年齡層偏高限制：</strong>如討論所發現，子女樣本（C/CI）納入時多為 15–24 歲以上青年，缺乏國中小低齡兒少細部紀錄。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>近期波次已補數位題：</strong>RR2024 等最新波次已納入成人上網、手遊與影音使用頻率。</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+                                <span><strong>定位建議：</strong>不建議作為單一主力資料，適合用來驗證青年期學業與就業表現之長期後果。</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
+                        <span>適用年齡：15–24 歲以上青年</span>
+                        <span class="text-slate-600 font-semibold">建議作為穩健性補充</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 第二部分：家庭經濟學雙重傳導機制與異質性 -->
+        <section id="mechanisms" class="scroll-mt-20">
+            <div class="mb-8">
+                <span class="text-brand-600 font-semibold text-sm tracking-wide uppercase">Theoretical Framework</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">家庭經濟學理論架構：雙重傳導機制與異質性</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">點擊下方機制卡片，檢視美妃在計畫書中可建立的經濟學假說、核心變數與預期符號：</p>
+            </div>
+
+            <!-- 互動式機制選擇器 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                <button onclick="selectMechanism('mech1')" id="btn-mech1" class="mech-btn text-left p-5 rounded-2xl border-2 border-brand-600 bg-brand-50/60 shadow-sm transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 rounded-md bg-brand-600 text-white text-xs font-bold">傳導機制 I</span>
+                        <i class="fa-solid fa-clock text-brand-600"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg">時間擠壓與數位保母效應</h3>
+                    <p class="text-xs text-slate-600 mt-1">Time Squeeze & Digital Pacifier</p>
+                </button>
+
+                <button onclick="selectMechanism('mech2')" id="btn-mech2" class="mech-btn text-left p-5 rounded-2xl border border-slate-200 bg-white hover:border-brand-300 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-700 text-xs font-bold">傳導機制 II</span>
+                        <i class="fa-solid fa-eye-slash text-slate-500"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg">注意力排擠與行為示範</h3>
+                    <p class="text-xs text-slate-600 mt-1">Parental Phubbing & Role Modeling</p>
+                </button>
+
+                <button onclick="selectMechanism('mech3')" id="btn-mech3" class="mech-btn text-left p-5 rounded-2xl border border-slate-200 bg-white hover:border-brand-300 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 rounded-md bg-slate-200 text-slate-700 text-xs font-bold">異質性分析</span>
+                        <i class="fa-solid fa-layer-group text-slate-500"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg">社經梯度與城鄉數位落差</h3>
+                    <p class="text-xs text-slate-600 mt-1">SES Gradient & Regional Heterogeneity</p>
+                </button>
+            </div>
+
+            <!-- 機制詳細內容展示面板 -->
+            <div id="mechanism-detail-panel" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                <!-- 內容將由 JS 動態渲染 -->
+            </div>
+        </section>
+
+        <!-- 第三部分：計量識別策略（說服國科會審委的關鍵） -->
+        <section id="econometrics" class="scroll-mt-20">
+            <div class="mb-8">
+                <span class="text-brand-600 font-semibold text-sm tracking-wide uppercase">Empirical Identification</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">計量識別策略：如何克服內生性與遺漏變項偏誤？</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">經濟學門審查最重視「因果關係（Causality）」。建議在計畫書中設計三層遞進的識別策略：</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 策略 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm card-hover">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg mb-4">
+                        01
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">追蹤資料固定效果<br><span class="text-sm font-medium text-indigo-600">Panel Fixed Effects (FE)</span></h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        利用 TIGPS（2023 Wave 1 $\rightarrow$ 2024 Wave 2）或 KIT 多波次追蹤資料，控制所有不隨時間變化的家庭與個人特質（如父母天生自制力、家庭基因與穩定教養觀念）。
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 text-xs text-slate-700 border border-slate-100">
+                        <strong>估計重點：</strong>觀察同一家庭內「父母工時或手機依賴的<strong>變動量（$\Delta X$）</strong>」如何影響子女非認知能力的<strong>成長軌跡（$\Delta Y$）</strong>。
+                    </div>
+                </div>
+
+                <!-- 策略 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm card-hover">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-4">
+                        02
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">家庭內手足固定效果<br><span class="text-sm font-medium text-emerald-600">Sibling Fixed Effects</span></h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        善用 TIGPS 獨有的「13–19 歲手足問卷」，比較同一家庭內不同出生序或不同性別手足所面臨的父母數位管教差異（呼應逐字稿中提到的男女分組與不同時期給手機差異）。
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 text-xs text-slate-700 border border-slate-100">
+                        <strong>估計重點：</strong>完全消除同一家庭內共有的社經環境與父母特質干擾，純化家庭內部資源與注意力分配效應。
+                    </div>
+                </div>
+
+                <!-- 策略 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm card-hover">
+                    <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg mb-4">
+                        03
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">外生衝擊與工具變數法<br><span class="text-sm font-medium text-amber-600">Instrumental Variables (IV)</span></h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        為處理雙向因果（例如：孩子本身情緒難帶導致父母更愛用手機安撫），可引入兩類外生工具變數：
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 text-xs text-slate-700 border border-slate-100 space-y-1">
+                        <div>• <strong>工時外生衝擊：</strong>父母所屬行業之景氣加班工時波動（Bartik-style IV）。</div>
+                        <div>• <strong>數位環境暴露：</strong>鄉鎮市區層級之行動寬頻與光纖普及率差異。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四部分：國科會與博論切割策略 ＋ 互動檢核表 -->
+        <section id="checklist" class="scroll-mt-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- 左側：國科會與博士論文階段性切割策略 -->
+                <div class="lg:col-span-5 bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-4">
+                            學術規劃與指導配置建議
+                        </span>
+                        <h2 class="text-2xl font-bold leading-snug mb-4">國科會計畫與博士論文的「階段性雙贏切割」</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            針對討論中顧慮「寫進國科會後能否當作博士論文章節」以及指導教授共同指導的安排，建議採取以下學術分工：
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="bg-white/10 rounded-xl p-4 border border-white/10">
+                                <div class="font-bold text-indigo-300 text-sm mb-1">1. 階段性成果延伸（完全合規且常見）</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    國科會計畫定調為<strong>「建立台灣家庭數位教養與非認知人力資本的基準實證（Baseline & Mechanism）」</strong>；博士論文則在此基礎上進一步發展結構式家庭動態模型或長期追蹤延伸，兩者為「階段性深化」而非重複發表。
+                                </p>
+                            </div>
+
+                            <div class="bg-white/10 rounded-xl p-4 border border-white/10">
+                                <div class="font-bold text-emerald-300 text-sm mb-1">2. 二月底前提出「先導實證初稿」</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    既然美妃已申請 SRDA 資料，建議先跑出 TIGPS 2023–2024 的敘述統計與基準迴歸表放入計畫書「初步研究成果」章節，能大幅提升通過率並強化與共同指導老師的合作基礎。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-5 border-t border-white/15 flex items-center justify-between text-xs text-slate-400">
+                        <span>目標時程：二月底前完成計畫定稿</span>
+                        <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white font-medium transition no-print">
+                            <i class="fa-solid fa-print mr-1"></i> 列印 / 存為 PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右側：美妃專屬執行檢核表（含 localStorage 儲存） -->
+                <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">美妃的 SRDA 跑檔與提案執行檢核表</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">點擊勾選已完成項目，系統將自動儲存您的進度於本機瀏覽器</p>
+                        </div>
+                        <div class="text-right">
+                            <span id="progress-text" class="text-sm font-bold text-brand-600">0% 完成</span>
+                        </div>
+                    </div>
+
+                    <!-- 進度條 -->
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 mb-6 overflow-hidden">
+                        <div id="progress-bar" class="bg-brand-600 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+                    </div>
+
+                    <!-- 檢核清單項目 -->
+                    <div id="checklist-items" class="space-y-3">
+                        <!-- 由 JS 動態生成與綁定事件 -->
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+                        <span>資料來源：SRDA（TIGPS / KIT / PSFD）實證規劃</span>
+                        <button onclick="resetChecklist()" class="text-slate-500 hover:text-rose-600 underline transition no-print">重設檢核進度</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+            <div>
+                國科會專題研究計畫構想書與 SRDA 資料庫可行性評估報告｜專為美妃博士研究規劃整理
+            </div>
+            <div>
+                建議優先檢視變數：TIGPS 家長問卷工時、親子互動頻率、青少年時間日誌與非認知量表
+            </div>
+        </div>
+    </footer>
+
+    <!-- 互動邏輯腳本 -->
+    <script>
+        // 1. 資料庫頁籤切換功能
+        function switchDatasetTab(selected) {
+            // 更新按鈕樣式
+            document.querySelectorAll('.dataset-tab').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-brand-700', 'shadow-sm', 'font-semibold');
+                btn.classList.add('text-slate-600', 'font-medium');
+            });
+            const activeBtn = document.getElementById(`tab-${selected}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'font-medium');
+                activeBtn.classList.add('bg-white', 'text-brand-700', 'shadow-sm', 'font-semibold');
+            }
+
+            // 篩選顯示卡片
+            const cards = document.querySelectorAll('.dataset-card');
+            const grid = document.getElementById('dataset-cards-grid');
+            
+            if (selected === 'all') {
+                grid.className = 'grid grid-cols-1 lg:grid-cols-3 gap-6';
+                cards.forEach(card => card.classList.remove('hidden'));
+            } else {
+                grid.className = 'grid grid-cols-1 max-w-2xl mx-auto gap-6';
+                cards.forEach(card => {
+                    if (card.dataset.dataset === selected) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        // 2. 雙重傳導機制互動資料與切換
+        const mechanismsData = {
+            mech1: {
+                badge: '傳導機制 I：時間配置與替代效應',
+                badgeColor: 'bg-brand-100 text-brand-700',
+                title: '父母長工時擠壓實體陪伴 $\\rightarrow$ 「數位保母」替代照顧',
+                hypothesis: '假說 H1：當父母每週勞動工時增加（或加班頻率上升），家庭內部的實體親子互動時間顯著減少，促使父母提高以智慧型手機／平板安撫或打發子女的頻率（Digital Nanny），進而對子女的專注力與情緒自我調節產生顯著負向影響。',
+                chain: [
+                    { step: '外生／解釋變數 (X)', desc: '父母每週工時、非典型工作時段、雙薪家庭勞動供給' },
+                    { step: '中介傳導變數 (M)', desc: '實體親子陪伴時數下降（−）、以 3C 產品安撫／替代照顧頻率上升（＋）' },
+                    { step: '結果變數 (Y)', desc: '子女非認知能力（專注力、衝動控制、情緒穩定度、睡眠品質）下降（−）' }
+                ],
+                srdaTip: 'SRDA 變數操作化：在 KIT 中可直接抓取「以 3C 安撫孩子」題項；在 TIGPS 中可結合「主要照顧者工時」與「家長對子女使用手機之管教放任程度」及「青少年時間日誌」。'
+            },
+            mech2: {
+                badge: '傳導機制 II：注意力稀缺與行為示範',
+                badgeColor: 'bg-emerald-100 text-emerald-700',
+                title: '父母低頭行為（Parental Phubbing）$\\rightarrow$ 品質調整互動下降與跨代示範',
+                hypothesis: '假說 H2：即使父母「人在現場」（例如同桌吃飯或同處一室），父母自身重度使用手機仍會大幅稀釋「品質調整後的親子互動時間（Quality-adjusted Time）」，並透過家庭內部的行為示範效應（Role Modeling），提高子女螢幕成癮風險與人際疏離感。',
+                chain: [
+                    { step: '解釋變數 (X)', desc: '主要照顧者自身每日手機／社群／影音使用時數與網路依賴程度' },
+                    { step: '中介傳導變數 (M)', desc: '餐桌對話與親子溝通品質下降（−）、子女模仿父母使用 3C 習慣（＋）' },
+                    { step: '結果變數 (Y)', desc: '子女同儕人際關係、抗壓性、生活適應與心理健康指標惡化（−）' }
+                ],
+                srdaTip: 'SRDA 變數操作化：TIGPS 主要照顧者問卷包含家長自身網路與數位媒體使用行為，以及親子共餐、聊天頻率，可直接與青少年自陳量表進行跨代配對估計。'
+            },
+            mech3: {
+                badge: '異質性分析（Heterogeneity Analysis）',
+                badgeColor: 'bg-amber-100 text-amber-700',
+                title: '社經地位（SES）梯度、三代同堂後援與城鄉數位落差',
+                hypothesis: '假說 H3：數位教養的負向跨代外溢並非均質分布。低社經地位（低教育／低所得）或缺乏長輩照顧後援的雙薪家庭，因缺乏高品質替代托育資源，更容易依賴數位保母，導致下一代在進入成年之前便出現非認知人力資本的階級擴大。',
+                chain: [
+                    { step: '維度 A：家庭社經地位', desc: '比較父母大專以上 vs. 高中職以下學歷、家庭所得五等分位之斜率差異' },
+                    { step: '維度 B：照顧資源與性別', desc: '比較有無祖父母同住後援、以及「父職 vs. 母職」低頭行為與子女性別之交叉效應' },
+                    { step: '維度 C：台灣區域數位落差', desc: '呼應中南部與北部都會區持有手機年齡差異（如國小 vs. 國高中才給手機）之區域比較' }
+                ],
+                srdaTip: 'SRDA 變數操作化：利用 TIGPS 學校／縣市代碼與首次擁有智慧型手機年齡題項，檢驗「延後給予手機」在不同家庭背景下的保護效果。'
+            }
+        };
+
+        function selectMechanism(key) {
+            // 更新按鈕狀態
+            document.querySelectorAll('.mech-btn').forEach(btn => {
+                btn.classList.remove('border-2', 'border-brand-600', 'bg-brand-50/60', 'shadow-sm');
+                btn.classList.add('border', 'border-slate-200', 'bg-white');
+                const badge = btn.querySelector('span');
+                badge.classList.remove('bg-brand-600', 'text-white');
+                badge.classList.add('bg-slate-200', 'text-slate-700');
+            });
+
+            const activeBtn = document.getElementById(`btn-${key}`);
+            activeBtn.classList.remove('border', 'border-slate-200', 'bg-white');
+            activeBtn.classList.add('border-2', 'border-brand-600', 'bg-brand-50/60', 'shadow-sm');
+            const activeBadge = activeBtn.querySelector('span');
+            activeBadge.classList.remove('bg-slate-200', 'text-slate-700');
+            activeBadge.classList.add('bg-brand-600', 'text-white');
+
+            // 渲染內容面板
+            const data = mechanismsData[key];
+            const panel = document.getElementById('mechanism-detail-panel');
+            
+            // 將簡單數學符號轉為 HTML 排版
+            const formattedTitle = data.title.replace('$\\rightarrow$', '<span class="text-brand-600 mx-1">→</span>');
+
+            panel.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold ${data.badgeColor}">${data.badge}</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 mb-3">${formattedTitle}</h4>
+                <div class="bg-slate-50 border-l-4 border-brand-600 p-4 rounded-r-xl text-sm text-slate-700 leading-relaxed mb-6">
+                    ${data.hypothesis}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    ${data.chain.map((item, idx) => `
+                        <div class="p-4 rounded-xl border border-slate-200 bg-white relative">
+                            <div class="text-xs font-bold text-brand-600 mb-1">${item.step}</div>
+                            <div class="text-sm text-slate-800 font-medium leading-snug">${item.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="flex items-start space-x-2.5 text-xs sm:text-sm text-slate-600 bg-indigo-50/50 p-3.5 rounded-xl border border-indigo-100">
+                    <i class="fa-solid fa-database text-brand-600 mt-0.5 shrink-0"></i>
+                    <span><strong>資料對應建議：</strong>${data.srdaTip}</span>
+                </div>
+            `;
+        }
+
+        // 3. 互動式執行檢核表（含 localStorage 持久化）
+        const defaultChecklist = [
+            {
+                id: 'step1',
+                title: '核對已申請的 SRDA 譯碼簿（Codebook）與家庭 ID 串聯鍵值',
+                desc: '確認 TIGPS 學生檔、主要照顧者檔與手足檔的 Family ID 串聯規則，並篩選出父母工時與親子互動題項。',
+                tag: '資料整備'
+            },
+            {
+                id: 'step2',
+                title: '建構核心變數：加總青少年時間日誌（Time-use）與非認知指標',
+                desc: '將 TIGPS 各時段上網／手遊紀錄轉換為每日／每週使用時數，並整理專注力、情緒穩定與睡眠品質量表分數。',
+                tag: '變數清洗'
+            },
+            {
+                id: 'step3',
+                title: '跑出初步敘述統計與城鄉／SES 數位落差檢定表',
+                desc: '比較不同父母工時組別、不同社經地位及縣市區域的數位教養差異，作為計畫書「初步研究成果」佐證。',
+                tag: '初步實證'
+            },
+            {
+                id: 'step4',
+                title: '估計基準迴歸模型（OLS、Panel FE 與手足固定效果）',
+                desc: '利用 2023–2024 兩波追蹤變動量檢驗雙重傳導機制，確認係數方向與顯著性。',
+                tag: '計量模型'
+            },
+            {
+                id: 'step5',
+                title: '完成國科會計畫書定稿並確認共同指導教授合作架構',
+                desc: '彙整文獻回顧、家庭經濟理論模型與初步實證表格，於二月底截止期限前完成線上送件。',
+                tag: '提案定稿'
+            }
+        ];
+
+        const STORAGE_KEY = 'meifei_nstc_checklist_v1';
+
+        function getChecklistState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveChecklistState(state) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                // 忽略無痕模式儲存限制
+            }
+        }
+
+        function toggleCheckItem(id) {
+            const state = getChecklistState();
+            state[id] = !state[id];
+            saveChecklistState(state);
+            renderChecklist();
+        }
+
+        function resetChecklist() {
+            saveChecklistState({});
+            renderChecklist();
+        }
+
+        function renderChecklist() {
+            const state = getChecklistState();
+            const container = document.getElementById('checklist-items');
+            let completedCount = 0;
+
+            container.innerHTML = defaultChecklist.map(item => {
+                const isChecked = !!state[item.id];
+                if (isChecked) completedCount++;
+
+                return `
+                    <div onclick="toggleCheckItem('${item.id}')" 
+                         class="cursor-pointer p-4 rounded-xl border transition flex items-start space-x-3.5 select-none ${isChecked ? 'bg-emerald-50/60 border-emerald-200' : 'bg-slate-50/70 border-slate-200 hover:border-brand-300 hover:bg-white'}">
+                        <div class="pt-0.5">
+                            <div class="w-5 h-5 rounded-md flex items-center justify-center border transition ${isChecked ? 'bg-emerald-600 border-emerald-600 text-white' : 'bg-white border-slate-300'}">
+                                ${isChecked ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="font-bold text-sm ${isChecked ? 'line-through text-slate-400' : 'text-slate-800'}">${item.title}</span>
+                                <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${item.tag}</span>
+                            </div>
+                            <p class="text-xs mt-1 leading-relaxed ${isChecked ? 'text-slate-400' : 'text-slate-600'}">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const pct = Math.round((completedCount / defaultChecklist.length) * 100);
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+            document.getElementById('progress-text').textContent = `${pct}% 完成 (${completedCount}/${defaultChecklist.length})`;
+        }
+
+        // 頁面載入初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            selectMechanism('mech1');
+            renderChecklist();
+        });
+    </script>
+</body>
+</html>
