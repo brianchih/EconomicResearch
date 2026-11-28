@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淡江大學經濟學系 115學年度頂石課程專題成果展 - 評分表</title>
+    <style>
+        :root {
+            /* 護眼莫蘭迪藍綠／暖灰低對比色系 */
+            --primary-dark: #1e3a5f;
+            --primary-mid: #2c5282;
+            --accent-teal: #2b6cb0;
+            --border-soft: #cbd5e1;
+            --border-med: #94a3b8;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --bg-cream: #fafaf9;
+            --bg-tint: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+            line-height: 1.5;
+            color: var(--text-main);
+            background-color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 頂部控制列（僅在螢幕顯示，列印時隱藏） */
+        .control-panel {
+            max-width: 210mm;
+            margin: 0 auto 20px auto;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 18px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.08);
+            border-left: 6px solid var(--primary-dark);
+        }
+
+        .control-panel h3 {
+            margin: 0 0 12px 0;
+            color: var(--primary-dark);
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: 105px 1fr 165px auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .input-group input {
+            padding: 8px 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            background-color: #ffffff;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-mid);
+            box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.12);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 9px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+            color: white;
+        }
+
+        .btn-print:hover {
+            opacity: 0.92;
+        }
+
+        .btn-clear {
+            background-color: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-clear:hover {
+            background-color: #cbd5e1;
+        }
+
+        /* A4 頁面容器（柔和暖白紙張底色，降低強光刺眼感） */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 24px auto;
+            background-color: #ffffff;
+            padding: 13mm 15mm;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 柔和漸層橫幅標題區 */
+        .header-banner {
+            background: linear-gradient(120deg, #1e3a5f 0%, #2c5282 60%, #3b6998 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 11px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(30, 58, 95, 0.15);
+        }
+
+        .header-banner h1 {
+            font-size: 17.5px;
+            font-weight: 700;
+            margin: 0 0 3px 0;
+            letter-spacing: 0.8px;
+            color: #f8fafc;
+        }
+
+        .header-banner h2 {
+            font-size: 16.5px;
+            font-weight: 800;
+            margin: 0;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        /* 整合資訊卡：組別、題目、評審姓名、評審簽名完全分開 */
+        .info-card {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1.5px solid #94a3b8;
+            border-left: 5px solid var(--primary-dark);
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 13px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .info-row + .info-row {
+            margin-top: 9px;
+            padding-top: 9px;
+            border-top: 1px dashed #cbd5e1;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: baseline;
+            white-space: nowrap;
+        }
+
+        .info-item.grow {
+            flex: 1;
+            white-space: normal;
+        }
+
+        /* 加大粗體標籤，讓評審一眼看清重點 */
+        .bold-lg {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .meta-text {
+            font-size: 13px;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .fill-line {
+            display: inline-block;
+            border-bottom: 1.5px solid #475569;
+            min-width: 46px;
+            text-align: center;
+            padding: 0 6px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .fill-line.wide {
+            flex: 1;
+            text-align: left;
+            min-height: 21px;
+        }
+
+        .fill-line.name-box {
+            min-width: 105px;
+            min-height: 21px;
+        }
+
+        .fill-line.sign-box {
+            min-width: 120px;
+            min-height: 21px;
+        }
+
+        /* 區塊標題（加大粗體） */
+        .section-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin: 10px 0 6px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .section-note {
+            font-size: 12px;
+            font-weight: normal;
+            color: var(--text-muted);
+        }
+
+        /* 水平五段式護眼漸層尺規 */
+        .rubric-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border: 1px solid var(--border-med);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .rubric-cell {
+            padding: 6px 8px;
+            border-right: 1px solid var(--border-soft);
+            line-height: 1.38;
+        }
+
+        .rubric-cell:last-child {
+            border-right: none;
+        }
+
+        /* 五段柔和同色系漸層，不刺眼且具視覺引導 */
+        .r-tier-1 { background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%); }
+        .r-tier-2 { background: linear-gradient(180deg, #ebf5ff 0%, #f8fafc 100%); }
+        .r-tier-3 { background: linear-gradient(180deg, #e2e8f0 0%, #f1f5f9 100%); } /* 80分基準錨點微深強調 */
+        .r-tier-4 { background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%); }
+        .r-tier-5 { background: linear-gradient(180deg, #f1f5f9 0%, #f8fafc 100%); }
+
+        .r-score {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 1px;
+        }
+
+        .r-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 3px;
+        }
+
+        .r-desc {
+            font-size: 11px;
+            color: #334155;
+        }
+
+        /* 評分表格（加入隔行微暖灰底色與柔和漸層表頭，減少閱讀疲勞） */
+        table.scoring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .scoring-table th, .scoring-table td {
+            border: 1px solid var(--border-med);
+            padding: 8px 10px;
+            vertical-align: middle;
+        }
+
+        .scoring-table th {
+            background: linear-gradient(180deg, #dbeafe 0%, #e0e7ff 100%);
+            color: var(--primary-dark);
+            font-size: 13.5px;
+            font-weight: 800;
+            text-align: center;
+            padding: 7px 10px;
+        }
+
+        /* 斑馬紋隔行變色，防止評審眼神跳行 */
+        .scoring-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .scoring-table tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .item-name {
+            width: 28%;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.35;
+        }
+
+        .item-weight {
+            display: inline-block;
+            background-color: #e2e8f0;
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-top: 3px;
+        }
+
+        .item-sub {
+            display: block;
+            font-size: 11px;
+            font-weight: normal;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .item-guide {
+            width: 54%;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #1e293b;
+        }
+
+        .item-guide ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .item-guide li {
+            margin-bottom: 3px;
+        }
+
+        .item-guide li:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-score {
+            width: 18%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            background-color: rgba(241, 245, 249, 0.5);
+        }
+
+        .score-line {
+            display: inline-block;
+            width: 56px;
+            border-bottom: 1.5px solid #334155;
+        }
+
+        /* 評語區（柔和虛線格線輔助書寫） */
+        .comment-box {
+            border: 1px solid var(--border-med);
+            border-radius: 6px;
+            height: 92px;
+            padding: 8px 12px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #ffffff 0px,
+                #ffffff 29px,
+                #e2e8f0 30px
+            );
+        }
+
+        /* 列印專用樣式 */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .control-panel {
+                display: none !important;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                padding: 12mm 14mm;
+                page-break-after: always;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 螢幕操作面板（列印時自動隱藏） -->
+    <div class="control-panel">
+        <h3>
+            <span>🖨️ 評分表快速填寫與列印設定</span>
+            <span style="font-size: 12.5px; font-weight: normal; color: #64748b;">輸入後同步帶入兩張表單（留白則印出底線供手寫，列印時本區塊自動隱藏）</span>
+        </h3>
+        <div class="control-grid">
+            <div class="input-group">
+                <label for="inputGroup">組別</label>
+                <input type="text" id="inputGroup" placeholder="例：01" oninput="syncInfo()">
+            </div>
+            <div class="input-group">
+                <label for="inputTopic">專題題目</label>
+                <input type="text" id="inputTopic" placeholder="請輸入完整專題題目" oninput="syncInfo()">
+            </div>
+            <div class="input-group">
+                <label for="inputJudge">評審姓名（選填）</label>
+                <input type="text" id="inputJudge" placeholder="可預填，簽名處仍留空" oninput="syncInfo()">
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-clear" onclick="clearInputs()">清空</button>
+                <button type="button" class="btn btn-print" onclick="window.print()">🖨️ 列印 / 存PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第一頁：第一階段書面審查評分表 -->
+    <div class="page">
+        <div class="header-banner">
+            <h1>淡江大學經濟學系 115 學年度頂石課程專題成果展</h1>
+            <h2>【第一階段：書面審查評分表】</h2>
+        </div>
+
+        <!-- 整合資訊卡：組別、題目、評審姓名、評審簽名（獨立分開） -->
+        <div class="info-card">
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="bold-lg">組別：</span>第 <span class="fill-line display-group"></span> 組
+                </div>
+                <div class="info-item grow">
+                    <span class="bold-lg">專題題目：</span><span class="fill-line wide display-topic"></span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item meta-text">
+                    審查期限：2026 年 12 月 8 日前
+                </div>
+                <div class="info-item" style="margin-left: auto;">
+                    <span class="bold-lg">評審姓名：</span><span class="fill-line name-box display-judge"></span>
+                </div>
+                <div class="info-item">
+                    <span class="bold-lg">評審簽名：</span><span class="fill-line sign-box"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 水平五段式護眼漸層尺規 -->
+        <div class="section-title">
+            一、給分尺規
+            <span class="section-note">（請依下列標準，針對「各單一項目」獨立填寫 0～100 分，可至小數第 1 位）</span>
+        </div>
+        <div class="rubric-bar">
+            <div class="rubric-cell r-tier-1">
+                <div class="r-score">90–100 分</div>
+                <div class="r-title">卓越（前15%）</div>
+                <div class="r-desc">超越期待、計量嚴謹且具獨到商業／政策洞察。</div>
+            </div>
+            <div class="rubric-cell r-tier-2">
+                <div class="r-score">81–89 分</div>
+                <div class="r-title">優秀／良好</div>
+                <div class="r-desc">架構完整、邏輯數據正確無誤，但較缺乏亮點。</div>
+            </div>
+            <div class="rubric-cell r-tier-3">
+                <div class="r-score">80 分</div>
+                <div class="r-title">基準錨點</div>
+                <div class="r-desc">符合課程基本門檻、表現平順之基準分。</div>
+            </div>
+            <div class="rubric-cell r-tier-4">
+                <div class="r-score">70–79 分</div>
+                <div class="r-title">待改進</div>
+                <div class="r-desc">邏輯或方法有明顯瑕疵、缺乏解讀或格式不符。</div>
+            </div>
+            <div class="rubric-cell r-tier-5">
+                <div class="r-score">60–69 分</div>
+                <div class="r-title">嚴重不足</div>
+                <div class="r-desc">內容殘缺、捏造文獻或未消化之 AI 生成內容。</div>
+            </div>
+        </div>
+
+        <!-- 評分項目表格 -->
+        <div class="section-title">
+            二、評分項目
+            <span class="section-note">（直接填入原始分數即可，無需自行心算加權）</span>
+        </div>
+        <table class="scoring-table">
+            <thead>
+                <tr>
+                    <th>評分項目與權重</th>
+                    <th>評分重點指引</th>
+                    <th>原始給分 (0–100)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-name">
+                        1. 執行摘要與問題意識
+                        <div><span class="item-weight">權重 20%</span> <span class="item-sub" style="display:inline;">｜第 1、2 節</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>摘要（限 1 頁）是否精準點出因果關係（X → Y）與核心量化數字？</li>
+                            <li>是否結合產業痛點，提出值得用經濟數據驗證、突破常識的問題？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        2. 文獻回顧與假設推導
+                        <div><span class="item-weight">權重 15%</span> <span class="item-sub" style="display:inline;">｜第 3 節及文獻</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>是否納入至少 5 篇真實學術文獻（無虛構）並完整呈現彙整表？</li>
+                            <li>研究假設（H1）是否由文獻自然推導，且文末引註格式規範一致？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        3. 資料處理與計量嚴謹度
+                        <div><span class="item-weight">權重 30%</span> <span class="item-sub" style="display:inline;">｜第 4、5 節</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>資料來源是否具公信力？依變數、自變數、控制變數定義與單位是否明確？</li>
+                            <li>迴歸式設定是否正確，並執行共線性、自我相關／異質變異等診斷修正？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        4. 實證解讀與圖表呈現
+                        <div><span class="item-weight">權重 15%</span> <span class="item-sub" style="display:inline;">｜第 4、5 節及排版</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>是否超越「統計顯著」，將係數轉化為白話的經濟彈性或邊際變動金額？</li>
+                            <li>本文是否控制在 10–15 頁，且統計表格與趨勢圖清晰具專業水準？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        5. 商業實務與政策價值
+                        <div><span class="item-weight">權重 20%</span> <span class="item-sub" style="display:inline;">｜第 6 節</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>企業決策、投資避險或政府政策建議，是否緊扣實證結果且具落地性？</li>
+                            <li>是否誠實交代研究限制（如樣本限制、內生性偏誤）並提出合理展望？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title">
+            三、評語與修改建議
+            <span class="section-note">（選填，供學生修正與決賽簡報參考）</span>
+        </div>
+        <div class="comment-box"></div>
+    </div>
+
+    <!-- 第二頁：第二階段現場發表與面試評分表 -->
+    <div class="page">
+        <div class="header-banner">
+            <h1>淡江大學經濟學系 115 學年度頂石課程專題成果展</h1>
+            <h2>【第二階段：現場發表與面試評分表】</h2>
+        </div>
+
+        <!-- 整合資訊卡：組別、題目、評審姓名、評審簽名（獨立分開） -->
+        <div class="info-card">
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="bold-lg">組別：</span>第 <span class="fill-line display-group"></span> 組
+                </div>
+                <div class="info-item grow">
+                    <span class="bold-lg">專題題目：</span><span class="fill-line wide display-topic"></span>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item meta-text">
+                    2026/12/15（二）｜商管 B302E / B302F
+                </div>
+                <div class="info-item" style="margin-left: auto;">
+                    <span class="bold-lg">評審姓名：</span><span class="fill-line name-box display-judge"></span>
+                </div>
+                <div class="info-item">
+                    <span class="bold-lg">評審簽名：</span><span class="fill-line sign-box"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 水平五段式護眼漸層尺規 -->
+        <div class="section-title">
+            一、給分尺規
+            <span class="section-note">（每組總時限 10 分鐘，由專人計時響鈴，請專注於資訊傳遞與問答品質）</span>
+        </div>
+        <div class="rubric-bar">
+            <div class="rubric-cell r-tier-1">
+                <div class="r-score">90–100 分</div>
+                <div class="r-title">卓越（前15%）</div>
+                <div class="r-desc">重點精準、Q&A 直切核心並以數據佐證，極具說服力。</div>
+            </div>
+            <div class="rubric-cell r-tier-2">
+                <div class="r-score">81–89 分</div>
+                <div class="r-title">優秀／良好</div>
+                <div class="r-desc">溝通順暢、問答準確得體，但臨場魅力較中規中矩。</div>
+            </div>
+            <div class="rubric-cell r-tier-3">
+                <div class="r-score">80 分</div>
+                <div class="r-title">基準錨點</div>
+                <div class="r-desc">完成基本資訊傳達與問答互動，無重大失誤之基準分。</div>
+            </div>
+            <div class="rubric-cell r-tier-4">
+                <div class="r-score">70–79 分</div>
+                <div class="r-title">待改進</div>
+                <div class="r-desc">未能講到重點、照稿念、答非所問或僅靠單人撐場。</div>
+            </div>
+            <div class="rubric-cell r-tier-5">
+                <div class="r-score">60–69 分</div>
+                <div class="r-title">嚴重不足</div>
+                <div class="r-desc">結構極度混亂、對自身研究一問三不知或態度敷衍。</div>
+            </div>
+        </div>
+
+        <!-- 評分項目表格 -->
+        <div class="section-title">
+            二、評分項目
+            <span class="section-note">（請針對「各單一項目」獨立給分，無需自行心算加權）</span>
+        </div>
+        <table class="scoring-table">
+            <thead>
+                <tr>
+                    <th>評分項目與權重</th>
+                    <th>評分重點指引</th>
+                    <th>原始給分 (0–100)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-name">
+                        1. 核心資訊傳遞與重點萃取
+                        <div><span class="item-weight">權重 30%</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>是否能在響鈴前完整交代「動機、計量發現、商業／政策建議」三大核心？</li>
+                            <li>能否用「白話且有說服力」的方式解釋計量結果，而非照本宣科念數字？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        2. 現場 Q&A 應答與邏輯思辨
+                        <div><span class="item-weight">權重 40%</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>面對計量方法、資料限制或商業可行性提問，能否切中核心並正面解答？</li>
+                            <li>回答是否具備經濟邏輯與數據支撐，面對研究限制時能否展現專業誠信？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+                <tr>
+                    <td class="item-name">
+                        3. 簡報視覺設計與團隊默契
+                        <div><span class="item-weight">權重 30%</span></div>
+                    </td>
+                    <td class="item-guide">
+                        <ul>
+                            <li>簡報是否做到「圖表化、重點化」（避免純文字貼上），讓評審一眼看懂？</li>
+                            <li>全組儀態是否自信專業，簡報接力與 Q&A 時組員間是否展現分工默契？</li>
+                        </ul>
+                    </td>
+                    <td class="item-score"><span class="score-line"></span> 分</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title">
+            三、評語與致現場學生建議
+            <span class="section-note">（選填，將於頒獎／講評時參考）</span>
+        </div>
+        <div class="comment-box" style="height: 150px;"></div>
+    </div>
+
+    <script>
+        function syncInfo() {
+            const groupVal = document.getElementById('inputGroup').value.trim();
+            const topicVal = document.getElementById('inputTopic').value.trim();
+            const judgeVal = document.getElementById('inputJudge').value.trim();
+
+            document.querySelectorAll('.display-group').forEach(el => {
+                el.textContent = groupVal;
+            });
+
+            document.querySelectorAll('.display-topic').forEach(el => {
+                el.textContent = topicVal;
+            });
+
+            document.querySelectorAll('.display-judge').forEach(el => {
+                el.textContent = judgeVal;
+            });
+        }
+
+        function clearInputs() {
+            document.getElementById('inputGroup').value = '';
+            document.getElementById('inputTopic').value = '';
+            document.getElementById('inputJudge').value = '';
+            syncInfo();
+        }
+    </script>
+</body>
+</html>
